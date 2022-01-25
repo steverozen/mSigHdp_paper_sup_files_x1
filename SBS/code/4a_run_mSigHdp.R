@@ -10,11 +10,11 @@ if (!requireNamespace("remotes", quietly = TRUE)) {
 }
 # "@*release" installs the latest release
 if (!("hdpx" %in% rownames(installed.packages())) ||
-    packageVersion("hdpx") < "0.3.4") {
+    packageVersion("hdpx") < "1.0.1") {
   remotes::install_github("steverozen/hdpx@*release")
 }
 if (!("mSigHdp" %in% rownames(installed.packages())) ||
-    packageVersion("mSigHdp") < "1.1.7") {
+    packageVersion("mSigHdp") < "2.0.0") {
   remotes::install_github(repo = "steverozen/mSigHdp@*release")
 }
 
@@ -114,7 +114,6 @@ for (dataset_name in dataset_names) {
           high.confidence.prop = 0.9,
           gamma.alpha     = 1,
           gamma.beta      = 20,
-          
           overwrite       = T)
         save(multi.chains.etc, file = paste0(out_dir, "/multi.chains.etc.Rdata"))
       },

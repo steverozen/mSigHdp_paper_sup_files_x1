@@ -3,18 +3,18 @@ if (basename(getwd()) != "Liu_et_al_Sup_Files") {
   stop("Please run from top level directory, Liu_et_al_Sup_Files")
 }
 
-# Install and Load required packages ------------------------------------------
+# Install and load required packages ------------------------------------------
 
 if (!requireNamespace("remotes", quietly = TRUE)) {
   install.packages("remotes")
 }
 # "@*release" installs the latest release
 if (!("hdpx" %in% rownames(installed.packages())) ||
-    packageVersion("hdpx") < "0.3.4") {
+    packageVersion("hdpx") < "1.0.1") {
   remotes::install_github("steverozen/hdpx@*release")
 }
 if (!("mSigHdp" %in% rownames(installed.packages())) ||
-    packageVersion("mSigHdp") < "1.1.7") {
+    packageVersion("mSigHdp") < "2.0.0") {
   remotes::install_github(repo = "steverozen/mSigHdp@*release")
 }
 
@@ -22,7 +22,6 @@ if (!("mSigHdp" %in% rownames(installed.packages())) ||
 require(ICAMS)
 require(hdpx)
 require(mSigHdp)
-require(ggplot2)
 
 
 
@@ -54,10 +53,10 @@ for (dataset_name in dataset_names) {
     
     # dot case ".results" is used for compatibility with SynSigEval.
     out_dir <- paste0(home_for_run,"/mSigHdp.beta", gamma.beta,".results/",
-                      dataset_name,"/seed.",seed_in_use)
+                      dataset_name, "/seed.", seed_in_use)
     
     # Skip if all finished jobs to save time if a users needs to re-run.
-    if(file.exists(paste0(out_dir,"/code.profile.Rdata"))) next
+    if (file.exists(paste0(out_dir, "/code.profile.Rdata"))) next
     
     message("\n\n===========================================\n\n")
     message(paste0("Begin running mSigHdp on data set ",
@@ -94,7 +93,7 @@ for (dataset_name in dataset_names) {
     code.profile[["system.time"]] <- system.time(
       {
         multi.chains.etc <- mSigHdp::RunHdpxParallel(
-          input.catalog = paste0(home_for_data,"/",dataset_name,
+          input.catalog = paste0(home_for_data, "/", dataset_name,
                                  "/ground.truth.syn.catalog.csv"),
           seedNumber = seed_in_use,
           out.dir = out_dir,
@@ -118,10 +117,8 @@ for (dataset_name in dataset_names) {
           high.confidence.prop = 0.9,
           gamma.alpha     = 1,
           gamma.beta      = gamma.beta,
-          checkpoint.chlist = TRUE,
-          checkpoint.1.chain = TRUE,
           overwrite       = T)
-        save(multi.chains.etc, file = paste0(out_dir,"/multi.chains.etc.Rdata"))
+        save(multi.chains.etc, file = paste0(out_dir, "/multi.chains.etc.Rdata"))
       },
       gcFirst = FALSE
     )
@@ -131,10 +128,10 @@ for (dataset_name in dataset_names) {
     code.profile[["gc"]] <- gc(reset = TRUE)
     
     # Save code profiling data.
-    save(code.profile, file = paste0(out_dir,"/code.profile.Rdata"))
+    save(code.profile, file = paste0(out_dir, "/code.profile.Rdata"))
     
     # Delete mSigHdp return-value object.
-    # This makes the measurement of peak-memory usage 
+    # This makes the measurement of peak-memory usage
     # for the next job accurate.
     rm(multi.chains.etc)
   }
