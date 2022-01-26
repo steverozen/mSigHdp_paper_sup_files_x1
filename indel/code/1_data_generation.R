@@ -9,6 +9,12 @@ if (basename(getwd()) != "Liu_et_al_Sup_Files") {
 if (!requireNamespace("remotes", quietly = TRUE)) {
   install.packages("remotes")
 }
+if (!requireNamespace("cosmicsig", quietly = TRUE)) {
+  remotes::install_github(repo = "Rozen-Lab/cosmicsig", ref = "v1.0.7-branch")
+}
+if (!requireNamespace("PCAWG7", quietly = TRUE)) {
+  remotes::install_github(repo = "steverozen/PCAWG7", ref = "v0.1.3-branch")
+}
 if (!requireNamespace("SynSigGen", quietly = TRUE) ||
   packageVersion("SynSigGen") < "1.1.1") {
   remotes::install_github(
@@ -16,21 +22,15 @@ if (!requireNamespace("SynSigGen", quietly = TRUE) ||
     ref = "1.1.1-branch"
   )
 }
-if (!requireNamespace("PCAWG7", quietly = TRUE)) {
-  remotes::install_github(repo = "steverozen/PCAWG7", ref = "master")
-}
-if (!requireNamespace("cosmicsig", quietly = TRUE)) {
-  remotes::install_github(repo = "Rozen-Lab/cosmicsig", ref = "v1.0.7-branch")
-}
 
 # Restart R after installing the new packages
 .rs.restartR()
 
 source("./common_code/data_gen_utils.R")
 
-library(SynSigGen)
-library(PCAWG7)
 library(cosmicsig)
+library(PCAWG7)
+library(SynSigGen)
 
 ##################################################################
 ##                      Data preprocessing                      ##
