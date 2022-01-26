@@ -1,1 +1,1 @@
-Please click this [link](https://htmlpreview.github.io/?https://github.com/Rozen-Lab/Liu_et_al_Sup_Files/blob/main/other_analyses/figure_2/mutograph_plot.html){target="_blank"} to preview mutograph_plot.html.
+Please click this [link](https://htmlpreview.github.io/?https://github.com/Rozen-Lab/Liu_et_al_Sup_Files/blob/main/other_analyses/figure_2/mutograph_plot.html) to preview mutograph_plot.html.
