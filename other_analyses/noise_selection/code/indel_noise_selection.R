@@ -9,27 +9,15 @@ if (basename(getwd()) != "Liu_et_al_Sup_Files") {
 pkg_names <- c("remotes", "dplyr", "ggpubr", "gridExtra")
 is_installed <- pkg_names %in% rownames(installed.packages())
 if (any(!is_installed)) {
-  install.packages(pkg.names[!is_installed])
+  install.packages(pkg_names[!is_installed])
 }
 
-if (!requireNamespace("SynSigGen", quietly = TRUE) ||
-  packageVersion("SynSigGen") < "1.1.1") {
-  remotes::install_github(
-    repo = "steverozen/SynSigGen",
-    ref = "1.1.1-branch"
-  )
+if (!requireNamespace("cosmicsig", quietly = TRUE)) {
+  remotes::install_github(repo = "Rozen-Lab/cosmicsig", ref = "v1.0.7-branch")
 }
 
 if (!requireNamespace("ICAMS", quietly = TRUE)) {
   remotes::install_github("steverozen/ICAMS", ref = "v3.0.5-branch")
-}
-
-if (!requireNamespace("mSigAct", quietly = TRUE) ||
-    packageVersion("mSigAct") < "2.2.0") {
-  remotes::install_github(
-    repo = "steverozen/mSigAct",
-    ref = "v2.2.0-branch"
-  )
 }
 
 if (!requireNamespace("PCAWG7", quietly = TRUE) ||
@@ -40,8 +28,20 @@ if (!requireNamespace("PCAWG7", quietly = TRUE) ||
   )
 }
 
-if (!requireNamespace("cosmicsig", quietly = TRUE)) {
-  remotes::install_github(repo = "Rozen-Lab/cosmicsig", ref = "v1.0.7-branch")
+if (!requireNamespace("mSigAct", quietly = TRUE) ||
+    packageVersion("mSigAct") < "2.2.0") {
+  remotes::install_github(
+    repo = "steverozen/mSigAct",
+    ref = "v2.2.0-branch"
+  )
+}
+
+if (!requireNamespace("SynSigGen", quietly = TRUE) ||
+  packageVersion("SynSigGen") < "1.1.1") {
+  remotes::install_github(
+    repo = "steverozen/SynSigGen",
+    ref = "1.1.1-branch"
+  )
 }
 
 # Restart R after installing the new packages
@@ -52,11 +52,11 @@ source("./common_code/data_gen_utils.R")
 library(dplyr)
 library(ggpubr)
 library(gridExtra)
-library(SynSigGen)
-library(ICAMS)
-library(mSigAct)
-library(PCAWG7)
 library(cosmicsig)
+library(ICAMS)
+library(PCAWG7)
+library(mSigAct)
+library(SynSigGen)
 
 # Get the real exposure for tumors from nine cancer types: "Breast-AdenoCA",
 # "ColoRect-AdenoCA", "Eso-AdenoCA", "Kidney-RCC", "Liver-HCC", "Lung-AdenoCA",
