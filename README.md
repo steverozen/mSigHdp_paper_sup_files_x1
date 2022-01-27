@@ -47,7 +47,7 @@ The directories `indel` and `SBS` both have the same structure, as follows:
 
   - `raw_results` contains 4 directories, one for each tested program. Each directory contains: 
 	- 3 Directories: `None` / `Moderate` / `Realistic` (sometimes indicated as High noise);
-	  each contains 5 directories called seed.Y, Y ∈ {145879, 200437, 310111, 528401, 1076753}
+	  each of these directories contains 5 sub-directories called seed.Y, Y ∈ {145879, 200437, 310111, 528401, 1076753}
 	  
 	Each seed.Y directory contains:
 	  - summary (summary of one run)
@@ -60,7 +60,8 @@ The directories `indel` and `SBS` both have the same structure, as follows:
 		CPU profiling info     
 	  - extracted.signatures.csv          
 	  - diagnostic_plots (only for mSigHdp): diagnostic plots        
-	  - best.run (only for SignatureAnalyzer): results generated from the best run  
+	  - best.run (only for SignatureAnalyzer): results generated from the best run (basically
+	    a run with the modal number of discovered signatures)  
 			  
   - `summary` top-level summary tables and plots  
     - all_profiling_results.csv CPU profiling results
