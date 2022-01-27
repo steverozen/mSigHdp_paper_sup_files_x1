@@ -19,7 +19,7 @@ At the top level are directories
 
 
 The directories `indel` and `SBS` both have the same structure, as follows:
-  - `code` contains code specific to either SBS or indel analysis.
+  - `code` contains code specific to either SBS or indel synthetic data generation and analysis.
       This code should be run with the top-level directory as the working
       directory. RStudio users, please open the .Rproj file in the top-level directory.
     - 1~3: Generate synthetic data
