@@ -1,10 +1,8 @@
-
-### Purpose
 This repository contains supplementary files - data, code, and results - 
 for the manuscript
 
-> Mo Liu†, Yang Wu†, Nanhai Jiang, Arnoud Boot, Steven G. Rozen*,
-> "mSigHdp: hierarchical Dirichlet process mixture modeling for mutational signature discovery". 
+> Mo Liu, Yang Wu, Nanhai Jiang, Arnoud Boot, Steven G. Rozen,
+> ***mSigHdp: hierarchical Dirichlet process mixture modeling for mutational signature discovery***. 
 
 See https://github.com/steverozen/mSigHdp and https://github.com/steverozen/hdpx for mSigHdp.
 
