@@ -73,20 +73,20 @@ The directories `indel` and `SBS` both have the same structure, as follows:
  
  ### License
  
-     Copyright (C) 2022 Steven G Rozen, Mo Liu, and Yang Wu
+ Copyright (C) 2022 Steven G Rozen, Mo Liu, and Yang Wu
 
-    Code in this repository is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
+ Code and data in this repository are free software: you can redistribute them and/or modify
+ them under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
 
-    This code is is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
+ This code and data are is distributed in the hope that they will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
 
-    You should have received a copy of the GNU General Public License
-    along with this code at 
-    https://github.com/Rozen-Lab/Liu_et_al_Sup_Files/blob/main/gpl-3.0.txt.
-    If not, see <http://www.gnu.org/licenses/>.
+ You should have received a copy of the GNU General Public License
+ along with this code and data at 
+ https://github.com/Rozen-Lab/Liu_et_al_Sup_Files/blob/main/gpl-3.0.txt.
+ If not, see <http://www.gnu.org/licenses/>.
     
