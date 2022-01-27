@@ -86,5 +86,7 @@ The directories `indel` and `SBS` both have the same structure, as follows:
     GNU General Public License for more details.
 
     You should have received a copy of the GNU General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+    along with this code at 
+    https://github.com/Rozen-Lab/Liu_et_al_Sup_Files/blob/main/gpl-3.0.txt.
+    If not, see <http://www.gnu.org/licenses/>.
     
