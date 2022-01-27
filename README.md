@@ -80,7 +80,7 @@ The directories `indel` and `SBS` both have the same structure, as follows:
  the Free Software Foundation, either version 3 of the License, or
  (at your option) any later version.
 
- This code and data are is distributed in the hope that they will be useful,
+ This code and data are distributed in the hope that they will be useful,
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  GNU General Public License for more details.
