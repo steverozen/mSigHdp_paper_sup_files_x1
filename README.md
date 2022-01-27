@@ -12,9 +12,9 @@ The files are organized as follows.
 
 At the top level are directories
 
-- `SBS`: SBS (single-base substitution) input data, SBS-specific code, and SBS results
+- `SBS`: SBS (single-base substitution) synthetic input data, SBS-specific code, and SBS results
 - `common_code`: Code used for both SBS and indel analysis
-- `indel`: Indel (small insertion and deletion) input data, indel-specific code, and indel results
+- `indel`: Indel (small insertion and deletion) synthetic input data, indel-specific code, and indel results
 - `other_analysis`: Several additional analyses
 
 
