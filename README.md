@@ -14,24 +14,24 @@ The files are organized as follows.
 
 At the top level are directories
 
-- SBS: SBS input data, SBS-specific code, and SBS results
-- common_code: Code used for both SBS and indel analysis
-- indel: Indel input data, indel-specific code, and indel results
-- other_analysis: Several additional analyses
+- `SBS`: SBS input data, SBS-specific code, and SBS results
+- `common_code`: Code used for both SBS and indel analysis
+- `indel`: Indel input data, indel-specific code, and indel results
+- `other_analysis`: Several additional analyses
 
 
-The directories **indel** and **SBS** both have the same structure, as follows:
-  - ***code***
-    - Note: Code should be run with the top-level directory as the working
-      directory. RStudio users can open the .Rproj file in the top-level directory.
+The directories `indel` and `SBS` both have the same structure, as follows:
+  - `code` contains code specific to either SBS or indel analysis.
+      This code should be run with the top-level directory as the working
+      directory. RStudio users, please open the .Rproj file in the top-level directory.
     - 1~3: Generate synthetic data
     - 4a~4d: Run 4 programs for signature extraction
     - 5~9: Summarize results. Need to run these scripts sequentially to prevent error.
-  - ***input*** contains one file and 3 directories.
-    - The file is {SBS,indel}_syn_data_distribution.pdf. It
+  - `input` contains one file and 3 directories.
+    - The file `{SBS,indel}_syn_data_distribution.pdf`
           provides plots that compare the distributions of mutation counts due
 	  to each signature in real data and in the
-	  synthetic data.
+	  synthetic data
     - The 3 directories are:
       - Noiseless: 
         Data with no negative binomial noise
@@ -47,10 +47,11 @@ The directories **indel** and **SBS** both have the same structure, as follows:
       - ground.truth.syn.sigs.csv The ground truth signatures used to generate the synthetic data (identical for all SBS and for indel synthetic data sets)
       - {SBS,indel}\_syn_tumor_spectra\_{no,moderate,realistic}_noise.pdf Plots of the synthetic spectra
 
-  - ***raw_results*** contains 4 directories, one for each tested program. Each directory contains: 
-	- 3 Directories: None / Moderate / Realistic (sometimes indicated as High noise); each contains 5 directories called seed.Y, Y ∈ {145879, 200437, 310111, 528401, 1076753}
+  - `raw_results` contains 4 directories, one for each tested program. Each directory contains: 
+	- 3 Directories: `None` / `Moderate` / `Realistic` (sometimes indicated as High noise);
+	  each contains 5 directories called seed.Y, Y ∈ {145879, 200437, 310111, 528401, 1076753}
 	  
-	Each seed.Y contains:
+	Each seed.Y directory contains:
 	  - summary (summary of one run)
 		- extracted.sigs.pdf: plots of extracted signatures
 		- full.cossims.ex.to.gt.csv: Full cosine similarity matrix between ground-truth and extracted sigs.
@@ -63,7 +64,7 @@ The directories **indel** and **SBS** both have the same structure, as follows:
 	  - diagnostic_plots (only for mSigHdp): diagnostic plots        
 	  - best.run (only for SignatureAnalyzer): results generated from the best run  
 			  
-  - ***summary*** top-level summary tables and plots  
+  - `summary` top-level summary tables and plots  
     - all_profiling_results.csv CPU profiling results
     - all_results.csv signature discovery accuracy  
     - cpu.profiling.pdf plot of CPU time
