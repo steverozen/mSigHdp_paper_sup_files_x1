@@ -71,4 +71,20 @@ The directories `indel` and `SBS` both have the same structure, as follows:
     + stats_by_approach_and_data_set.csv CSV version of main text
 	  Table 1 (SBS) or Table 2 (indel)    
  
+ ### License
+ 
+     Copyright (C) 2022 Steven G Rozen, Mo Liu, and Yang Wu
 
+    Code in this repository is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This code is is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+    
