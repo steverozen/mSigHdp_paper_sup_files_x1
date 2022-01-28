@@ -421,8 +421,10 @@ process.input &lt;- function(x) { ## sample name to grep out
       xleft = x.left, ymax * 1.01, xright = x.right, ymax * 1.15,
       col = indel.class.col, border = NA, xpd = NA
     )
-    text((x.left + x.right) / 2, ymax * 1.25, labels = category.lab, 
-         cex = 1, xpd = NA)
+    text((x.left + x.right) / 2, ymax * 1.25,
+      labels = category.lab,
+      cex = 1, xpd = NA
+    )
   }
 
   # mutation class labels at the top of the figure:
@@ -528,8 +530,10 @@ process.input &lt;- function(x) { ## sample name to grep out
 <pre class="r"><code>## function to use the layout to arrange plots and assemble figure
 plot.mutograph &lt;- function(input, name) {
   name2 &lt;- sub(&quot;::&quot;, &quot;_&quot;, name)
-  png(paste(name2, &quot;mutograph.png&quot;, sep = &quot;.&quot;), width = 8.2677, 
-      height = 11.6929, units = &quot;in&quot;, res = 720)
+  png(paste(name2, &quot;mutograph.png&quot;, sep = &quot;.&quot;),
+    width = 8.2677,
+    height = 11.6929, units = &quot;in&quot;, res = 720
+  )
   par(mar = c(0.1, 2, 0.3, 0), oma = c(0, 2, 2, 0), xpd = NA)
 
   ## use the number of signatures to fit into the plot
@@ -690,7 +694,6 @@ plot.mutograph &lt;- function(input, name) {
     }
   }
 
-
   ## plot dinc spectra
   dinuc.prop &lt;- as.vector(dinuc.c / sum(dinuc.c))
   plot_dinucs(dinuc.prop,
@@ -722,7 +725,6 @@ plot.mutograph &lt;- function(input, name) {
   ),
   cex.main = 1, line = -1
   )
-
 
   ## dinuc exposure
   bar2 &lt;- barplot(dinuc.exp,
@@ -795,10 +797,12 @@ plot.mutograph &lt;- function(input, name) {
     grid = T
   )
 
-  title(paste0(&quot;Cosine similarity : &quot;, 
-               round(mSigAct::cossim(indel.prop, indel.recon.prop), 3)), 
-        cex.main = 1, line = -1)
-
+  title(paste0(
+    &quot;Cosine similarity : &quot;,
+    round(mSigAct::cossim(indel.prop, indel.recon.prop), 3)
+  ),
+  cex.main = 1, line = -1
+  )
 
   ## indel exposure
   bar3 &lt;- barplot(indel.exp,
@@ -814,8 +818,9 @@ plot.mutograph &lt;- function(input, name) {
 
   total.indel &lt;- round(sum(indel.exp))
   title(
-    main = paste(&quot;ID Spectrum\n(&quot;, total.indel, &quot;)\n\nReconstructed\nSpectrum&quot;, 
-                 sep = &quot;&quot;),
+    main = paste(&quot;ID Spectrum\n(&quot;, total.indel, &quot;)\n\nReconstructed\nSpectrum&quot;,
+      sep = &quot;&quot;
+    ),
     ylab = &quot;Signature\nContributions&quot;, line = 0.8, cex.main = 1.1, cex.lab = 0.9
   )
 
@@ -834,12 +839,16 @@ plot.mutograph &lt;- function(input, name) {
 
   ## pad empty plots
   if (length(indel.s) &lt; 5) {
-    for (empty in seq(1, 5 - length(indel.s))) plot(0, type = &quot;n&quot;, 
-                                                    axes = FALSE, ann = FALSE)
+    for (empty in seq(1, 5 - length(indel.s))) {
+      plot(0,
+        type = &quot;n&quot;,
+        axes = FALSE, ann = FALSE
+      )
+    }
   }
 
   dev.off()
-  
+
   invisible(TRUE)
 }</code></pre>
 <p>Process sample:</p>
@@ -898,9 +907,9 @@ indel.col.df &lt;- data.frame(
   color = cols[seq(1, length(indel.sig.col) * 2, by = 2) + 1]
 )
 
-plot.mutograph(output.list[[1]], &quot;Breast−AdenoCA::SP116341&quot;)</code></pre>
+plot.mutograph(output.list[[1]], &quot;Breast-AdenoCA::SP116341&quot;)</code></pre>
 <p>Show the mutograph plot:</p>
-<pre class="r"><code>knitr::include_graphics(&quot;Breast−AdenoCA_SP116341.mutograph.png&quot;)</code></pre>
+<pre class="r"><code>knitr::include_graphics(&quot;Breast-AdenoCA_SP116341.mutograph.png&quot;)</code></pre>
 <div class="figure">
 <p class="caption">
 Figure 2 in manuscript was generated from a slightly earlier version of the code with different colors in stacked bar. We edited the output to remove the DBS example and to put the lines between the stacked bars on the left and the corresponding signatures.

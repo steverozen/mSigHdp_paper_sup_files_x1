@@ -290,8 +290,10 @@ plot_indels <- function(counts, mut.type, display.name, class, labels,
       xleft = x.left, ymax * 1.01, xright = x.right, ymax * 1.15,
       col = indel.class.col, border = NA, xpd = NA
     )
-    text((x.left + x.right) / 2, ymax * 1.25, labels = category.lab, 
-         cex = 1, xpd = NA)
+    text((x.left + x.right) / 2, ymax * 1.25,
+      labels = category.lab,
+      cex = 1, xpd = NA
+    )
   }
 
   # mutation class labels at the top of the figure:
@@ -404,8 +406,10 @@ Function for mutograph plot:
 ## function to use the layout to arrange plots and assemble figure
 plot.mutograph <- function(input, name) {
   name2 <- sub("::", "_", name)
-  png(paste(name2, "mutograph.png", sep = "."), width = 8.2677, 
-      height = 11.6929, units = "in", res = 720)
+  png(paste(name2, "mutograph.png", sep = "."),
+    width = 8.2677,
+    height = 11.6929, units = "in", res = 720
+  )
   par(mar = c(0.1, 2, 0.3, 0), oma = c(0, 2, 2, 0), xpd = NA)
 
   ## use the number of signatures to fit into the plot
@@ -566,7 +570,6 @@ plot.mutograph <- function(input, name) {
     }
   }
 
-
   ## plot dinc spectra
   dinuc.prop <- as.vector(dinuc.c / sum(dinuc.c))
   plot_dinucs(dinuc.prop,
@@ -598,7 +601,6 @@ plot.mutograph <- function(input, name) {
   ),
   cex.main = 1, line = -1
   )
-
 
   ## dinuc exposure
   bar2 <- barplot(dinuc.exp,
@@ -671,10 +673,12 @@ plot.mutograph <- function(input, name) {
     grid = T
   )
 
-  title(paste0("Cosine similarity : ", 
-               round(mSigAct::cossim(indel.prop, indel.recon.prop), 3)), 
-        cex.main = 1, line = -1)
-
+  title(paste0(
+    "Cosine similarity : ",
+    round(mSigAct::cossim(indel.prop, indel.recon.prop), 3)
+  ),
+  cex.main = 1, line = -1
+  )
 
   ## indel exposure
   bar3 <- barplot(indel.exp,
@@ -690,8 +694,9 @@ plot.mutograph <- function(input, name) {
 
   total.indel <- round(sum(indel.exp))
   title(
-    main = paste("ID Spectrum\n(", total.indel, ")\n\nReconstructed\nSpectrum", 
-                 sep = ""),
+    main = paste("ID Spectrum\n(", total.indel, ")\n\nReconstructed\nSpectrum",
+      sep = ""
+    ),
     ylab = "Signature\nContributions", line = 0.8, cex.main = 1.1, cex.lab = 0.9
   )
 
@@ -710,12 +715,16 @@ plot.mutograph <- function(input, name) {
 
   ## pad empty plots
   if (length(indel.s) < 5) {
-    for (empty in seq(1, 5 - length(indel.s))) plot(0, type = "n", 
-                                                    axes = FALSE, ann = FALSE)
+    for (empty in seq(1, 5 - length(indel.s))) {
+      plot(0,
+        type = "n",
+        axes = FALSE, ann = FALSE
+      )
+    }
   }
 
   dev.off()
-  
+
   invisible(TRUE)
 }
 ```
@@ -778,10 +787,10 @@ indel.col.df <- data.frame(
   color = cols[seq(1, length(indel.sig.col) * 2, by = 2) + 1]
 )
 
-plot.mutograph(output.list[[1]], "Breast−AdenoCA::SP116341")
+plot.mutograph(output.list[[1]], "Breast-AdenoCA::SP116341")
 ```
 
 Show the mutograph plot:
 ```{r, fig.cap='Figure 2 in manuscript was generated from a slightly earlier version of the code with different colors in stacked bar. We edited the output to remove the DBS example and to put the lines between the stacked bars on the left and the corresponding signatures.', fig.topcaption=TRUE, out.width="100%", out.height="50%"}
-knitr::include_graphics("Breast−AdenoCA_SP116341.mutograph.png")
+knitr::include_graphics("Breast-AdenoCA_SP116341.mutograph.png")
 ```
