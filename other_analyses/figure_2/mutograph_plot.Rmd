@@ -1,14 +1,14 @@
 ---
 title: "PCAWG \"mutograph\" figure"
-author: "Alvin Wei Tian Ng, Nanhai Jiang, Steven G. Rozen"
-date: "25/01/2022"
+author: "Alvin Wei Tian Ng, Mi Ni Huang, Nanhai Jiang, Steven G. Rozen"
+date: "28/01/2022"
 output: html_document
 ---
-## Generate stack barcharts for tumors in the PCAWG dataset 
+## Generate stacked barcharts for tumors in the PCAWG dataset 
 This markdown generates a "mutograph" plot, with each sample having <= 5 signatures.
 If > 5 sigs for either SNV, DINUC or INDEL, margins of 
-the figure has to be changed (see layout() function).
-This plot was originally developed by Alvin Wei Tian Ng for
+the figure has to be changed (see `layout()` function).
+This plot was originally developed by Alvin Wei Tian Ng and Mi Ni Huang for
 Alexandrov, L. B., Kim, J., Haradhvala, N. J., Huang, M. N., Tian Ng, A. W., Wu, Y., et al,
  (2020). The repertoire of mutational signatures in human cancer. Nature, 578(7793), 94-101. doi:10.1038/s41586-020-1943-3
 

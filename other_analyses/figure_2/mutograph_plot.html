@@ -9,7 +9,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
-<meta name="author" content="Alvin Wei Tian Ng, Nanhai Jiang, Steven G. Rozen" />
+<meta name="author" content="Alvin Wei Tian Ng, Mi Ni Huang, Nanhai Jiang, Steven G. Rozen" />
 
 
 <title>PCAWG “mutograph” figure</title>
@@ -165,15 +165,15 @@ pre code {
 
 
 <h1 class="title toc-ignore">PCAWG “mutograph” figure</h1>
-<h4 class="author">Alvin Wei Tian Ng, Nanhai Jiang, Steven G. Rozen</h4>
-<h4 class="date">25/01/2022</h4>
+<h4 class="author">Alvin Wei Tian Ng, Mi Ni Huang, Nanhai Jiang, Steven G. Rozen</h4>
+<h4 class="date">28/01/2022</h4>
 
 </div>
 
 
-<div id="generate-stack-barcharts-for-tumors-in-the-pcawg-dataset" class="section level2">
-<h2>Generate stack barcharts for tumors in the PCAWG dataset</h2>
-<p>This markdown generates a “mutograph” plot, with each sample having &lt;= 5 signatures. If &gt; 5 sigs for either SNV, DINUC or INDEL, margins of the figure has to be changed (see layout() function). This plot was originally developed by Alvin Wei Tian Ng for Alexandrov, L. B., Kim, J., Haradhvala, N. J., Huang, M. N., Tian Ng, A. W., Wu, Y., et al, (2020). The repertoire of mutational signatures in human cancer. Nature, 578(7793), 94-101. <a href="doi:10.1038/s41586-020-1943-3" class="uri">doi:10.1038/s41586-020-1943-3</a></p>
+<div id="generate-stacked-barcharts-for-tumors-in-the-pcawg-dataset" class="section level2">
+<h2>Generate stacked barcharts for tumors in the PCAWG dataset</h2>
+<p>This markdown generates a “mutograph” plot, with each sample having &lt;= 5 signatures. If &gt; 5 sigs for either SNV, DINUC or INDEL, margins of the figure has to be changed (see <code>layout()</code> function). This plot was originally developed by Alvin Wei Tian Ng and Mi Ni Huang for Alexandrov, L. B., Kim, J., Haradhvala, N. J., Huang, M. N., Tian Ng, A. W., Wu, Y., et al, (2020). The repertoire of mutational signatures in human cancer. Nature, 578(7793), 94-101. <a href="doi:10.1038/s41586-020-1943-3" class="uri">doi:10.1038/s41586-020-1943-3</a></p>
 <div id="note" class="section level3">
 <h3>Note:</h3>
 <p>Please install the dependencies before running the script. Required packages are on CRAN except mSigAct and PCAWG7. Set <code>eval = T</code> in the next chunk if you want to automatically install these packages.</p>
