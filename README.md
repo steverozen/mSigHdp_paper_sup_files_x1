@@ -1,4 +1,4 @@
-This repository contains supplementary files - synthetic data, code, and analytical results - 
+This repository contains supplementary files - synthetic data, code, and analytically results - 
 for the manuscript
 
 > Mo Liu, Yang Wu, Nanhai Jiang, Arnoud Boot, Steven G. Rozen,
@@ -39,7 +39,7 @@ The directories `indel` and `SBS` both have the same structure, as follows:
         Synthetic data with realistic negative binomial noise
       
     - Each directory contains the files:
-      - ground.truth.syn.catalog.csv The syntheic tumor spectra in a format used by all programs other than SigProfilerExtractor
+      - ground.truth.syn.catalog.csv The synthetic tumor spectra in a format used by all programs other than SigProfilerExtractor
       - ground.truth.syn.catalog.tsv The synthetic tumor spectra in a format readable by SigProfilerExtractor
       - ground.truth.syn.exposures.csv The exposures of each synthetic tumor to each signature
       - ground.truth.syn.sigs.csv The ground truth signatures used to generate the synthetic data (identical for all SBS and for indel synthetic data sets)
