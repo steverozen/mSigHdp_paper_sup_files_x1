@@ -10,7 +10,7 @@ If > 5 sigs for either SNV, DINUC or INDEL, margins of
 the figure has to be changed (see `layout()` function).
 This plot was originally developed by Alvin Wei Tian Ng and Mi Ni Huang for
 Alexandrov, L. B., Kim, J., Haradhvala, N. J., Huang, M. N., Tian Ng, A. W., Wu, Y., et al,
- (2020). The repertoire of mutational signatures in human cancer. Nature, 578(7793), 94-101. doi:10.1038/s41586-020-1943-3
+ (2020). The repertoire of mutational signatures in human cancer. Nature, 578(7793), 94-101. https://doi.org/10.1038/s41586-020-1943-3
 
 ### Note:
 Please install the dependencies before running the script.
