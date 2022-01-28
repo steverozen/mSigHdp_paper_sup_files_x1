@@ -782,6 +782,6 @@ plot.mutograph(output.list[[1]], "Breast−AdenoCA::SP116341")
 ```
 
 Show the mutograph plot:
-```{r, out.width="100%", out.height="50%", message=FALSE}
+```{r, fig.cap='Figure 2 in manuscript was generated from a slightly earlier version of the code with different colors in stacked bar. We edited the output to remove the DBS example and to put the lines between the stacked bars on the left and the corresponding signatures.', fig.topcaption=TRUE, out.width="100%", out.height="50%"}
 knitr::include_graphics("Breast−AdenoCA_SP116341.mutograph.png")
 ```
