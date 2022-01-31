@@ -63,11 +63,11 @@ sig_activity_sbs$missed_by_msighdp <-
   )
 
 cat(
-  "SigPro SBS sigs FP median proportion of tumors = ",
+  "SigPro SBS sigs FP, median proportion of tumors with sig = ",
   median(sig_activity_sbs[sig_activity_sbs$missed_by_sigpro == "TRUE", "sig_prop"]),
   "\n")
 
-cat("SigPro SBS sigs TP median proportion of tumors = ",
+cat("SigPro SBS sigs TP, median proportion of tumors with sig = ",
     median(sig_activity_sbs[sig_activity_sbs$missed_by_sigpro == "FALSE", "sig_prop"]),
     "\n")
 
