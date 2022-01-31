@@ -71,7 +71,7 @@ p1 <-
     x = "missed_by_sigpro", y = "sig_prop",
     color = "missed_by_sigpro", palette = c("#FAA691", "#000000"),
     ylab = "Signature proportion",
-    xlab = "SBS signature missed by SigProfilerExtractor",
+    xlab = "SBS signature missed by SigProfilerExtractor in realistic data",
     add = "jitter"
   ) +
   ggpubr::stat_compare_means(
@@ -86,7 +86,7 @@ p2 <-
     x = "missed_by_msighdp", y = "sig_prop",
     color = "missed_by_msighdp", palette = c("#00CC00", "#000000"),
     ylab = "Signature proportion",
-    xlab = "SBS signature missed by mSigHdp",
+    xlab = "SBS signature missed by mSigHdp in realistic data",
     add = "jitter"
   ) +
   ggpubr::stat_compare_means(
