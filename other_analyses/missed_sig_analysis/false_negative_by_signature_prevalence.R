@@ -6,7 +6,7 @@ if (basename(getwd()) != "Liu_et_al_Sup_Files") {
 #################################################################
 ##                 Install dependency packages                 ##
 #################################################################
-pkg_names <- c("remotes", "dplyr", "ggpubr", "gridExtra")
+pkg_names <- c("remotes", "dplyr")
 is_installed <- pkg_names %in% rownames(installed.packages())
 if (any(!is_installed)) {
   stop("Please install packages",
@@ -22,8 +22,6 @@ if (!requireNamespace("mSigAct", quietly = TRUE) ||
 source("./common_code/data_gen_utils.R")
 
 library(dplyr)
-library(ggpubr)
-library(gridExtra)
 library(mSigAct)
 
 # Read in signature exposure file from realistic synthetic data
@@ -52,64 +50,27 @@ false_negs_sigpro <- c(
 )
 false_neg_msighdp <- c("SBS7a", "SBS7b", "SBS35")
 
-sig_activity_sbs$missed_by_sigpro <-
-  factor(sig_activity_sbs$sig_id %in% false_negs_sigpro,
-    levels = c(TRUE, FALSE)
-  )
+sig_activity_sbs$missed_by_sigpro <- 
+  sig_activity_sbs$sig_id %in% false_negs_sigpro
 
-sig_activity_sbs$missed_by_msighdp <-
-  factor(sig_activity_sbs$sig_id %in% false_neg_msighdp,
-    levels = c(TRUE, FALSE)
-  )
+
+sig_activity_sbs$missed_by_msighdp <- 
+  sig_activity_sbs$sig_id %in% false_neg_msighdp
+
+write.csv(sig_activity_sbs, 
+          file.path(output_home, "SBS_false_negs.csv"),
+          row.names = FALSE)
 
 cat(
   "SigPro SBS sigs FP, median proportion of tumors with sig = ",
-  median(sig_activity_sbs[sig_activity_sbs$missed_by_sigpro == "TRUE", "sig_prop"]),
+  median(sig_activity_sbs[sig_activity_sbs$missed_by_sigpro, "sig_prop"]),
   "\n")
 
 cat("SigPro SBS sigs TP, median proportion of tumors with sig = ",
-    median(sig_activity_sbs[sig_activity_sbs$missed_by_sigpro == "FALSE", "sig_prop"]),
+    median(sig_activity_sbs[!sig_activity_sbs$missed_by_sigpro, "sig_prop"]),
     "\n")
 
 wt <- wilcox.test(jitter(sig_prop) ~ missed_by_sigpro, data = sig_activity_sbs)
 cat("Associated p value = ", wt$p.value, "\n")
 
-ylab <- "Proportion of tumors with signature"
-  
-p1 <-
-  ggpubr::ggboxplot(sig_activity_sbs,
-    x = "missed_by_sigpro", y = "sig_prop",
-    color = "missed_by_sigpro", palette = c("#FAA691", "#000000"),
-    ylab = ylab,
-    xlab = "SigProfilerExtractor false negative SBS signatures in realistic data",
-    add = "jitter"
-  ) +
-  ggpubr::stat_compare_means(
-    method = "wilcox.test",
-    label.x = 1.5, label.y = 1
-  ) +
-  ggplot2::theme(legend.position = "none")
-
-
-p2 <-
-  ggpubr::ggboxplot(sig_activity_sbs,
-    x = "missed_by_msighdp", y = "sig_prop",
-    color = "missed_by_msighdp", palette = c("#00CC00", "#000000"),
-    ylab = ylab,
-    xlab = "mSigHdp false negative SBS signatures in realistic data",
-    add = "jitter"
-  ) +
-  ggpubr::stat_compare_means(
-    method = "wilcox.test",
-    label.x = 1.5, label.y = 1
-  ) +
-  ggplot2::theme(legend.position = "none")
-
-ggplot_to_pdf(
-  plot_objects = list(p1, p2),
-  file = file.path(output_home, "false_neg_in_realistic_data.pdf"),
-  nrow = 2, ncol = 1,
-  width = 8.2677, height = 11.6929, units = "in"
-)
-grDevices::dev.off()
-message("done")
+cat("done\n")
