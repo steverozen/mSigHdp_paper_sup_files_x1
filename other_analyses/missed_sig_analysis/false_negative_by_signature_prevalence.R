@@ -10,6 +10,7 @@ pkg_names <- c("remotes", "dplyr", "ggpubr", "gridExtra")
 is_installed <- pkg_names %in% rownames(installed.packages())
 if (any(!is_installed)) {
   install.packages(pkg_names[!is_installed])
+  .rs.restartR()
 }
 
 if (!requireNamespace("mSigAct", quietly = TRUE) ||
@@ -18,10 +19,10 @@ if (!requireNamespace("mSigAct", quietly = TRUE) ||
     repo = "steverozen/mSigAct",
     ref = "v2.2.0-branch"
   )
+  # Restart R after installing the new packages
+  .rs.restartR()
 }
 
-# Restart R after installing the new packages
-.rs.restartR()
 
 source("./common_code/data_gen_utils.R")
 
@@ -41,7 +42,7 @@ sig_activity_sbs <- get_sig_activity(exposure_sbs)
 sig_activity_indel <- get_sig_activity(exposure_indel)
 sig_activity_all <- rbind(sig_activity_sbs, sig_activity_indel)
 
-output_home <- "other_analyses/missed_sig_analysis/output"
+output_home <- "other_analyses/missed_sig_analysis"
 write.csv(
   x = sig_activity_all,
   file = file.path(output_home, "sig_activity_in_realistic_data.csv"),
@@ -50,28 +51,30 @@ write.csv(
 
 # Investigate the signatures failed to discover by SigProfilerExtractor and
 # mSigHdp
-sigs_missed_sigpro <- c(
+false_negs_sigpro <- c(
   paste0("SBS", c(5, 12, 29, 41, 16, 38, 22, 35)),
   paste0("ID", c(5, 11, 13))
 )
-sigs_missed_msighdp <- c("SBS7a", "SBS7b", "SBS35")
+false_neg_msighdp <- c("SBS7a", "SBS7b", "SBS35")
 
 sig_activity_sbs$missed_by_sigpro <-
-  factor(sig_activity_sbs$sig_id %in% sigs_missed_sigpro,
+  factor(sig_activity_sbs$sig_id %in% false_negs_sigpro,
     levels = c(TRUE, FALSE)
   )
 
 sig_activity_sbs$missed_by_msighdp <-
-  factor(sig_activity_sbs$sig_id %in% sigs_missed_msighdp,
+  factor(sig_activity_sbs$sig_id %in% false_neg_msighdp,
     levels = c(TRUE, FALSE)
   )
 
+ylab <- "Proportion of tumors with signature"
+  
 p1 <-
   ggpubr::ggboxplot(sig_activity_sbs,
     x = "missed_by_sigpro", y = "sig_prop",
     color = "missed_by_sigpro", palette = c("#FAA691", "#000000"),
-    ylab = "Signature proportion",
-    xlab = "SBS signature missed by SigProfilerExtractor in realistic data",
+    ylab = ylab,
+    xlab = "SigProfilerExtractor false negative SBS signatures in realistic data",
     add = "jitter"
   ) +
   ggpubr::stat_compare_means(
@@ -85,8 +88,8 @@ p2 <-
   ggpubr::ggboxplot(sig_activity_sbs,
     x = "missed_by_msighdp", y = "sig_prop",
     color = "missed_by_msighdp", palette = c("#00CC00", "#000000"),
-    ylab = "Signature proportion",
-    xlab = "SBS signature missed by mSigHdp in realistic data",
+    ylab = ylab,
+    xlab = "mSigHdp false negative SBS signatures in realistic data",
     add = "jitter"
   ) +
   ggpubr::stat_compare_means(
@@ -95,11 +98,11 @@ p2 <-
   ) +
   ggplot2::theme(legend.position = "none")
 
-output_home2 <- "other_analyses/missed_sig_analysis"
 ggplot_to_pdf(
   plot_objects = list(p1, p2),
-  file = file.path(output_home2, "missed_sig_in_realistic_data.pdf"),
+  file = file.path(output_home, "false_neg_in_realistic_data.pdf"),
   nrow = 2, ncol = 1,
   width = 8.2677, height = 11.6929, units = "in"
 )
 grDevices::dev.off()
+message("done")
