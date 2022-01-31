@@ -9,20 +9,15 @@ if (basename(getwd()) != "Liu_et_al_Sup_Files") {
 pkg_names <- c("remotes", "dplyr", "ggpubr", "gridExtra")
 is_installed <- pkg_names %in% rownames(installed.packages())
 if (any(!is_installed)) {
-  install.packages(pkg_names[!is_installed])
-  .rs.restartR()
+  stop("Please install packages",
+       paste(pkg_names[!is_installed], collapse = ", "))
 }
 
 if (!requireNamespace("mSigAct", quietly = TRUE) ||
   packageVersion("mSigAct") < "2.2.0") {
-  remotes::install_github(
-    repo = "steverozen/mSigAct",
-    ref = "v2.2.0-branch"
-  )
-  # Restart R after installing the new packages
-  .rs.restartR()
+  stop("Please install mSigAct . v2.2.0:\n",
+       "remotes::install_github(\"steverozen/mSigAct\", ref = \"v2.2.0-branch\"")
 }
-
 
 source("./common_code/data_gen_utils.R")
 
@@ -66,6 +61,18 @@ sig_activity_sbs$missed_by_msighdp <-
   factor(sig_activity_sbs$sig_id %in% false_neg_msighdp,
     levels = c(TRUE, FALSE)
   )
+
+cat(
+  "SigPro SBS sigs FP median proportion of tumors = ",
+  median(sig_activity_sbs[sig_activity_sbs$missed_by_sigpro == "TRUE", "sig_prop"]),
+  "\n")
+
+cat("SigPro SBS sigs TP median proportion of tumors = ",
+    median(sig_activity_sbs[sig_activity_sbs$missed_by_sigpro == "FALSE", "sig_prop"]),
+    "\n")
+
+wt <- wilcox.test(jitter(sig_prop) ~ missed_by_sigpro, data = sig_activity_sbs)
+cat("Associated p value = ", wt$p.value, "\n")
 
 ylab <- "Proportion of tumors with signature"
   
