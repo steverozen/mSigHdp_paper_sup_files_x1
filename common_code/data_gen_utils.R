@@ -5,6 +5,7 @@
 # indel/code/3_spectra_plot.R
 # other_analyses/noise_selection/code/SBS_noise_selection.R
 # other_analyses/noise_selection/code/indel_noise_selection.R
+# other_analyses/missed_sig_analysis/code/missed_sig_analysis.R
 ###########################################################################
 
 #' Remove signatures which have zero activity from an exposure matrix
@@ -1067,4 +1068,40 @@ ggplot_to_pdf <-
       width = width, height = height, units = units
     )
   }
+
+#' Get signature activity information from an exposure matrix
+#'
+#' @param exposure Exposures as a numerical matrix (or data.frame) with
+#'   signatures in rows and samples in columns. Rownames are taken as the
+#'   signature names and column names are taken as the sample IDs.
+#'
+#' @return A data frame showing the activity information for each signature in
+#'   \code{exposure}.
+#'
+get_sig_activity <- function(exposure) {
+  get_sig_info <- function(sig_exposures) {
+    total_tumors <- length(sig_exposures)
+    active_tumors <- sum(sig_exposures > 0)
+    sig_prop <- active_tumors / total_tumors
+    return(list(
+      active_tumors = active_tumors,
+      sig_prop = sig_prop
+    ))
+  }
+  
+  sig_info <- apply(exposure, MARGIN = 1, FUN = get_sig_info)
+  active_tumors <- sapply(sig_info, FUN = "[[", 1)
+  sig_prop <- sapply(sig_info, FUN = "[[", 2)
+  
+  sig_activity_df <- data.frame(
+    sig_id = names(active_tumors),
+    active_tumors = active_tumors,
+    sig_prop = sig_prop
+  )
+  
+  sig_activity_df <-
+    dplyr::arrange(sig_activity_df, dplyr::desc(active_tumors))
+  
+  return(sig_activity_df)
+}
 
