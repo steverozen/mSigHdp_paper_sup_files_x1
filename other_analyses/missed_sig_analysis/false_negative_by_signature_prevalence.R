@@ -62,7 +62,7 @@ write.csv(sig_activity_sbs,
           row.names = FALSE)
 
 cat(
-  "SigPro SBS sigs FP, median proportion of tumors with sig = ",
+  "SigPro SBS sigs FN, median proportion of tumors with sig = ",
   median(sig_activity_sbs[sig_activity_sbs$missed_by_sigpro, "sig_prop"]),
   "\n")
 
