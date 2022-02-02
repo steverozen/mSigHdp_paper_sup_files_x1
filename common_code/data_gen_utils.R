@@ -993,7 +993,8 @@ one_boxplot <- function(distance_df, title, ylim) {
       x = "group", y = "scaled.euclidean", color = "group"
     ) +
     ggpubr::stat_compare_means(
-      label = "p.signif", ref.group = "real", method = "wilcox.test"
+      label = "p.signif", ref.group = "real", method = "wilcox.test",
+      method.args = list(alternative = "two.sided")
     ) +
     ggplot2::ggtitle(title) + ggplot2::ylab("Scaled Euclidean distance") +
     ggplot2::scale_y_reverse(limits = rev(ylim)) +
