@@ -13,7 +13,7 @@ library(ICAMS)
 source("./common_code/data_gen_utils.R")
 
 sbs96_plot_home <- "./SBS_down_samp/input/"
-dataset_names <- c("1k", "5k", "10k")
+dataset_names <- c("1k", "3k", "5k", "10k", "20k")
 file_suffixes <- paste0("thres_", dataset_names)
 identifiers <- gsub(pattern = "_", replacement = "=", x = file_suffixes)
 

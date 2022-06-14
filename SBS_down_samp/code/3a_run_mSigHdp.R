@@ -36,7 +36,7 @@ home_for_run <- "./SBS_down_samp/raw_results"
 start_K <- 46
 
 # Names of data sets
-dataset_names <- c("1k", "5k", "10k")
+dataset_names <- c("1k", "3k", "5k", "10k", "20k")
 
 # Specify 1 seed used in software running
 if (FALSE) {
