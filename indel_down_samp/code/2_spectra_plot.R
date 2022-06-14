@@ -1,0 +1,38 @@
+# Please run this script from the top directory
+if (basename(getwd()) != "Liu_et_al_Sup_Files") {
+  stop("Please run from top level directory, Liu_et_al_Sup_Files")
+}
+
+##################################################################
+##      Install dependency packages and create directories      ##
+##################################################################
+if (!requireNamespace("ICAMS", quietly = TRUE)) {
+  remotes::install_github("steverozen/ICAMS", ref = "v3.0.5-branch")
+}
+library(ICAMS)
+source("./common_code/data_gen_utils.R")
+
+sbs96_plot_home <- "./indel_down_samp/input/"
+dataset_names <- c("500", "1k", "3k", "5k", "10k")
+file_suffixes <- paste0("thres_", dataset_names)
+identifiers <- gsub(pattern = "_", replacement = "=", x = file_suffixes)
+
+##################################################################
+##              Plot indel synthetic tumor spectra              ##
+##################################################################
+for (i in seq_along(dataset_names)) {
+  input_file <-
+    file.path(sbs96_plot_home, dataset_names[i], "ground.truth.syn.catalog.csv")
+  catalog <- ICAMS::ReadCatalog(input_file)
+
+  output_file <-
+    file.path(
+      sbs96_plot_home, dataset_names[i],
+      paste0("spectra_", file_suffixes[i], ".pdf")
+    )
+  plot_catalog_to_pdf(
+    catalog = catalog,
+    identifier = identifiers[i],
+    file = output_file
+  )
+}
