@@ -1,0 +1,7 @@
+Noise_level,Approach,mean(PPV),mean(TPR),mean(aver_Sim_TP_only),mean(Composite),sd(Composite)
+10k,mSigHdp,0.955,0.913,0.987,2.85,"NA"
+10k,SigProfilerExtractor,0.941,0.696,0.975,2.61,"NA"
+1k,mSigHdp,1.000,0.826,0.993,2.82,"NA"
+1k,SigProfilerExtractor,0.941,0.696,0.973,2.61,"NA"
+5k,mSigHdp,1.000,0.870,0.992,2.86,"NA"
+5k,SigProfilerExtractor,0.944,0.739,0.973,2.66,"NA"
