@@ -48,8 +48,8 @@ if __name__ == "__main__":
     # Read old working directory
     old_wd = os.getcwd()
     # os.path.abspath extends a relative path to an absolute one.
-    home_for_data = os.path.abspath("./indel/input")
-    home_for_run = os.path.abspath("./indel/raw_results")
+    home_for_data = os.path.abspath("./indel_down_samp/input")
+    home_for_run = os.path.abspath("./indel_down_samp/raw_results")
     # Seed numbers
     if False:
         seed_numbers = (145879, 200437, 310111, 528401, 1076753)
