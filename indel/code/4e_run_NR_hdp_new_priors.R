@@ -15,8 +15,6 @@ burnin.iterations  <- 5000 * 6
 CPU.cores          <- 20
 num.child.process  <- 20
 # Guessed number of raw clusters
-# We assume mSigHdp does not know the ground-truth K (11),
-# then we should specify start_K as 22.
 start_K            <- 22
 
 home_for_run       <- 
