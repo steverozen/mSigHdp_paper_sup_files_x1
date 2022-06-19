@@ -1,32 +1,17 @@
-# Please run this script from the top directory
-if (basename(getwd()) != "mSigHdp_paper_sup_files_x1") {
-  stop("Please run from top level directory, Liu_et_al_Sup_Files")
+basedir <- "mSigHdp_paper_sup_files_x1" 
+if (basename(getwd()) != basedir) {
+  stop("Please run from top level directory, ", basedir)
 }
 
-# Install and load required packages ------------------------------------------
-
-if (!requireNamespace("remotes", quietly = TRUE)) {
-  install.packages("remotes")
-}
-
-remotes::install_github("steverozen/hdpx", ref = "NR-version-plus-fixes")
-
-if (!("mSigHdp" %in% rownames(installed.packages())) ||
-    packageVersion("mSigHdp") < "2.0.0") {
-  remotes::install_github(repo = "steverozen/mSigHdp@*release")
-}
-
-# ICAMS is installed when installing mSigHdp
-require(ICAMS)
-require(hdpx)
-require(mSigHdp)
-
-
+# Install and load package versions to test Nicola Roberts's algorithms 
+source("common_code/install_NR_versions.R")
 
 # Specify global variables ----------------------------------------------------
+gamma.beta <- 50
+home_for_run <- paste0("./indel_NR_gamma_beta_", gamma.beta, "/raw_results")
 
 home_for_data <- "./indel/input"
-home_for_run <- "./indel/raw_results"
+
 
 # Guessed signatures.
 # We assume mSigHdp does not know the ground-truth K (11),
@@ -34,12 +19,11 @@ home_for_run <- "./indel/raw_results"
 start_K <- 22
 
 # Names of data sets
-dataset_names <- c("Noiseless", "Moderate", "Realistic")
+# dataset_names <- c("Noiseless", "Moderate", "Realistic")
+dataset_names <- c("Realistic")
 
 # Specify 5 seeds used in software running
-seeds_in_use <- c(145879, 200437, 310111, 528401, 1076753)
-
-
+seeds_in_use <- c(145879) # , 200437, 310111, 528401, 1076753)
 
 # Run mSigHdp -----------------------------------------------------------------
 
@@ -111,7 +95,7 @@ for (dataset_name in dataset_names) {
           CPU.cores = 20,
           high.confidence.prop = 0.9,
           gamma.alpha     = 1,
-          gamma.beta      = 50,
+          gamma.beta      = gamma.beta,
           overwrite       = T)
         save(multi.chains.etc, file = paste0(out_dir, "/multi.chains.etc.Rdata"))
       },
