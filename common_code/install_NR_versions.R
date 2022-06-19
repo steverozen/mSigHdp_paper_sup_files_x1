@@ -6,7 +6,7 @@ if (!requireNamespace("remotes", quietly = TRUE)) {
 
 # Always install the version of hdpx and mSigHdp with the Nicola
 # Roberts algorithm for combining raw clusters into signatures
-if (requireNamespace("hdpx", quietly = TRUE)) {
+if (system.file(package = "hdpx") != "") {
   if (packageVersion("hdpx") != "0.1.5.0099") {
     remove.package("hdpx")
     remotes::install_github("steverozen/hdpx", ref = "NR-version-plus-fixes")
@@ -14,19 +14,22 @@ if (requireNamespace("hdpx", quietly = TRUE)) {
 } else {
   remotes::install_github("steverozen/hdpx", ref = "NR-version-plus-fixes")
 }
+message("hdpx version ", packageVersion("hdpx"))
 stopifnot(packageVersion("hdpx") == "0.1.5.0099")
 
-if (requireNamespace("mSigHdp")) {
-  if (packageVersion("mSigHdp") != "0.0.0.9015") {
+if (system.file(package = "mSigHdp") != "") {
+  if (packageVersion("mSigHdp") != "0.0.0.9016") {
     remove.packages("mSigHdp")
     remotes::install_github(repo = "steverozen/mSigHdp", 
-                            ref = "for-NR-version-with-fixes")
+                            ref = "for-NR-version-plus-fixes")
   }
 } else {
   remotes::install_github(repo = "steverozen/mSigHdp", 
-                          ref = "for-NR-version-with-fixes")
+                          ref = "for-NR-version-plus-fixes")
 }
-stopifnot(packageVersion("mSigHdp") == "0.0.0.9015")
+message("mSigHdp version ", packageVersion("mSigHdp"))
+stopifnot(packageVersion("mSigHdp") == "0.0.0.9016")
+
 
 # ICAMS is installed when installing mSigHdp
 require(ICAMS)
