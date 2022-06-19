@@ -1,5 +1,5 @@
 # How to run:
-# $ nice Rscript common_code/generic_run_NR_hdp.R >& run_indel_NR_hdp_new_priors.log &
+# $ nice Rscript indel/code/4e_run_NR_hdp_new_priors.R >& run_indel_NR_hdp_new_priors.log &
 
 basedir <- "mSigHdp_paper_sup_files_x1" 
 if (basename(getwd()) != basedir) {
