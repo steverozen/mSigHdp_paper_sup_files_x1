@@ -3,46 +3,20 @@ if (basename(getwd()) != basedir) {
   stop("Please run from top level directory, ", basedir)
 }
 
-# Install and load package versions to test Nicola Roberts's algorithms 
-
-if (!requireNamespace("remotes", quietly = TRUE)) {
-  install.packages("remotes")
-}
-
-# Always install the version of hdpx and mSigHdp with the Nicola
-# Roberts algorithm for combining raw clusters into signatures
-hdpx.version <- "0.1.5.0099"
-if (system.file(package = "hdpx") != "") {
-  if (packageVersion("hdpx") != hdpx.version) {
-    remove.package("hdpx")
-    remotes::install_github("steverozen/hdpx", ref = "NR-version-plus-fixes")
-  }
-} else {
-  remotes::install_github("steverozen/hdpx", ref = "NR-version-plus-fixes")
-}
-message("hdpx version ", packageVersion("hdpx"))
-stopifnot(packageVersion("hdpx") == hdpx.version)
-
-mSigHdp.version <- "0.0.0.9019"
-if (system.file(package = "mSigHdp") != "") {
-  if (packageVersion("mSigHdp") != mSigHdp.version) {
-    remove.packages("mSigHdp")
-    remotes::install_github(repo = "steverozen/mSigHdp", 
-                            ref = "for-NR-version-plus-fixes")
-  }
-} else {
-  remotes::install_github(repo = "steverozen/mSigHdp", 
-                          ref = "for-NR-version-plus-fixes")
-}
-message("mSigHdp version ", packageVersion("mSigHdp"))
-stopifnot(packageVersion("mSigHdp") == mSigHdp.version)
+source("common_code/install_NR_hdp.R")
 
 # ICAMS is installed when installing mSigHdp
 require(ICAMS)
 require(hdpx)
 require(mSigHdp)
 
-
+message(Sys.time(), " starting analyses; output in subdir of ", home_for_run)
+if (!dir.exists(home_for_run)) {
+  message(Sys.time(), " creating ", home_for_run)
+  dir.create(home_for_run, recursive = TRUE)
+} else {
+  message(Sys.time(), home_for_run, " already exists")
+}
 
 # Run mSigHdp -----------------------------------------------------------------
 
@@ -50,8 +24,10 @@ for (dataset_name in dataset_names) {
   for (seed_in_use in seeds_in_use) {
     
     # dot case ".results" is used for compatibility with SynSigEval.
-    out_dir <- paste0(home_for_run, "/mSigHdp.results/",
+    out_dir <- paste0(home_for_run, "/",
                       dataset_name, "/seed.", seed_in_use)
+    
+    message(Sys.time(), " putting results in ", out_dir)
     
     # Skip if all finished jobs to save time if a users needs to re-run.
     if (file.exists(paste0(out_dir, "/code.profile.Rdata"))) next
