@@ -9,7 +9,7 @@ if (!requireNamespace("remotes", quietly = TRUE)) {
 hdpx.version <- "0.1.5.0099"
 if (system.file(package = "hdpx") != "") {
   if (packageVersion("hdpx") != hdpx.version) {
-    remove.package("hdpx")
+    remove.packages("hdpx")
     remotes::install_github("steverozen/hdpx", ref = "NR-version-plus-fixes")
   }
 } else {
