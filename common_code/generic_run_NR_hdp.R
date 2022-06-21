@@ -28,6 +28,9 @@ for (dataset_name in dataset_names) {
                       dataset_name, "/seed.", seed_in_use)
     
     message(Sys.time(), " putting results in ", out_dir)
+    seed_in_use <- as.numeric(seed_in_use)
+    message(Sys.time(), " seed_in_use=", seed_in_use)
+
     
     # Skip if all finished jobs to save time if a users needs to re-run.
     if (file.exists(paste0(out_dir, "/code.profile.Rdata"))) next
