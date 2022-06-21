@@ -7,4 +7,5 @@
 
 cd $PBS_O_WORKDIR/
 
+mkdir -p indel/raw_results/NR_hdp_gamma_beta_50
 nice Rscript indel/code/4e_run_NR_hdp_gamma_beta_50.R 145879 >& indel/raw_results/NR_hdp_gamma_beta_50/145879.log
