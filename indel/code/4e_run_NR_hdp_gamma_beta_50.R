@@ -10,7 +10,15 @@ message(Sys.time(), " running ", paste(commandArgs(), collapse = " "))
 
 args <- commandArgs(trailingOnly = TRUE)
 
-seeds_in_use <- args # c(145879) # , 200437, 310111, 528401, 1076753)
+
+if (TRUE) {
+seeds_in_use <- args 
+} else {
+seeds_in_use <- args[2]
+
+home_for_run <- args[1]
+}
+stop("update the qsub scripts for this")
 
 message(Sys.time(), " running on seed ", seeds_in_use)
 
