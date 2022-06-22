@@ -12,7 +12,7 @@ generate.qsub.script <- function(
   }
   pbscat <- function(...) { mycat("#PBS -", ...)}
   pbscat("l nodes=1:ppn=20")
-  pbscat("N ", out.file.name)
+  pbscat("N ", script.to.run, ".", seed)
   pbscat("o ", out.file.name, ".out")
   pbscat("e ", out.file.name, ".err")
   pbscat("S /bin/bash")
