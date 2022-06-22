@@ -17,7 +17,7 @@ generate.qsub.script <- function(
   pbscat("e ", out.file.name, ".err")
   pbscat("S /bin/bash")
   mycat("cd $PBS_O_WORKDIR")
-  mycat("mkdir ", target.dir)
+  mycat("mkdir -p ", target.dir)
   mycat("nice Rscript ", 
         file.path(indel.or.SBS, "code", paste0(script.to.run, ".R")), " ", 
         target.dir, " ", seed, " >& ", target.dir, "/", seed, ".log")
