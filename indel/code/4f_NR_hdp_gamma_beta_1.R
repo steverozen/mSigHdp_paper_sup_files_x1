@@ -10,7 +10,9 @@ message(Sys.time(), " running ", paste(commandArgs(), collapse = " "))
 
 args <- commandArgs(trailingOnly = TRUE)
 
-seeds_in_use <- args
+seeds_in_use <- args[2]
+
+home_for_run <- args[1]
 
 message(Sys.time(), " running on seed ", seeds_in_use)
 
@@ -29,8 +31,6 @@ num.child.process  <- 20
 # Guessed number of raw clusters
 start_K            <- 22
 
-home_for_run       <- paste0("./indel/raw_results/NR_hdp_gamma_beta_", 
-                             GLOBAL.gamma.beta)
 home_for_data      <- "./indel/input"
 
 # Names of data sets

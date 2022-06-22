@@ -20,6 +20,6 @@ generate.qsub.script <- function(
   mycat("mkdir ", target.dir)
   mycat("nice Rscript ", 
         file.path(indel.or.SBS, "code", paste0(script.to.run, ".R")), " ", 
-        seed, ">& ", dirname(target.dir), "/", script.to.run, "/", seed, ".log")
+        target.dir, " ", seed, " >& ", target.dir, "/", seed, ".log")
   
 }

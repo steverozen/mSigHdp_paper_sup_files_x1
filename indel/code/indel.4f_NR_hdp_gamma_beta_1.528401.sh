@@ -6,4 +6,4 @@
 #PBS -S /bin/bash
 cd $PBS_O_WORKDIR
 mkdir indel/raw_results/4f_NR_hdp_gamma_beta_1
-nice Rscript indel/code/4f_NR_hdp_gamma_beta_1.R 528401>& indel/raw_results/4f_NR_hdp_gamma_beta_1/528401.log
+nice Rscript indel/code/4f_NR_hdp_gamma_beta_1.R indel/raw_results/4f_NR_hdp_gamma_beta_1 528401 >& indel/raw_results/4f_NR_hdp_gamma_beta_1/528401.log
