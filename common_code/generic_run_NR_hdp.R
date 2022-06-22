@@ -28,6 +28,10 @@ for (dataset_name in dataset_names) {
                       dataset_name, "/seed.", seed_in_use)
     
     message(Sys.time(), " putting results in ", out_dir)
+    if (!dir.exists(out_dir)) {
+      dir.create(out_dir, showWarnings = FALSE, recursive = TRUE)
+    }
+    
     seed_in_use <- as.numeric(seed_in_use)
     message(Sys.time(), " seed_in_use=", seed_in_use)
 
