@@ -1,6 +1,6 @@
 # Please run this script from the top directory
-if (basename(getwd()) != "Liu_et_al_Sup_Files") {
-  stop("Please run from top level directory, Liu_et_al_Sup_Files")
+if (basename(getwd()) != "mSigHdp_paper_sup_files_x1") {
+  stop("Please run from top level directory, mSigHdp_paper_sup_files_x1")
 }
 
 # Install and load required packages ------------------------------------------
@@ -38,12 +38,9 @@ start_K <- 22
 # Names of data sets
 dataset_names <- c("500", "1k", "3k", "5k", "10k")
 
-# Specify 1 seed used in software running
-if (FALSE) {
-  seeds_in_use <- c(145879, 200437, 310111, 528401, 1076753)
-} else {
-  seeds_in_use <- 145879
-}
+# Specify 5 seeds used in software running
+seeds_in_use <- c(145879, 200437, 310111, 528401, 1076753)
+
 
 
 # Run mSigHdp -----------------------------------------------------------------

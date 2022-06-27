@@ -31,7 +31,7 @@ for (thres_val in thres_vals) {
   if (!dir.exists(dataset_path)) 
     dir.create(dataset_path, recursive = T)
   
-  # Down-sample original exposure ---------------------------------------------
+  # Down-sample original signature and exposure -------------------------------
   spec <- ICAMS::ReadCatalog(
     file = paste0(old_SBS_home, "/ground.truth.syn.catalog.csv"),
     ref.genome = "GRCh37",
@@ -39,47 +39,12 @@ for (thres_val in thres_vals) {
     catalog.type = "counts")
   exp <- mSigAct::ReadExposure(
     paste0(old_SBS_home, "/ground.truth.syn.exposures.csv"))
-  exp_sum <- colSums(exp)
-  # Print the number of samples with mutations smaller than thres_val
-  which(exp_sum <= thres_val) %>% length() %>% print()
-  down_exp_sum <- sapply(exp_sum, down_sample_func, thres = thres_val)
+  retval <- down_samp(spec, exp, thres_val)
+  down_spec <- retval$down_spec
+  down_exp <- retval$down_exp
   
-  down_factor <- down_exp_sum / exp_sum
-  
-  # Export down-sampled exposure ----------------------------------------------
-  down_exp <- (t(exp) * down_factor) %>% t() %>% as.data.frame()
-  foo <- sapply(down_exp, round)
-  foo <- foo %>% as.data.frame()
-  # Check
-  if (FALSE) {
-    # Expects to be TRUE
-    all.equal(dimnames(exp), dimnames(down_exp))
-    # The difference between each element in two dfs is less than 1
-    (foo - down_exp) %>% range()
-  }
-  dimnames(foo) <- dimnames(exp)
-  down_exp <- foo
-  rm(foo)
-  mSigAct::WriteExposure(
-    exposure = down_exp,
-    file = paste0(dataset_path, "/ground.truth.syn.exposures.csv"))
-  
-  # Export down-sampled catalog -----------------------------------------------
-  down_spec <-(t(spec) * down_factor) %>% t() %>% as.data.frame()
-  foo <- sapply(down_spec, round)
-  foo <- foo %>% as.data.frame()
-  # Check
-  if (FALSE) {
-    # Expects to be TRUE
-    all.equal(dimnames(spec), dimnames(down_spec))
-    # The difference between each element in two dfs is less than 1
-    (foo - down_spec) %>% range()
-  }
-  dimnames(foo) <- dimnames(spec)
-  down_spec <- ICAMS::as.catalog(foo, ref.genome = "GRCh37",
-                                 region = "genome",
-                                 catalog.type = "counts")
-  rm(foo)
+  # Export down-sampled spectra and exposure ----------------------------------
+  # Export spectra to ICAMS formatted csv file
   ICAMS::WriteCatalog(
     down_spec,
     file = paste0(dataset_path, "/ground.truth.syn.catalog.csv"))
@@ -88,6 +53,10 @@ for (thres_val in thres_vals) {
     down_spec,
     file = paste0(dataset_path, "/ground.truth.syn.catalog.tsv"),
     sep = "\t")
+  # Export down-sampled exposure
+  mSigAct::WriteExposure(
+    exposure = down_exp,
+    file = paste0(dataset_path, "/ground.truth.syn.exposures.csv"))
   
   # Copy ground-truth signature file ------------------------------------------
   old_sig_path <- paste0(old_SBS_home, "/ground.truth.syn.sigs.csv")
