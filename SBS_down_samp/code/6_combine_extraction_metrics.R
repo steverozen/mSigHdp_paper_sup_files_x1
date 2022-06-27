@@ -69,7 +69,7 @@ for (ii in 2:length(dd)) {
 # Make the column names more user-friendly
 ccc <- cc[ , c(3, 4, 1, 2, 5:ncol(cc))]
 colnames(ccc) <- c("Approach",
-                   "Noise_level",
+                   "Down_samp_level",
                    "Run",
                    "PPV",
                    "TPR",
@@ -93,7 +93,7 @@ readr::write_csv(ccc, paste0(home, "/../all_results.csv"))
 ccc_sub <- ccc %>% select(-c(N_sigs, FN, FP))
 
 by.approach.and.data.set <- ccc_sub %>%
-  group_by(Noise_level, Approach) %>%
+  group_by(Down_samp_level, Approach) %>%
   summarise_at(.vars = colnames(ccc_sub)[4:ncol(ccc_sub)], .funs = c(mean, sd))
 
 # Name-fixing function for summary tibbles with two-statistics (mean, sd)

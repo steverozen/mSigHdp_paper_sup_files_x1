@@ -38,7 +38,7 @@ folder4CombinedSummary <- "./SBS_down_samp/summary/top_level_summary"
 
 # Specify dataset names
 if (TRUE) {
-  datasetNames <- c("1k", "5k", "10k")
+  datasetNames <- c("1k", "3k", "5k", "10k")
 } else {
   datasetNames <- c("1k", "3k", "5k", "10k", "20k")
 }
@@ -49,11 +49,17 @@ if (TRUE) {
 #
 # SigProfilerExtractor is included, but we should run
 # 5_rename_SA_SP_files before this summarization.
-RBasedExtrAttrToolNames <- c("mSigHdp", "SigProfilerExtractor")
+if (FALSE) {
+  RBasedExtrAttrToolNames <- c("mSigHdp", "SigProfilerExtractor")
+} else {
+  RBasedExtrAttrToolNames <- c("mSigHdp")
+}
+
 
 # Specify seeds used in analysis.
-# Specify 1 seed used in software running
-seedsInUse <- c(145879)
+# Specify 3 seeds used in software running
+seedsInUse <- c(145879, 200437, 310111, 528401, 1076753)
+seedsInUse1 <- c(145879, 200437, 310111)
 
 
 
@@ -61,6 +67,10 @@ seedsInUse <- c(145879)
 
 for(datasetName in datasetNames){
   for(seedInUse in seedsInUse){
+    if ((datasetName %in% c("5k", "10k")) && 
+        (seedInUse %in% seedsInUse1 == FALSE))
+      next
+    
     ## Summarize R-based Extraction and attribution tools.
     for(extrAttrToolName in RBasedExtrAttrToolNames){
       SynSigEval::SummarizeSigOneExtrAttrSubdir(
@@ -79,15 +89,16 @@ for(datasetName in datasetNames){
 # Summary of runs on each dataset with each software --------------------------
 
 for(datasetName in datasetNames){
-  ## For each dataset, summarize 20 runs
-  ## using different seeds by EMu
+  ## For each dataset, summarize 5 runs
   for(extrAttrToolName in RBasedExtrAttrToolNames){
     SynSigEval::SummarizeMultiRuns(
       datasetName = datasetName,
       toolName = extrAttrToolName,
       resultPath = paste0(topLevelFolder4Run,"/",extrAttrToolName,
                           ".results/",datasetName,"/"),
-      run.names = paste0("seed.",seedsInUse)
+      run.names = paste0("seed.", 
+                         ifelse(datasetName %in% c("1k", "3k"),
+                                seedsInUse, seedsInUse1))
     )
   }
 }
@@ -132,8 +143,26 @@ FinalExtrAttr <- SummarizeMultiToolsMultiDatasets(
 
 matchExToGtFull <- data.frame()
 
-for (datasetName in datasetNames) {
+for (datasetName in c("1k", "3k")) {
   for (seedInUse in seedsInUse) {
+    for (extrAttrToolName in RBasedExtrAttrToolNames) {
+      summaryDir <- 
+        paste0(topLevelFolder4Run, "/", extrAttrToolName, ".results/"
+               ,datasetName, "/seed.", seedInUse, "/summary")
+      tmpMatch <- readr::read_csv(paste0(summaryDir, "/match.ex.to.gt.csv"),
+                                  show_col_types = FALSE)
+      tmpMatch1 <- data.frame(prog = extrAttrToolName,
+                              noise = datasetName,
+                              seed = seedInUse,
+                              tmpMatch,
+                              stringsAsFactors = F)
+      matchExToGtFull <- rbind(matchExToGtFull, tmpMatch1)
+    }
+  }
+}
+
+for (datasetName in c("5k", "10k")) {
+  for (seedInUse in seedsInUse1) {
     for (extrAttrToolName in RBasedExtrAttrToolNames) {
       summaryDir <- 
         paste0(topLevelFolder4Run, "/", extrAttrToolName, ".results/"
