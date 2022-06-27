@@ -1,6 +1,6 @@
 1119 spectra in total
 
-The range of mutations in each spectrum is
+The range of mutations in each spectrum before down-sampling is
 30 to 131890
 
 327 spectra with <= 500 mutations
