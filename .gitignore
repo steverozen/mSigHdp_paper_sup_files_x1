@@ -2,3 +2,19 @@
 .Rhistory
 .RData
 .Ruserdata
+
+# Do not track mSigHdp checkpoint files on the top level
+# of this directory.
+mSigHdp.burnin.checkpoint.*.Rdata
+mSigHdp.sample.checkpoint.*.Rdata
+posterior.checkpoint.*.Rdata
+
+# Do not track RData files to store mSigHdp return values.
+# They are too large.
+**/hdp.retval.Rdata
+**/multi.chains.etc.Rdata
+
+# Do not track miscellaneous SigProfilerExtractor output files.
+# This is because their paths are too long.
+**/SigProfilerExtractor.results/**/SBS96/
+**/SigProfilerExtractor.results/**/ID83/
