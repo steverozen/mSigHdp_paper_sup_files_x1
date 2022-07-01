@@ -1,0 +1,132 @@
+THIS FILE CONTAINS THE METADATA ABOUT SYSTEM AND RUNTIME
+
+
+-------System Info-------
+Operating System Name: Linux
+Nodename: Monster2
+Release: 4.18.0-394.el8.x86_64
+Version: #1 SMP Tue May 31 16:19:11 UTC 2022
+
+-------Python and Package Versions------- 
+Python Version: 3.10.4
+SigProfilerExtractor Version: 1.1.7
+SigProfilerPlotting Version: 1.2.1
+SigProfilerMatrixGenerator Version: 1.2.5
+Pandas version: 1.4.2
+Numpy version: 1.22.4
+Scipy version: 1.8.1
+Scikit-learn version: 1.1.1
+
+--------------EXECUTION PARAMETERS--------------
+INPUT DATA
+	input_type: matrix
+	output: /home/e0240162/practice/mSigHdp_paper_sup_files_x1/indel_down_samp/raw_results/SigProfilerExtractor.results/5k/seed.145879/
+	input_data: /home/e0240162/practice/mSigHdp_paper_sup_files_x1/indel_down_samp/input/5k/ground.truth.syn.catalog.tsv
+	reference_genome: GRCh37
+	context_types: ID83
+	exome: False
+NMF REPLICATES
+	minimum_signatures: 2
+	maximum_signatures: 20
+	NMF_replicates: 100
+NMF ENGINE
+	NMF_init: random
+	precision: single
+	matrix_normalization: gmm
+	resample: True
+	seeds: /home/e0240162/practice/mSigHdp_paper_sup_files_x1/indel_down_samp/raw_results/SigProfilerExtractor.results/5k/seed.145879/Seeds.txt
+	min_NMF_iterations: 1,000
+	max_NMF_iterations: 200,000
+	NMF_test_conv: 1,000
+	NMF_tolerance: 1e-08
+CLUSTERING
+	clustering_distance: cosine
+EXECUTION
+	cpu: 60; Maximum number of CPU is 192
+	gpu: False
+Solution Estimation
+	stability: 0.8
+	min_stability: 0.2
+	combined_stability: 1.0
+COSMIC MATCH
+	opportunity_genome: GRCh37
+\cosmic_version: 3.2
+	nnls_add_penalty: 0.05
+	nnls_remove_penalty: 0.01
+	initial_remove_penalty: 0.05
+	de_novo_fit_penalty: 0.02
+	refit_denovo_signatures: True
+	collapse_to_SBS96: True
+
+-------Analysis Progress------- 
+[2022-06-15 13:25:14] Analysis started: 
+
+##################################
+
+[2022-06-15 13:25:14] Analysis started for ID83. Matrix size [83 rows x 1119 columns]
+
+[2022-06-15 13:25:14] Normalization GMM with cutoff value set at 8300
+
+[2022-06-15 13:25:56] ID83 de novo extraction completed for a total of 2 signatures! 
+Execution time:0:00:41
+
+[2022-06-15 13:26:46] ID83 de novo extraction completed for a total of 3 signatures! 
+Execution time:0:00:50
+
+[2022-06-15 13:27:35] ID83 de novo extraction completed for a total of 4 signatures! 
+Execution time:0:00:49
+
+[2022-06-15 13:28:36] ID83 de novo extraction completed for a total of 5 signatures! 
+Execution time:0:01:00
+
+[2022-06-15 13:29:46] ID83 de novo extraction completed for a total of 6 signatures! 
+Execution time:0:01:10
+
+[2022-06-15 13:31:04] ID83 de novo extraction completed for a total of 7 signatures! 
+Execution time:0:01:17
+
+[2022-06-15 13:32:31] ID83 de novo extraction completed for a total of 8 signatures! 
+Execution time:0:01:27
+
+[2022-06-15 13:34:24] ID83 de novo extraction completed for a total of 9 signatures! 
+Execution time:0:01:52
+
+[2022-06-15 13:37:01] ID83 de novo extraction completed for a total of 10 signatures! 
+Execution time:0:02:37
+
+[2022-06-15 13:39:21] ID83 de novo extraction completed for a total of 11 signatures! 
+Execution time:0:02:19
+
+[2022-06-15 13:42:09] ID83 de novo extraction completed for a total of 12 signatures! 
+Execution time:0:02:48
+
+[2022-06-15 13:45:21] ID83 de novo extraction completed for a total of 13 signatures! 
+Execution time:0:03:11
+
+[2022-06-15 13:49:14] ID83 de novo extraction completed for a total of 14 signatures! 
+Execution time:0:03:53
+
+[2022-06-15 13:53:48] ID83 de novo extraction completed for a total of 15 signatures! 
+Execution time:0:04:33
+
+[2022-06-15 13:57:10] ID83 de novo extraction completed for a total of 16 signatures! 
+Execution time:0:03:22
+
+[2022-06-15 14:00:44] ID83 de novo extraction completed for a total of 17 signatures! 
+Execution time:0:03:33
+
+[2022-06-15 14:04:37] ID83 de novo extraction completed for a total of 18 signatures! 
+Execution time:0:03:52
+
+[2022-06-15 14:09:22] ID83 de novo extraction completed for a total of 19 signatures! 
+Execution time:0:04:45
+
+[2022-06-15 14:13:55] ID83 de novo extraction completed for a total of 20 signatures! 
+Execution time:0:04:32
+
+[2022-06-15 14:19:15] Analysis ended: 
+
+-------Job Status------- 
+Analysis of mutational signatures completed successfully! 
+Total execution time: 0:54:00 
+Results can be found in:  /home/e0240162/practice/mSigHdp_paper_sup_files_x1/indel_down_samp/raw_results/SigProfilerExtractor.results/5k/seed.145879/  folder
