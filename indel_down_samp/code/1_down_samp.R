@@ -7,8 +7,9 @@ if (basename(getwd()) != "mSigHdp_paper_sup_files_x1") {
 if (!requireNamespace("magrittr", quietly = TRUE)) {
   install.packages("magrittr")
 }
-if (!requireNamespace("ICAMS", quietly = TRUE)) {
-  remotes::install_github("steverozen/ICAMS", ref = "v3.0.5-branch")
+if ((!requireNamespace("ICAMS", quietly = TRUE)) ||
+    (packageVersion("ICAMS") < "3.0.6")) {
+  remotes::install_github("steverozen/ICAMS", ref = "v3.0.6-branch")
 }
 require(magrittr)
 require(ICAMS)

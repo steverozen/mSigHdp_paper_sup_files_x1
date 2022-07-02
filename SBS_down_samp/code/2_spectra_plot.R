@@ -6,8 +6,9 @@ if (basename(getwd()) != "mSigHdp_paper_sup_files_x1") {
 ##################################################################
 ##      Install dependency packages and create directories      ##
 ##################################################################
-if (!requireNamespace("ICAMS", quietly = TRUE)) {
-  remotes::install_github("steverozen/ICAMS", ref = "v3.0.5-branch")
+if ((!requireNamespace("ICAMS", quietly = TRUE)) ||
+    (packageVersion("ICAMS") < "3.0.6")) {
+  remotes::install_github("steverozen/ICAMS", ref = "v3.0.6-branch")
 }
 library(ICAMS)
 source("./common_code/data_gen_utils.R")
