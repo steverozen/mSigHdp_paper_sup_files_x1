@@ -1,0 +1,20 @@
+Average cosine similarity, only best matches are considered
+[1] 0.98871
+
+Number of ground-truth signatures
+[1] 11
+
+Number of extracted signatures
+[1] 10
+
+True positive ground-truth signatures
+[1] "ID1"  "ID2"  "ID3"  "ID4"  "ID6"  "ID8"  "ID9"  "ID13" "ID14"
+
+True positive extracted signatures
+[1] "ID83A" "ID83B" "ID83D" "ID83E" "ID83F" "ID83G" "ID83H" "ID83I" "ID83J"
+
+False positive signatures
+[1] "ID83C"
+
+False negative signatures
+[1] "ID5"  "ID11"

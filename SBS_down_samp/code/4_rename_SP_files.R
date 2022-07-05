@@ -4,7 +4,16 @@ if (basename(getwd()) != "mSigHdp_paper_sup_files_x1") {
 }
 
 # Install and load required packages ------------------------------------------
+if ((!requireNamespace("ICAMS", quietly = TRUE)) ||
+    (packageVersion("ICAMS") < "3.0.6")) {
+  remotes::install_github("steverozen/ICAMS", ref = "v3.0.6-branch")
+}
+if (!(requireNamespace("mSigAct", quietly = TRUE)) ||
+    (packageVersion("mSigAct") < "2.3.2")) {
+  remotes::install_github(repo = "steverozen/mSigAct", ref = "v2.3.2-branch")
+}
 require(ICAMS)
+require(mSigAct)
 
 
 
@@ -13,42 +22,72 @@ home_for_data <- "SBS_down_samp/input"
 home_for_run <- "SBS_down_samp/raw_results"
 
 # Import data set names
-dataset_names <- c("1k", "3k", "5k", "10k")
+dataset_names <- c("1k", "3k", "5k", "10k", "20k")
 
-# Specify 1 seed used in software running
-seeds_in_use <- 145879
+# Specify 5 seeds used in software running
+seeds_in_use <- c(145879, 200437, 310111, 528401, 1076753)
 
 
-
-# Convert SigPro-TSV-formatted signatures and exposures -----------------------
-# into ICAMS-CSV-formatted signatures and exposures.
+# Copy signature files from old.sig.path to sig.path --------------------------
 for (dataset_name in dataset_names) {
   for (seed_in_use in seeds_in_use) {
-    
+    sp_run_dir <- paste0(home_for_run, "/SigProfilerExtractor.results/",
+                         dataset_name, "/seed.", seed_in_use)
+    # Note: SigProfilerExtractor originally exports extracted signature file
+    # in a very deep path
+    old.sig.path <- 
+      paste0(sp_run_dir, 
+             "/SBS96/Suggested_Solution/SBS96_De-Novo_Solution/Signatures/",
+             "SBS96_De-Novo_Signatures.txt")
+    # This very deep path will break some program on Windows,
+    # and thus we copied these files to sig.path.
+    sig.path <- paste0(sp_run_dir, "/SBS96_De-Novo_Signatures.txt")
+    file.copy(from = old.sig.path, to = sig.path)
+  }
+}
+
+
+# Convert SigPro-TSV-formatted signatures to ICAMS-CSV format -----------------
+for (dataset_name in dataset_names) {
+  for (seed_in_use in seeds_in_use) {
     sp_run_dir <- paste0(home_for_run, "/SigProfilerExtractor.results/",
                          dataset_name, "/seed.", seed_in_use)
     
-    # Write signature in ICAMS format
-    # Note: SigProfilerExtractor originally exports extracted signature file
-    # in a very deep path under sp_run_dir:
-    # SBS96/Suggested_Solution/SBS96_De-Novo_Solution/Signatures/SBS96_De-Novo_Signatures.txt
-    #
-    # This very deep path is too long will break some program on Windows,
-    # and therefore we copied these files directly under sp_run_dir.
+    # Convert catalog to ICAMS format, using wrapper function
     sig.path <- paste0(sp_run_dir, "/SBS96_De-Novo_Signatures.txt")
-    sig.catalog <- utils::read.table(
+    sig.catalog.sp <- utils::read.table(
       sig.path,
       sep = "\t",
-      row.names = 1,
       as.is = TRUE,
       header = TRUE)
-    n <- rownames(sig.catalog)
-    new.n <- paste0(substr(n,1,1), substr(n,3,3), substr(n,7,7), substr(n,5,5))
-    rownames(sig.catalog) <- new.n
-    sig.catalog <- sig.catalog[ICAMS::catalog.row.order$SBS96, ,drop = FALSE]
+    sig.catalog <- ICAMS:::MakeSBS96CatalogFromSigPro(sig.catalog.sp)
     sig.catalog <- ICAMS::as.catalog(sig.catalog,
                                      catalog.type = "counts.signature")
     ICAMS::WriteCatalog(sig.catalog,
                         paste0(sp_run_dir, "/extracted.signatures.csv"))
+  }
+}
+
+
+# Convert exposure files to mSigAct-format ------------------------------------
+for (dataset_name in dataset_names) {
+  for (seed_in_use in seeds_in_use) {
+    sp_run_dir <- paste0(home_for_run, "/SigProfilerExtractor.results/",
+                         dataset_name, "/seed.", seed_in_use)
+    # Note: SigProfilerExtractor originally exports inferred exposure file
+    # in a very deep path
+    old.exp.path <- 
+      paste0(sp_run_dir, 
+             "/SBS96/Suggested_Solution/SBS96_De-Novo_Solution/Activities/",
+             "SBS96_De-Novo_Activities_refit.txt")
+    # Transpose the SigPro-formatted exposure to mSigAct-formatted spectra
+    exp <- utils::read.table(
+      old.exp.path,       
+      sep = "\t",
+      row.names = 1,
+      as.is = TRUE,
+      header = TRUE)
+    sig.path <- paste0(sp_run_dir, "/inferred.exposures.csv")
+    mSigAct::WriteExposure(t(exp), file = sig.path)
   }
 }

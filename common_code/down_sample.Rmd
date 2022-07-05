@@ -22,7 +22,7 @@ This function aims to lower the mutation counts in some hyper-mutated mutational
 
 ```{r}
 source("down_sample.R")
-print(down_sample_func) # Print the source code
+print(down_sample_one_val) # Print the source code
 ```
 
 
@@ -38,7 +38,7 @@ for (thres_val in thres_vals) {
     data.frame(
       thres = thres_val,
       x = x_vec,
-      y = sapply(x_vec, down_sample_func, thres = thres_val)))
+      y = sapply(x_vec, down_sample_one_val, thres = thres_val)))
 }
 
 ggObj <- 
