@@ -1,6 +1,6 @@
 # Please run this script from the top directory
-if (basename(getwd()) != "Liu_et_al_Sup_Files") {
-  stop("Please run from top level directory, Liu_et_al_Sup_Files")
+if (basename(getwd()) != "mSigHdp_paper_sup_files_x1") {
+  stop("Please run from top level directory, mSigHdp_paper_sup_files_x1")
 }
 # 1. Install and load dependencies --------------------------------------------
 
@@ -23,9 +23,8 @@ dir.create(indel_home, showWarnings = FALSE, recursive = TRUE)
 # Shortening the names of folders
 old_dataset_names <-
   c("PCAWG.ID.syn.exposures.no.noise",
-    "PCAWG.ID.syn.exposures.noisy.neg.binom.size.10",
-    "PCAWG.ID.syn.exposures.noisy.neg.binom.size.100")
-dataset_names <- c("Noiseless", "Realistic", "Moderate")
+    "PCAWG.ID.syn.exposures.noisy.neg.binom.size.10")
+dataset_names <- c("Noiseless", "Realistic")
 for (ii in seq_along(dataset_names)) {
   if (!file.exists(file.path(indel_home, dataset_names[ii]))) {
     file.copy(from = paste0(old_indel_home, "/", old_dataset_names[ii]),

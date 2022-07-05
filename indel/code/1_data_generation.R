@@ -1,6 +1,6 @@
 # Please run this script from the top directory
-if (basename(getwd()) != "Liu_et_al_Sup_Files") {
-  stop("Please run from top level directory, Liu_et_al_Sup_Files")
+if (basename(getwd()) != "mSigHdp_paper_sup_files_x1") {
+  stop("Please run from top level directory, mSigHdp_paper_sup_files_x1")
 }
 
 #################################################################
@@ -41,14 +41,17 @@ pcawg_id_catalog <- PCAWG7::spectra$PCAWG$ID
 
 # Only select samples that belong to the selected cancer types
 cancer_types <- c(
-  "Breast-AdenoCA", "ColoRect-AdenoCA", "Eso-AdenoCA",
+  "Biliary-AdenoCA", "Breast-AdenoCA", "CNS-Medullo", 
+  "ColoRect-AdenoCA", "Eso-AdenoCA", "Head-SCC",
   "Kidney-RCC", "Liver-HCC", "Lung-AdenoCA",
-  "Ovary-AdenoCA", "Skin-Melanoma", "Stomach-AdenoCA"
+  "Lymph-BNHL", "Lymph-CLL", "Ovary-AdenoCA", 
+  "Panc-AdenoCA", "Panc-Endocrine", "Prost-AdenoCA",
+  "Skin-Melanoma", "Stomach-AdenoCA", "Uterus-AdenoCA"
 )
-indices_nine_types <- unlist(sapply(cancer_types, FUN = function(x) {
+indices_selected_types <- unlist(sapply(cancer_types, FUN = function(x) {
   grep(x, colnames(real_exposures_id))
 }))
-real_exposures_id <- real_exposures_id[, indices_nine_types]
+real_exposures_id <- real_exposures_id[, indices_selected_types]
 
 # Exclude samples which have mutations less than 100
 samples_less_than_100 <- names(which(colSums(pcawg_id_catalog) < 100))
@@ -80,36 +83,36 @@ real_exposures_id <- remove_zero_activity_sigs(real_exposures_id)
 ##   Calculate number of synthetic tumors in each cancer type   ##
 ##################################################################
 
-msi_sample_indices_nine_types <-
+msi_sample_indices_selected_types <-
   unlist(sapply(pcawg_msi_tumor_ids, FUN = function(x) {
     grep(x, colnames(real_exposures_id))
   }))
-msi_sample_ids <- names(msi_sample_indices_nine_types)
-length(msi_sample_ids) # 20
+msi_sample_ids <- names(msi_sample_indices_selected_types)
+length(msi_sample_ids) # 37
 
-pole_sample_indices_nine_types <-
+pole_sample_indices_selected_types <-
   unlist(sapply(pcawg_pole_tumor_ids, FUN = function(x) {
     grep(x, colnames(real_exposures_id))
   }))
-pole_sample_ids <- names(pole_sample_indices_nine_types)
-length(pole_sample_ids) # 8
+pole_sample_ids <- names(pole_sample_indices_selected_types)
+length(pole_sample_ids) # 9
 
 real_exposures_id_no_msi_pole <-
   real_exposures_id[, -c(
-    msi_sample_indices_nine_types,
-    pole_sample_indices_nine_types
+    msi_sample_indices_selected_types,
+    pole_sample_indices_selected_types
   ), drop = FALSE]
 real_exposures_id_no_msi_pole <-
   remove_zero_activity_sigs(real_exposures_id_no_msi_pole)
 real_exposures_id_msi <-
-  real_exposures_id[, msi_sample_indices_nine_types, drop = FALSE]
+  real_exposures_id[, msi_sample_indices_selected_types, drop = FALSE]
 real_exposures_id_msi <- remove_zero_activity_sigs(real_exposures_id_msi)
 real_exposures_id_pole <-
-  real_exposures_id[, pole_sample_indices_nine_types, drop = FALSE]
+  real_exposures_id[, pole_sample_indices_selected_types, drop = FALSE]
 real_exposures_id_pole <- remove_zero_activity_sigs(real_exposures_id_pole)
 
 num_samples_total <- calculate_num_samples(real_exposures_id)
-sum(num_samples_total) # 1119
+sum(num_samples_total) # 2019
 
 num_samples_msi <- calculate_num_samples(real_exposures_id_msi)
 cancer_types_msi <- names(num_samples_msi)
@@ -121,7 +124,7 @@ num_samples_no_msi_pole <- calculate_num_samples(real_exposures_id_no_msi_pole)
 
 # The number of synthetic tumors will be the same as the one in real exposure
 sum(num_samples_msi) + sum(num_samples_pole) +
-  sum(num_samples_no_msi_pole) # 1119
+  sum(num_samples_no_msi_pole) # 2019
 
 ##################################################################
 ##                 Generation of synthetic data                 ##
@@ -133,8 +136,6 @@ output_dir_id_pole <- "./indel/input/raw/PCAWG.ID.syn.exposures.pole"
 output_dir_id <- "./indel/input/raw/PCAWG.ID.syn.exposures.no.noise"
 output_dir_id_nb_size_10 <-
   "./indel/input/raw/PCAWG.ID.syn.exposures.noisy.neg.binom.size.10"
-output_dir_id_nb_size_100 <-
-  "./indel/input/raw/PCAWG.ID.syn.exposures.noisy.neg.binom.size.100"
 
 distribution <- "neg.binom"
 sample_prefix_name <- "SP.Syn."
@@ -142,7 +143,7 @@ mutation_type <- "ID"
 seed <- 658220
 input_sigs_id <- cosmicsig::COSMIC_v3.2$signature$GRCh37$ID
 
-sig_params_id_nine_types <-
+sig_params_id_selected_types <-
   SynSigGen:::GetSynSigParamsFromExposures(
     exposures = real_exposures_id,
     distribution = distribution,
@@ -160,7 +161,7 @@ syn_tumors_id_no_msi_pole <-
     real.exposures = real_exposures_id_no_msi_pole,
     distribution = distribution,
     sample.prefix.name = sample_prefix_name,
-    sig.params = sig_params_id_nine_types
+    sig.params = sig_params_id_selected_types
   )
 unlink(output_dir_id_no_msi_pole, recursive = TRUE)
 syn_exposures_id_no_msi_pole <-
@@ -178,7 +179,7 @@ synthetic_tumors_id_msi <-
     distribution = distribution,
     sample_prefix_name = sample_prefix_name,
     tumor_marker_name = "MSI-H",
-    sig_params = sig_params_id_nine_types
+    sig_params = sig_params_id_selected_types
   )
 unlink(output_dir_id_msi, recursive = TRUE)
 syn_exposures_id_msi <-
@@ -196,7 +197,7 @@ synthetic_tumors_id_pole <-
     distribution = distribution,
     sample_prefix_name = sample_prefix_name,
     tumor_marker_name = "POLE",
-    sig_params = sig_params_id_nine_types
+    sig_params = sig_params_id_selected_types
   )
 unlink(output_dir_id_pole, recursive = TRUE)
 syn_exposures_id_pole <-
@@ -218,7 +219,7 @@ write_sig_params(
   synthetic_exposure = synthetic_exposures_id,
   cancer_types = cancer_types,
   distribution = distribution,
-  sig_params = sig_params_id_nine_types,
+  sig_params = sig_params_id_selected_types,
   sample_prefix_name = sample_prefix_name,
   mutation_type = mutation_type
 )
@@ -242,16 +243,6 @@ id_noisy_tumors_size_10 <-
   )
 noisy_exposures_size_10_id <- id_noisy_tumors_size_10$exposures
 
-id_noisy_tumors_size_100 <-
-  SynSigGen::GenerateNoisyTumors(
-    seed = seed,
-    dir = output_dir_id_nb_size_100,
-    input.exposure = synthetic_exposures_id,
-    signatures = input_sigs_id,
-    n.binom.size = 100
-  )
-noisy_exposures_size_100_id <- id_noisy_tumors_size_100$exposures
-
 #################################################################
 ##                   Plot data distributions                   ##
 #################################################################
@@ -260,18 +251,16 @@ data_distribution_file <-
   "./indel/input/indel_syn_data_distributions.pdf"
 grDevices::pdf(
   file = data_distribution_file,
-  width = 11.6929, height = 8.2677, onefile = TRUE
+  width = 8.2677, height = 11.6929, onefile = TRUE
 )
-par(mfrow = c(3, 4))
+par(mfrow = c(4, 3), oma = c(0, 0, 1, 0))
 plot_exposure_distribution(
   real_exposure = real_exposures_id,
   synthetic_exposure = synthetic_exposures_id,
-  less_noisy_exposure = noisy_exposures_size_100_id,
-  size1 = 100,
-  more_noisy_exposure = noisy_exposures_size_10_id,
-  size2 = 10,
+  noisy_exposure = noisy_exposures_size_10_id,
+  size = 10,
   distribution = distribution,
-  sig_params = sig_params_id_nine_types,
+  sig_params = sig_params_id_selected_types,
   sample_prefix_name = sample_prefix_name
 )
 grDevices::dev.off()

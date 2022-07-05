@@ -361,17 +361,11 @@ pcawg_msi_tumor_ids <-
 #'
 #' @param synthetic_exposure A matrix of synthetic exposures.
 #'
-#' @param less_noisy_exposure A matrix of synthetic exposures with less noise
+#' @param noisy_exposure A matrix of synthetic exposures with noise
 #'   added.
 #'
-#' @param size1 Negative binomial size parameter used for adding noise to
-#'   \code{less_noisy_exposure}.
-#'
-#' @param more_noisy_exposure A matrix of synthetic exposures with more noise
-#'   added.
-#'
-#' @param size2 Negative binomial size parameter used for adding noise to
-#'   \code{more_noisy_exposure}.
+#' @param size Negative binomial size parameter used for adding noise to
+#'   \code{synthetic_exposure}.
 #'
 #' @param distribution Probability distribution used to model exposures due to
 #'   one mutational signature. Can be \code{neg.binom} which stands for negative
@@ -388,8 +382,7 @@ pcawg_msi_tumor_ids <-
 #' @param sample_prefix_name Prefix name to add to the synthetic tumors.
 plot_exposure_distribution <-
   function(real_exposure, synthetic_exposure,
-           less_noisy_exposure, size1,
-           more_noisy_exposure, size2,
+           noisy_exposure, size,
            distribution,
            sig_params, sample_prefix_name) {
     real_exposure_info <-
@@ -404,15 +397,9 @@ plot_exposure_distribution <-
         distribution = distribution,
         sig_params = sig_params
       )
-    noisy_exposure1_info <-
+    noisy_exposure_info <-
       get_exposure_info(
-        exposure = less_noisy_exposure,
-        distribution = distribution,
-        sig_params = sig_params
-      )
-    noisy_exposure2_info <-
-      get_exposure_info(
-        exposure = more_noisy_exposure,
+        exposure = noisy_exposure,
         distribution = distribution,
         sig_params = sig_params
       )
@@ -425,30 +412,23 @@ plot_exposure_distribution <-
       real_exposure_one_type <- real_exposure_info$exposures[[one_caner_type]]
       synthetic_exposure_one_type <-
         synthetic_exposure_info$exposures[[one_caner_type_with_prefix]]
-      noisy_exposure1_one_type <-
-        noisy_exposure1_info$exposures[[one_caner_type_with_prefix]]
-      noisy_exposure2_one_type <-
-        noisy_exposure2_info$exposures[[one_caner_type_with_prefix]]
+      noisy_exposure_one_type <-
+        noisy_exposure_info$exposures[[one_caner_type_with_prefix]]
       
       params_real_one_type <- real_exposure_info$sig_params[[one_caner_type]]
       params_synthetic_one_type <-
         synthetic_exposure_info$sig_params[[one_caner_type_with_prefix]]
-      params_noisy1_one_type <-
-        noisy_exposure1_info$sig_params[[one_caner_type_with_prefix]]
-      params_noisy2_one_type <-
-        noisy_exposure2_info$sig_params[[one_caner_type_with_prefix]]
+      params_noisy_one_type <-
+        noisy_exposure_info$sig_params[[one_caner_type_with_prefix]]
       
       plot_exposure_dist_one_type(
         real_exposure = real_exposure_one_type,
         synthetic_exposure = synthetic_exposure_one_type,
         params_real = params_real_one_type,
         params_synthetic = params_synthetic_one_type,
-        noisy_exposure1 = noisy_exposure1_one_type,
-        params_noisy1 = params_noisy1_one_type,
-        size1 = size1,
-        noisy_exposure2 = noisy_exposure2_one_type,
-        params_noisy2 = params_noisy2_one_type,
-        size2 = size2,
+        noisy_exposure = noisy_exposure_one_type,
+        params_noisy = params_noisy_one_type,
+        size = size,
         cancer_type = one_caner_type
       )
     })
@@ -606,19 +586,12 @@ draw_two_density <-
 #'
 #' @param params_synthetic Signature parameters of \code{synthetic_exposure}.
 #'
-#' @param noisy_exposure1 A matrix of synthetic exposures with noise added.
+#' @param noisy_exposure A matrix of synthetic exposures with noise added.
 #'
-#' @param params_noisy1 Signature parameters of \code{noisy_exposure1}.
+#' @param params_noisy Signature parameters of \code{noisy_exposure}.
 #'
-#' @param size1 Negative binomial size parameter used for adding noise to
-#'   \code{noisy_exposure1}.
-#'
-#' @param noisy_exposure2 A matrix of synthetic exposures with noise added.
-#'
-#' @param params_noisy2 Signature parameters of \code{noisy_exposure2}.
-#'
-#' @param size2 Negative binomial size parameter used for adding noise to
-#'   \code{noisy_exposure2}.
+#' @param size Negative binomial size parameter used for adding noise to
+#'   \code{synthetic_exposure}.
 #'
 #' @param cancer_type A character string denoting one cancer type. See
 #'   \code{PCAWG7::CancerTypes()} for examples.
@@ -626,30 +599,21 @@ draw_two_density <-
 plot_exposure_dist_one_type <-
   function(real_exposure, synthetic_exposure,
            params_real, params_synthetic,
-           noisy_exposure1, params_noisy1, size1,
-           noisy_exposure2, params_noisy2, size2,
+           noisy_exposure, params_noisy, size,
            cancer_type) {
     real_exposure <- remove_zero_activity_sigs(real_exposure)
     synthetic_exposure <- remove_zero_activity_sigs(synthetic_exposure)
-    noisy_exposure1 <- remove_zero_activity_sigs(noisy_exposure1)
-    noisy_exposure2 <- remove_zero_activity_sigs(noisy_exposure2)
+    noisy_exposure <- remove_zero_activity_sigs(noisy_exposure)
     
     for (i in rownames(synthetic_exposure)) {
       real_exposure_non_zero <- real_exposure[i, which(real_exposure[i, ] > 0)]
       synthetic_exposure_non_zero <-
         synthetic_exposure[i, which(synthetic_exposure[i, ] > 0)]
-      if (i %in% rownames(noisy_exposure1)) {
-        noisy_exposure1_non_zero <-
-          noisy_exposure1[i, which(noisy_exposure1[i, ] > 0)]
+      if (i %in% rownames(noisy_exposure)) {
+        noisy_exposure_non_zero <-
+          noisy_exposure[i, which(noisy_exposure[i, ] > 0)]
       } else {
-        noisy_exposure1_non_zero <- NULL
-      }
-      
-      if (i %in% rownames(noisy_exposure2)) {
-        noisy_exposure2_non_zero <-
-          noisy_exposure2[i, which(noisy_exposure2[i, ] > 0)]
-      } else {
-        noisy_exposure2_non_zero <- NULL
+        noisy_exposure_non_zero <- NULL
       }
       
       draw_histogram(
@@ -668,27 +632,14 @@ plot_exposure_dist_one_type <-
         sig_id = i
       )
       
-      if (!is.null(noisy_exposure1_non_zero)) {
+      if (!is.null(noisy_exposure_non_zero)) {
         draw_histogram(
-          counts = noisy_exposure1_non_zero,
+          counts = noisy_exposure_non_zero,
           title = paste0(cancer_type, ".", i, ".noisy.exposure"),
           cex_main = 0.85,
-          params = params_noisy1,
+          params = params_noisy,
           sig_id = i,
-          size = size1
-        )
-      } else {
-        plot.new()
-      }
-      
-      if (!is.null(noisy_exposure2_non_zero)) {
-        draw_histogram(
-          counts = noisy_exposure1_non_zero,
-          title = paste0(cancer_type, ".", i, ".noisy.exposure"),
-          cex_main = 0.85,
-          params = params_noisy2,
-          sig_id = i,
-          size = size2
+          size = size
         )
       } else {
         plot.new()
@@ -724,32 +675,15 @@ plot_exposure_dist_one_type <-
       if (length(real_exposure_non_zero) > 1) {
         draw_two_density(
           counts1 = real_exposure_non_zero,
-          counts2 = noisy_exposure1_non_zero,
+          counts2 = noisy_exposure_non_zero,
           title = paste0(
             cancer_type, ".", i, ".noisy.exposure"
           ),
           cex_main = 0.85,
-          params = params_noisy1,
+          params = params_noisy,
           sig_id = i,
           legend = c("real.exposure", "noisy.exposure"),
-          size = size1
-        )
-      } else {
-        plot.new()
-      }
-      
-      if (length(real_exposure_non_zero) > 1) {
-        draw_two_density(
-          counts1 = real_exposure_non_zero,
-          counts2 = noisy_exposure2_non_zero,
-          title = paste0(
-            cancer_type, ".", i, ".noisy.exposure"
-          ),
-          cex_main = 0.85,
-          params = params_noisy2,
-          sig_id = i,
-          legend = c("real.exposure", "noisy.exposure"),
-          size = size2
+          size = size
         )
       } else {
         plot.new()
@@ -1025,7 +959,7 @@ create_boxplots <- function(distance_df, data_type, ylim) {
   plot_objects <-
     one_boxplot(
       distance_df = distance_df,
-      title = paste0("All nine cancer types (", data_type, ")"),
+      title = paste0("All 18 cancer types (", data_type, ")"),
       ylim = ylim
     )
   
