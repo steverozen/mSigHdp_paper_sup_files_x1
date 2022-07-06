@@ -29,9 +29,9 @@ print(down_sample_one_val) # Print the source code
 # 2. Plotting the function
 
 ```{r}
-x_vec <- seq(0, 1e+06, 1000)
+x_vec <- seq(0, 1e+04, 1000)
 y_df <- data.frame()
-thres_vals <- c(1000, 5000, 10000)
+thres_vals <- c(1000, 3000, 5000, 10000)
 for (thres_val in thres_vals) {
   y_df <- rbind(
     y_df,
