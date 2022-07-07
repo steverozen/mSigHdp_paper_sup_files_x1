@@ -56,7 +56,7 @@ for (dn in dataset_names) {
   }
 }
 
-# 3. Export ICAMS-formatted indel catalog to SigPro tsv format ----------------
+# 3. Export ICAMS-formatted indel catalog and sigs to SigPro tsv format -------
 
 for (dn in dataset_names) {
   spectra <- ICAMS::ReadCatalog(
@@ -64,6 +64,16 @@ for (dn in dataset_names) {
   )
   ICAMS:::ConvertCatalogToSigProfilerFormat(
     spectra,
+    file = paste0(indel_home, "/", dn, "/ground.truth.syn.catalog.tsv"),
+    sep = "\t")
+}
+
+for (dn in dataset_names) {
+  sigs <- ICAMS::ReadCatalog(
+    paste0(indel_home, "/", dn, "/ground.truth.syn.sigs.csv")
+  )
+  ICAMS:::ConvertCatalogToSigProfilerFormat(
+    sigs,
     file = paste0(indel_home, "/", dn, "/ground.truth.syn.catalog.tsv"),
     sep = "\t")
 }

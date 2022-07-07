@@ -52,5 +52,16 @@ file.copy(
   paste0(dir_non_hyper, "/ground.truth.syn.sigs.csv")
 )
 
+# Export SigPro-formatted ground-truth spectra and sigs -----------------------
+ICAMS:::ConvertCatalogToSigProfilerFormat(
+  spec_non_hyper,
+  file = paste0(dir_non_hyper, "/ground.truth.syn.catalog.tsv"),
+  sep = "\t")
 
-
+sigs <- ICAMS::ReadCatalog(
+  paste0(dir_non_hyper, "/ground.truth.syn.sigs.csv")
+)
+ICAMS:::ConvertCatalogToSigProfilerFormat(
+  sigs,
+  file = paste0(dir_non_hyper, "/ground.truth.syn.sigs.tsv"),
+  sep = "\t")
