@@ -57,7 +57,7 @@ if __name__ == "__main__":
         seed_numbers = (200437, 310111, 528401, 1076753)
     seed_numbers = [(sn % 10000000) for sn in seed_numbers]
     # Naming the datasets for cycling
-    dataset_names = ("500", "1k", "3k", "5k", "10k")
+    dataset_names = ("500", "1k", "3k", "5k", "10k", "non_hyper")
 
     ###########################################################################
     #  2.2: Set NON-DEFAULT argument values
