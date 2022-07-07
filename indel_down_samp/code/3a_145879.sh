@@ -7,5 +7,6 @@
 
 cd $PBS_O_WORKDIR/
 
-mkdir -p indel_down_samp/raw_results/mSigHdp.results
-nice Rscript indel_down_samp/code/3a_run_mSigHdp.R 145879 &>> indel_down_samp/raw_results/mSigHdp.results/3a_145879.out &
+echo "Start running the wrapper script ......"
+mkdir -p indel_down_samp/raw_results/mSigHdp.results/non_hyper
+nice /data/rozen/home/e0240162/opt/anaconda3/envs/R-4.1.3/bin/Rscript indel_down_samp/code/3a_run_mSigHdp.R 145879 &>> indel_down_samp/raw_results/mSigHdp.results/3a_145879.out

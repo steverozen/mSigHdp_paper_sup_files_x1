@@ -25,12 +25,14 @@ require(mSigHdp)
 
 
 # Import optional trailing args ------------------------------------------------
-if (length(args)==0) {
+curr_args <- commandArgs(trailing = T)
+message("args: ", as.character(curr_args))
+if (length(curr_args)==0) {
   # In this case, use the DEFAULT seed numbers
   args_flag <- FALSE
 } else{
   args_flag <- TRUE
-  seeds_in_use <- args
+  seeds_in_use <- as.integer(curr_args)
 }
 
 
