@@ -48,13 +48,13 @@ if __name__ == "__main__":
     # Read old working directory
     old_wd = os.getcwd()
     # os.path.abspath extends a relative path to an absolute one.
-    home_for_data = os.path.abspath("./indel/input")
-    home_for_run = os.path.abspath("./indel/raw_results")
+    home_for_data = os.path.abspath("./indel_2/input")
+    home_for_run = os.path.abspath("./indel_2/raw_results")
     # Seed numbers
     seed_numbers = (145879, 200437, 310111, 528401, 1076753)
     seed_numbers = [(sn % 10000000) for sn in seed_numbers]
     # Naming the datasets for cycling
-    dataset_names = ("Noiseless", "Moderate", "Realistic")
+    dataset_names = ("Realistic", "Noiseless")
 
     ###########################################################################
     #  2.2: Set NON-DEFAULT argument values
@@ -62,9 +62,9 @@ if __name__ == "__main__":
     # ID - signatures and spectra in indel context
     context_type = "ID"
     # Range for number of signatures to extract.
-    # We set to 2..20 as there are 11 ground-truth signatures.
+    # We set to 2..24 as there are 13 ground-truth signatures.
     min_K = 2
-    max_K = 20
+    max_K = 24
     # Argument values from Supp Note 1 of BioRxiv Preprint by Islam et al.
     min_nmf_iterations = 1000
     max_nmf_iterations = 200000

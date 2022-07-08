@@ -48,12 +48,12 @@ home_for_data <- "./indel_2/input"
 home_for_run <- "./indel_2/raw_results"
 
 # Guessed signatures.
-# We assume SignatureAnalyzer does not know the ground-truth K (11),
-# then we should specify max_K as 22.
-max_K <- 22
+# We assume SignatureAnalyzer does not know the ground-truth K (13),
+# then we should specify max_K as 26.
+max_K <- 26
 
-# Name of data set to run
-dataset_names <- c("Realistic")
+# Names of data sets
+dataset_names <- c("Realistic", "Noiseless")
 
 # Specify 5 seeds used in software running
 seeds_in_use <- c(145879, 200437, 310111, 528401, 1076753)

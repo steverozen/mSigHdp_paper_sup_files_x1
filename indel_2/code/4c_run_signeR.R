@@ -42,16 +42,16 @@ home_for_data <- "./indel_2/input"
 home_for_run <- "./indel_2/raw_results"
 
 # Range of signatures to choose from.
-# We assume SignatureAnalyzer does not know the ground-truth K (11),
-# then we should specify K_range as 2..20.
+# We assume SignatureAnalyzer does not know the ground-truth K (13),
+# then we should specify K_range as 2..24.
 #
 # Note: K.range parameter in SynSigRun::RunsigneR() 
-# accepts min and max sig numbers - c(2, 20),
-# rather than the full range - 2..20
-K_range <- c(2, 20)
+# accepts min and max sig numbers - c(2, 24),
+# rather than the full range - 2..24
+K_range <- c(2, 24)
 
 # Names of data sets
-dataset_names <- c("Noiseless", "Moderate", "Realistic")
+dataset_names <- c("Realistic", "Noiseless")
 
 # Specify 5 seeds used in software running
 seeds_in_use <- c(145879, 200437, 310111, 528401, 1076753)
