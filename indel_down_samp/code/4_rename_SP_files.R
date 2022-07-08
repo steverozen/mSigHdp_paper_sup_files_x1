@@ -22,7 +22,7 @@ home_for_data <- "indel_down_samp/input"
 home_for_run <- "indel_down_samp/raw_results"
 
 # Import data set names
-dataset_names <- c("500", "1k", "3k", "5k", "10k")
+dataset_names <- c("500", "1k", "3k", "5k", "10k", "non_hyper")
 
 # Specify 5 seeds used in software running
 seeds_in_use <- c(145879, 200437, 310111, 528401, 1076753)
