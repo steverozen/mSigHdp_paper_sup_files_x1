@@ -13,17 +13,13 @@ CONDA_RSCRIPT=$HOME_LOC/opt/anaconda3/envs/R-4.1.3/bin/Rscript
 
 SEED=145879
 
-# Activate conda environment
-source $CONDA_BIN_DIR/activate
-$CONDA_BIN activate R-4.1.3
+# Initiate conda on computation node
+$CONDA_BIN init bash
 
 cd $PROJ_LOC
 echo "Start running the wrapper script ......"
-mkdir -p $PROJ_LOC/indel_2/raw_results/SignatureAnalyzer.results/non_hyper/
-$CONDA_RSCRIPT $PROJ_LOC/indel_2/code/4b_run_SignatureAnalyzer.R $SEED &>> $PROJ_LOC/indel_down_samp/raw_results/SignatureAnalyzer.results/4b_${SEED}.out
-
-$CONDA_BIN deactivate #this is to exit the $ENV_NAME environment
-$CONDA_BIN deactivate #this is to exit the base anaconda environment
+mkdir -p $PROJ_LOC/indel_2/raw_results/SignatureAnalyzer.results/
+$CONDA_RSCRIPT $PROJ_LOC/indel_2/code/4b_run_SignatureAnalyzer.R $SEED &>> $PROJ_LOC/indel_2/raw_results/SignatureAnalyzer.results/4b_${SEED}.out
 
 exit 0
 

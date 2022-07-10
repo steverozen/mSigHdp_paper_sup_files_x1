@@ -35,6 +35,18 @@ require(SynSigRun)
 require(signeR)
 
 
+# Import optional trailing args ------------------------------------------------
+curr_args <- commandArgs(trailing = T)
+message("args: ", as.character(curr_args))
+if (length(curr_args)==0) {
+  # In this case, use the DEFAULT seed numbers
+  args_flag <- FALSE
+} else {
+  args_flag <- TRUE
+  seeds_in_use <- as.integer(curr_args)
+}
+
+
 
 # Specify global variables ----------------------------------------------------
 
@@ -54,8 +66,9 @@ K_range <- c(2, 24)
 dataset_names <- c("Realistic", "Noiseless")
 
 # Specify 5 seeds used in software running
+if (args_flag == FALSE) {
 seeds_in_use <- c(145879, 200437, 310111, 528401, 1076753)
-
+}
 
 
 # Run signeR ------------------------------------------------------------------
