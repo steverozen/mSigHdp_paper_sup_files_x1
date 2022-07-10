@@ -1,0 +1,430 @@
+Loading required package: ICAMS
+Loading required package: SynSigRun
+
+
+===========================================
+
+
+Begin running SignatureAnalyzer on data set Realistic using seed 145879...
+
+
+
+===========================================
+
+
+
+ BestSignatureAnalyzerResult vector of K:
+ sa.run.1 sa.run.10 sa.run.11 sa.run.12 sa.run.13 sa.run.14 sa.run.15 sa.run.16 
+       16        14        16        15        15        16        15        15 
+sa.run.17 sa.run.18 sa.run.19  sa.run.2 sa.run.20  sa.run.3  sa.run.4  sa.run.5 
+       15        16        17        15        16        16        14        15 
+ sa.run.6  sa.run.7  sa.run.8  sa.run.9 
+       15        16        13        17 
+
+
+
+ BestSignatureAnalyzerResult vector of evidence:
+ sa.run.1 sa.run.10 sa.run.11 sa.run.12 sa.run.13 sa.run.14 sa.run.15 sa.run.16 
+ 36608.46  35200.63  38046.07  35797.24  35852.42  37197.45  36230.44  37201.99 
+sa.run.17 sa.run.18 sa.run.19  sa.run.2 sa.run.20  sa.run.3  sa.run.4  sa.run.5 
+ 35933.77  36808.26  38685.59  35836.31  38131.46  38080.79  35743.40  36042.53 
+ sa.run.6  sa.run.7  sa.run.8  sa.run.9 
+ 36226.06  38433.85  38673.24  38800.23 
+
+
+
+ BestSignatureAnalyzerResult  most common numbers of extracted signatures: 15 
+
+
+ BestSignatureAnalyzerResult evidences for most common Ks:
+sa.run.12 sa.run.13 sa.run.15 sa.run.16 sa.run.17  sa.run.2  sa.run.5  sa.run.6 
+ 35797.24  35852.42  36230.44  37201.99  35933.77  35836.31  36042.53  36226.06 
+
+
+
+
+===========================================
+
+
+Begin running SignatureAnalyzer on data set Realistic using seed 200437...
+
+
+
+===========================================
+
+
+
+ BestSignatureAnalyzerResult vector of K:
+ sa.run.1 sa.run.10 sa.run.11 sa.run.12 sa.run.13 sa.run.14 sa.run.15 sa.run.16 
+       17        16        15        15        17        15        15        17 
+sa.run.17 sa.run.18 sa.run.19  sa.run.2 sa.run.20  sa.run.3  sa.run.4  sa.run.5 
+       15        15        17        16        17        15        16        14 
+ sa.run.6  sa.run.7  sa.run.8  sa.run.9 
+       14        15        15        17 
+
+
+
+ BestSignatureAnalyzerResult vector of evidence:
+ sa.run.1 sa.run.10 sa.run.11 sa.run.12 sa.run.13 sa.run.14 sa.run.15 sa.run.16 
+ 38930.54  36881.10  35999.42  35887.67  38794.97  35922.92  36224.73  38941.55 
+sa.run.17 sa.run.18 sa.run.19  sa.run.2 sa.run.20  sa.run.3  sa.run.4  sa.run.5 
+ 35866.61  36081.87  38823.88  36837.48  39056.01  35918.26  38151.63  35158.69 
+ sa.run.6  sa.run.7  sa.run.8  sa.run.9 
+ 35119.64  35875.25  36084.96  38158.56 
+
+
+
+ BestSignatureAnalyzerResult  most common numbers of extracted signatures: 15 
+
+
+ BestSignatureAnalyzerResult evidences for most common Ks:
+sa.run.11 sa.run.12 sa.run.14 sa.run.15 sa.run.17 sa.run.18  sa.run.3  sa.run.7 
+ 35999.42  35887.67  35922.92  36224.73  35866.61  36081.87  35918.26  35875.25 
+ sa.run.8 
+ 36084.96 
+
+
+
+
+===========================================
+
+
+Begin running SignatureAnalyzer on data set Realistic using seed 310111...
+
+
+
+===========================================
+
+
+
+ BestSignatureAnalyzerResult vector of K:
+ sa.run.1 sa.run.10 sa.run.11 sa.run.12 sa.run.13 sa.run.14 sa.run.15 sa.run.16 
+       16        15        15        16        16        16        15        16 
+sa.run.17 sa.run.18 sa.run.19  sa.run.2 sa.run.20  sa.run.3  sa.run.4  sa.run.5 
+       16        14        15        17        16        16        16        17 
+ sa.run.6  sa.run.7  sa.run.8  sa.run.9 
+       15        16        16        16 
+
+
+
+ BestSignatureAnalyzerResult vector of evidence:
+ sa.run.1 sa.run.10 sa.run.11 sa.run.12 sa.run.13 sa.run.14 sa.run.15 sa.run.16 
+ 36881.96  35790.59  35930.88  38028.62  36833.45  36750.02  36026.67  36949.38 
+sa.run.17 sa.run.18 sa.run.19  sa.run.2 sa.run.20  sa.run.3  sa.run.4  sa.run.5 
+ 36631.87  35173.40  35873.55  38830.58  38080.24  38196.81  37172.59  39425.35 
+ sa.run.6  sa.run.7  sa.run.8  sa.run.9 
+ 35962.60  36586.74  36924.73  36877.45 
+
+
+
+ BestSignatureAnalyzerResult  most common numbers of extracted signatures: 16 
+
+
+ BestSignatureAnalyzerResult evidences for most common Ks:
+ sa.run.1 sa.run.12 sa.run.13 sa.run.14 sa.run.16 sa.run.17 sa.run.20  sa.run.3 
+ 36881.96  38028.62  36833.45  36750.02  36949.38  36631.87  38080.24  38196.81 
+ sa.run.4  sa.run.7  sa.run.8  sa.run.9 
+ 37172.59  36586.74  36924.73  36877.45 
+
+
+
+
+===========================================
+
+
+Begin running SignatureAnalyzer on data set Realistic using seed 528401...
+
+
+
+===========================================
+
+
+
+ BestSignatureAnalyzerResult vector of K:
+ sa.run.1 sa.run.10 sa.run.11 sa.run.12 sa.run.13 sa.run.14 sa.run.15 sa.run.16 
+       15        14        16        14        17        16        16        16 
+sa.run.17 sa.run.18 sa.run.19  sa.run.2 sa.run.20  sa.run.3  sa.run.4  sa.run.5 
+       16        15        14        14        15        15        17        16 
+ sa.run.6  sa.run.7  sa.run.8  sa.run.9 
+       15        17        15        17 
+
+
+
+ BestSignatureAnalyzerResult vector of evidence:
+ sa.run.1 sa.run.10 sa.run.11 sa.run.12 sa.run.13 sa.run.14 sa.run.15 sa.run.16 
+ 35811.09  35391.42  36739.17  35200.78  37893.56  36987.66  36627.04  38258.38 
+sa.run.17 sa.run.18 sa.run.19  sa.run.2 sa.run.20  sa.run.3  sa.run.4  sa.run.5 
+ 38054.36  35987.71  35124.21  35200.74  36130.67  35799.97  38871.00  36935.89 
+ sa.run.6  sa.run.7  sa.run.8  sa.run.9 
+ 36035.57  38866.00  35870.40  37963.48 
+
+
+
+ BestSignatureAnalyzerResult  most common numbers of extracted signatures: 15 16 
+
+
+ BestSignatureAnalyzerResult evidences for most common Ks:
+ sa.run.1 sa.run.11 sa.run.14 sa.run.15 sa.run.16 sa.run.17 sa.run.18 sa.run.20 
+ 35811.09  36739.17  36987.66  36627.04  38258.38  38054.36  35987.71  36130.67 
+ sa.run.3  sa.run.5  sa.run.6  sa.run.8 
+ 35799.97  36935.89  36035.57  35870.40 
+
+
+
+
+===========================================
+
+
+Begin running SignatureAnalyzer on data set Realistic using seed 1076753...
+
+
+
+===========================================
+
+
+
+ BestSignatureAnalyzerResult vector of K:
+ sa.run.1 sa.run.10 sa.run.11 sa.run.12 sa.run.13 sa.run.14 sa.run.15 sa.run.16 
+       16        17        17        15        14        15        15        15 
+sa.run.17 sa.run.18 sa.run.19  sa.run.2 sa.run.20  sa.run.3  sa.run.4  sa.run.5 
+       16        16        15        19        15        16        15        17 
+ sa.run.6  sa.run.7  sa.run.8  sa.run.9 
+       15        15        16        19 
+
+
+
+ BestSignatureAnalyzerResult vector of evidence:
+ sa.run.1 sa.run.10 sa.run.11 sa.run.12 sa.run.13 sa.run.14 sa.run.15 sa.run.16 
+ 36587.28  38868.11  39025.06  36027.38  35319.89  36826.12  35937.51  35848.80 
+sa.run.17 sa.run.18 sa.run.19  sa.run.2 sa.run.20  sa.run.3  sa.run.4  sa.run.5 
+ 36792.74  36875.28  35865.98  41967.73  36181.87  36793.93  36031.66  40178.39 
+ sa.run.6  sa.run.7  sa.run.8  sa.run.9 
+ 35872.69  35896.52  37131.41  42373.27 
+
+
+
+ BestSignatureAnalyzerResult  most common numbers of extracted signatures: 15 
+
+
+ BestSignatureAnalyzerResult evidences for most common Ks:
+sa.run.12 sa.run.14 sa.run.15 sa.run.16 sa.run.19 sa.run.20  sa.run.4  sa.run.6 
+ 36027.38  36826.12  35937.51  35848.80  35865.98  36181.87  36031.66  35872.69 
+ sa.run.7 
+ 35896.52 
+
+
+
+
+===========================================
+
+
+Begin running SignatureAnalyzer on data set Noiseless using seed 145879...
+
+
+
+===========================================
+
+
+
+ BestSignatureAnalyzerResult vector of K:
+ sa.run.1 sa.run.10 sa.run.11 sa.run.12 sa.run.13 sa.run.14 sa.run.15 sa.run.16 
+       11        10        11        11        11        10        11        11 
+sa.run.17 sa.run.18 sa.run.19  sa.run.2 sa.run.20  sa.run.3  sa.run.4  sa.run.5 
+       11        11        12        12        11        11        11        11 
+ sa.run.6  sa.run.7  sa.run.8  sa.run.9 
+       10        11         9        11 
+
+
+
+ BestSignatureAnalyzerResult vector of evidence:
+ sa.run.1 sa.run.10 sa.run.11 sa.run.12 sa.run.13 sa.run.14 sa.run.15 sa.run.16 
+-53766.79 -49632.05 -53768.01 -53780.64 -53763.84 -39710.80 -53779.73 -53777.03 
+sa.run.17 sa.run.18 sa.run.19  sa.run.2 sa.run.20  sa.run.3  sa.run.4  sa.run.5 
+-53638.98 -53775.24 -52885.26 -52961.73 -53737.16 -53780.59 -53730.64 -51316.09 
+ sa.run.6  sa.run.7  sa.run.8  sa.run.9 
+-49648.24 -53780.62 -36919.31 -53595.98 
+
+
+
+ BestSignatureAnalyzerResult  most common numbers of extracted signatures: 11 
+
+
+ BestSignatureAnalyzerResult evidences for most common Ks:
+ sa.run.1 sa.run.11 sa.run.12 sa.run.13 sa.run.15 sa.run.16 sa.run.17 sa.run.18 
+-53766.79 -53768.01 -53780.64 -53763.84 -53779.73 -53777.03 -53638.98 -53775.24 
+sa.run.20  sa.run.3  sa.run.4  sa.run.5  sa.run.7  sa.run.9 
+-53737.16 -53780.59 -53730.64 -51316.09 -53780.62 -53595.98 
+
+
+
+
+===========================================
+
+
+Begin running SignatureAnalyzer on data set Noiseless using seed 200437...
+
+
+
+===========================================
+
+
+
+ BestSignatureAnalyzerResult vector of K:
+ sa.run.1 sa.run.10 sa.run.11 sa.run.12 sa.run.13 sa.run.14 sa.run.15 sa.run.16 
+       10        11        11        11        11        11        10        11 
+sa.run.17 sa.run.18 sa.run.19  sa.run.2 sa.run.20  sa.run.3  sa.run.4  sa.run.5 
+       11        11        12        10        11        10        10        10 
+ sa.run.6  sa.run.7  sa.run.8  sa.run.9 
+       10        10        10        11 
+
+
+
+ BestSignatureAnalyzerResult vector of evidence:
+ sa.run.1 sa.run.10 sa.run.11 sa.run.12 sa.run.13 sa.run.14 sa.run.15 sa.run.16 
+-49570.79 -53763.76 -53780.72 -53780.71 -53779.60 -53736.04 -49647.88 -53649.79 
+sa.run.17 sa.run.18 sa.run.19  sa.run.2 sa.run.20  sa.run.3  sa.run.4  sa.run.5 
+-53763.92 -53779.24 -52895.77 -49648.56 -53768.22 -49633.38 -49648.60 -49648.05 
+ sa.run.6  sa.run.7  sa.run.8  sa.run.9 
+-49648.56 -49648.59 -49646.94 -53780.72 
+
+
+
+ BestSignatureAnalyzerResult  most common numbers of extracted signatures: 11 
+
+
+ BestSignatureAnalyzerResult evidences for most common Ks:
+sa.run.10 sa.run.11 sa.run.12 sa.run.13 sa.run.14 sa.run.16 sa.run.17 sa.run.18 
+-53763.76 -53780.72 -53780.71 -53779.60 -53736.04 -53649.79 -53763.92 -53779.24 
+sa.run.20  sa.run.9 
+-53768.22 -53780.72 
+
+
+
+
+===========================================
+
+
+Begin running SignatureAnalyzer on data set Noiseless using seed 310111...
+
+
+
+===========================================
+
+
+
+ BestSignatureAnalyzerResult vector of K:
+ sa.run.1 sa.run.10 sa.run.11 sa.run.12 sa.run.13 sa.run.14 sa.run.15 sa.run.16 
+       10        11        11        10        11        11        11        11 
+sa.run.17 sa.run.18 sa.run.19  sa.run.2 sa.run.20  sa.run.3  sa.run.4  sa.run.5 
+       11        11        10        12        10        11        11        11 
+ sa.run.6  sa.run.7  sa.run.8  sa.run.9 
+       11        11        10        11 
+
+
+
+ BestSignatureAnalyzerResult vector of evidence:
+ sa.run.1 sa.run.10 sa.run.11 sa.run.12 sa.run.13 sa.run.14 sa.run.15 sa.run.16 
+-49647.95 -53780.69 -53780.71 -49632.24 -53778.49 -53780.64 -53394.52 -53780.71 
+sa.run.17 sa.run.18 sa.run.19  sa.run.2 sa.run.20  sa.run.3  sa.run.4  sa.run.5 
+-53780.62 -53763.27 -49645.69 -52960.88 -49647.43 -53779.21 -53763.68 -53768.25 
+ sa.run.6  sa.run.7  sa.run.8  sa.run.9 
+-53780.68 -53780.72 -49636.37 -53777.25 
+
+
+
+ BestSignatureAnalyzerResult  most common numbers of extracted signatures: 11 
+
+
+ BestSignatureAnalyzerResult evidences for most common Ks:
+sa.run.10 sa.run.11 sa.run.13 sa.run.14 sa.run.15 sa.run.16 sa.run.17 sa.run.18 
+-53780.69 -53780.71 -53778.49 -53780.64 -53394.52 -53780.71 -53780.62 -53763.27 
+ sa.run.3  sa.run.4  sa.run.5  sa.run.6  sa.run.7  sa.run.9 
+-53779.21 -53763.68 -53768.25 -53780.68 -53780.72 -53777.25 
+
+
+
+
+===========================================
+
+
+Begin running SignatureAnalyzer on data set Noiseless using seed 528401...
+
+
+
+===========================================
+
+
+
+ BestSignatureAnalyzerResult vector of K:
+ sa.run.1 sa.run.10 sa.run.11 sa.run.12 sa.run.13 sa.run.14 sa.run.15 sa.run.16 
+       10        10        11        11        11        11        11        10 
+sa.run.17 sa.run.18 sa.run.19  sa.run.2 sa.run.20  sa.run.3  sa.run.4  sa.run.5 
+       11        11        10        11        10        11        11        11 
+ sa.run.6  sa.run.7  sa.run.8  sa.run.9 
+       11        10        10        11 
+
+
+
+ BestSignatureAnalyzerResult vector of evidence:
+ sa.run.1 sa.run.10 sa.run.11 sa.run.12 sa.run.13 sa.run.14 sa.run.15 sa.run.16 
+-49396.47 -49645.30 -53780.70 -53742.47 -53780.65 -53780.39 -53777.30 -39801.12 
+sa.run.17 sa.run.18 sa.run.19  sa.run.2 sa.run.20  sa.run.3  sa.run.4  sa.run.5 
+-53780.30 -53779.17 -49640.58 -53736.11 -49627.87 -53773.41 -53780.61 -53763.17 
+ sa.run.6  sa.run.7  sa.run.8  sa.run.9 
+-53779.09 -49648.42 -49648.60 -53780.71 
+
+
+
+ BestSignatureAnalyzerResult  most common numbers of extracted signatures: 11 
+
+
+ BestSignatureAnalyzerResult evidences for most common Ks:
+sa.run.11 sa.run.12 sa.run.13 sa.run.14 sa.run.15 sa.run.17 sa.run.18  sa.run.2 
+-53780.70 -53742.47 -53780.65 -53780.39 -53777.30 -53780.30 -53779.17 -53736.11 
+ sa.run.3  sa.run.4  sa.run.5  sa.run.6  sa.run.9 
+-53773.41 -53780.61 -53763.17 -53779.09 -53780.71 
+
+
+
+
+===========================================
+
+
+Begin running SignatureAnalyzer on data set Noiseless using seed 1076753...
+
+
+
+===========================================
+
+
+
+ BestSignatureAnalyzerResult vector of K:
+ sa.run.1 sa.run.10 sa.run.11 sa.run.12 sa.run.13 sa.run.14 sa.run.15 sa.run.16 
+       11        11        12        11        11        11        11        10 
+sa.run.17 sa.run.18 sa.run.19  sa.run.2 sa.run.20  sa.run.3  sa.run.4  sa.run.5 
+       12        10        10        11        10        11         9        11 
+ sa.run.6  sa.run.7  sa.run.8  sa.run.9 
+       11        10        10        11 
+
+
+
+ BestSignatureAnalyzerResult vector of evidence:
+ sa.run.1 sa.run.10 sa.run.11 sa.run.12 sa.run.13 sa.run.14 sa.run.15 sa.run.16 
+-53780.60 -53780.74 -52946.55 -53780.65 -53780.18 -53780.71 -53780.03 -49632.36 
+sa.run.17 sa.run.18 sa.run.19  sa.run.2 sa.run.20  sa.run.3  sa.run.4  sa.run.5 
+-52878.89 -49646.69 -49573.18 -51298.42 -49646.21 -53780.70 -37009.70 -53780.61 
+ sa.run.6  sa.run.7  sa.run.8  sa.run.9 
+-53709.38 -49572.03 -49563.07 -53765.98 
+
+
+
+ BestSignatureAnalyzerResult  most common numbers of extracted signatures: 11 
+
+
+ BestSignatureAnalyzerResult evidences for most common Ks:
+ sa.run.1 sa.run.10 sa.run.12 sa.run.13 sa.run.14 sa.run.15  sa.run.2  sa.run.3 
+-53780.60 -53780.74 -53780.65 -53780.18 -53780.71 -53780.03 -51298.42 -53780.70 
+ sa.run.5  sa.run.6  sa.run.9 
+-53780.61 -53709.38 -53765.98 
+
+
