@@ -14,6 +14,11 @@ posterior.checkpoint.*.Rdata
 **/hdp.retval.Rdata
 **/multi.chains.etc.Rdata
 
+# Do not track RData files to store signeR return values.
+# They are too large.
+**/signeR_out.RData
+**/signeR_out.Rdata
+
 # Do not track miscellaneous SigProfilerExtractor output files.
 # This is because their paths are too long.
 **/SigProfilerExtractor.results/**/SBS96/
