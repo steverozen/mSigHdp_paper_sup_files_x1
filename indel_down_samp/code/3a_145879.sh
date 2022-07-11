@@ -13,17 +13,13 @@ CONDA_RSCRIPT=$HOME_LOC/opt/anaconda3/envs/R-4.1.3/bin/Rscript
 
 SEED=145879
 
-# Activate conda environment
-source $CONDA_BIN_DIR/activate
-$CONDA_BIN activate R-4.1.3
+# Initiate conda on computation node
+$CONDA_BIN init bash
 
 cd $PROJ_LOC
 echo "Start running the wrapper script ......"
 mkdir -p $PROJ_LOC/indel_down_samp/raw_results/mSigHdp.results/non_hyper/
 $CONDA_RSCRIPT $PROJ_LOC/indel_down_samp/code/3a_run_mSigHdp.R $SEED &>> $PROJ_LOC/indel_down_samp/raw_results/mSigHdp.results/3a_${SEED}.out
-
-$CONDA_BIN deactivate #this is to exit the $ENV_NAME environment
-$CONDA_BIN deactivate #this is to exit the base anaconda environment
 
 exit 0
 
