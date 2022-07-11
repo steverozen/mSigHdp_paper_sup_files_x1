@@ -18,15 +18,31 @@ require(mSigAct)
 
 
 # Specify global variables ----------------------------------------------------
-home_for_data <- "indel_down_samp/input"
-home_for_run <- "indel_down_samp/raw_results"
+home_for_data <- "indel_2/input"
+home_for_run <- "indel_2/raw_results"
 
 # Import data set names
-dataset_names <- c("500", "1k", "3k", "5k", "10k", "non_hyper")
+dataset_names <- c("Noiseless", "Realistic")
 
 # Specify 5 seeds used in software running
 seeds_in_use <- c(145879, 200437, 310111, 528401, 1076753)
 
+
+
+# Copy the best extraction by SignatureAnalyzer in "best.run/" ----------------
+for (dataset_name in dataset_names) {
+  for (seed_in_use in seeds_in_use) {
+    
+    sa_run_dir <- paste0(home_for_run, "/SignatureAnalyzer.results/",
+                         dataset_name, "/seed.", seed_in_use)
+    
+    # Copy signature in ICAMS format
+    sig_path <- paste0(sa_run_dir, "/best.run/sa.output.sigs.csv")
+    file.copy(from = sig_path,
+              to = paste0(sa_run_dir, "/extracted.signatures.csv"),
+              copy.date = TRUE)
+  }
+}
 
 # Copy SigPro signature files from old.sig.path to sig.path -------------------
 for (dataset_name in dataset_names) {
