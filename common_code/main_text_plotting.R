@@ -117,6 +117,9 @@ main_text_plot <- function(DF, var.name, var.title, inputRange){
 file <- paste0(home_for_summary, "/all_results.csv")
 DF <- read.csv(file, header = T)
 
+toolNames <- c("mSigHdp", "SigProfilerExtractor",
+               "SignatureAnalyzer", "signeR",
+               "NR_hdp_gb_1", "NR_hdp_gb_50")
 
 # b. Data pre-processing.
 #
@@ -135,8 +138,7 @@ DF$Noise_level <- fac
 
 # Change tool names to ordered factor
 fac <- factor(DF$Approach, ordered = T,
-              levels = c("mSigHdp", "SigProfilerExtractor",
-                         "SignatureAnalyzer", "signeR"))
+              levels = toolNames)
 DF$Approach <- fac
 
 
@@ -204,8 +206,7 @@ DF <- DF %>% filter(Noise_level == "Realistic")
 
 # Change tool names to ordered factor
 fac <- factor(DF$Approach, ordered = T,
-              levels = c("mSigHdp", "SigProfilerExtractor",
-                         "SignatureAnalyzer", "signeR"))
+              levels = toolNames)
 DF$Approach <- fac
 # Re-arrange DF
 DF <- DF %>% arrange(Approach,Noise_level,Run)
