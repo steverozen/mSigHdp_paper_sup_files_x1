@@ -1,6 +1,6 @@
 # Please run this script from the top directory
-if (basename(getwd()) != "Liu_et_al_Sup_Files") {
-  stop("Please run from top level directory, Liu_et_al_Sup_Files")
+if (basename(getwd()) != "mSigHdp_paper_sup_files_x1") {
+  stop("Please run from top level directory, mSigHdp_paper_sup_files_x1")
 }
 
 #################################################################
@@ -58,15 +58,13 @@ library(PCAWG7)
 library(mSigAct)
 library(SynSigGen)
 
-# Get the real exposure for tumors from nine cancer types: "Breast-AdenoCA",
-# "ColoRect-AdenoCA", "Eso-AdenoCA", "Kidney-RCC", "Liver-HCC", "Lung-AdenoCA",
-# "Ovary-AdenoCA", "Skin-Melanoma", "Stomach-AdenoCA"
+# Get the real exposure for tumors from selected cancer types
 real_exposure_sbs_file <-
   "./other_analyses/noise_selection/data/SBS_real_exposure.csv"
 real_exposure_sbs <- mSigAct::ReadExposure(file = real_exposure_sbs_file)
 sigs_sbs <- cosmicsig::COSMIC_v3.2$signature$GRCh37$SBS96
 
-# Get the real tumor spectra from the nine cancer types
+# Get the real tumor spectra from the selected cancer types
 real_spectra_sbs <-
   PCAWG7::spectra$PCAWG$SBS96[, colnames(real_exposure_sbs)]
 
