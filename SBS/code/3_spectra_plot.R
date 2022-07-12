@@ -1,7 +1,8 @@
 # Please run this script from the top directory
-if (basename(getwd()) != "Liu_et_al_Sup_Files") {
-  stop("Please run from top level directory, Liu_et_al_Sup_Files")
+if (basename(getwd()) != "mSigHdp_paper_sup_files_x1") {
+  stop("Please run from top level directory, mSigHdp_paper_sup_files_x1")
 }
+
 
 ##################################################################
 ##      Install dependency packages and create directories      ##
@@ -13,8 +14,8 @@ library(ICAMS)
 source("./common_code/data_gen_utils.R")
 
 sbs96_plot_home <- "./SBS/input/"
-dataset_names <- c("Noiseless", "Realistic", "Moderate")
-file_suffixes <- c("no_noise", "realistic_noise", "moderate_noise")
+dataset_names <- c("Noiseless", "Realistic")
+file_suffixes <- c("no_noise", "realistic_noise")
 identifiers <- gsub(pattern = "_", replacement = " ", x = file_suffixes)
 
 ##################################################################
@@ -24,7 +25,7 @@ for (i in seq_along(dataset_names)) {
   input_file <-
     file.path(sbs96_plot_home, dataset_names[i], "ground.truth.syn.catalog.csv")
   catalog <- ICAMS::ReadCatalog(input_file)
-
+  
   output_file <-
     file.path(
       sbs96_plot_home, dataset_names[i],
@@ -33,6 +34,9 @@ for (i in seq_along(dataset_names)) {
   plot_catalog_to_pdf(
     catalog = catalog,
     identifier = identifiers[i],
-    file = output_file
+    file = output_file,
+    grid = FALSE,
+    upper = TRUE,
+    xlabels = TRUE
   )
 }

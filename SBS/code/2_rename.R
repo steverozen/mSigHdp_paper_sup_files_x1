@@ -1,7 +1,8 @@
 # Please run this script from the top directory
-if (basename(getwd()) != "Liu_et_al_Sup_Files") {
-  stop("Please run from top level directory, Liu_et_al_Sup_Files")
+if (basename(getwd()) != "mSigHdp_paper_sup_files_x1") {
+  stop("Please run from top level directory, mSigHdp_paper_sup_files_x1")
 }
+
 # 1. Install and load dependencies --------------------------------------------
 
 if (!requireNamespace("magrittr", quietly = TRUE)) {
@@ -23,9 +24,8 @@ dir.create(SBS_home, showWarnings = FALSE, recursive = TRUE)
 # Shortening the names of folders
 old_dataset_names <-
   c("PCAWG.SBS96.syn.exposures.no.noise",
-    "PCAWG.SBS96.syn.exposures.noisy.neg.binom.size.30",
-    "PCAWG.SBS96.syn.exposures.noisy.neg.binom.size.100")
-dataset_names <- c("Noiseless", "Realistic", "Moderate")
+    "PCAWG.SBS96.syn.exposures.noisy.neg.binom.size.30")
+dataset_names <- c("Noiseless", "Realistic")
 for (ii in seq_along(dataset_names)) {
   if (!file.exists(file.path(SBS_home, dataset_names[ii]))) {
     file.copy(from = paste0(old_SBS_home, "/", old_dataset_names[ii]),
