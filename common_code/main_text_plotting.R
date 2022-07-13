@@ -102,6 +102,12 @@ main_text_plot <- function(DF, var.name, var.title, inputRange){
       strip.text = ggplot2::element_text(size = 10),
       # remove legends.
       legend.position = "top")  +
+    # Make legend spans on two lines
+    ggplot2::guides(
+      color = ggplot2::guide_legend(
+        nrow = 2, 
+        byrow = TRUE)
+    ) +
     # Add border lines across different data sets
     geom_vline(xintercept = c(1.5, 2.5), 
                color = "black", 
@@ -117,9 +123,6 @@ main_text_plot <- function(DF, var.name, var.title, inputRange){
 file <- paste0(home_for_summary, "/all_results.csv")
 DF <- read.csv(file, header = T)
 
-toolNames <- c("mSigHdp", "SigProfilerExtractor",
-               "SignatureAnalyzer", "signeR",
-               "NR_hdp_gb_1", "NR_hdp_gb_50")
 
 # b. Data pre-processing.
 #
@@ -138,7 +141,7 @@ DF$Noise_level <- fac
 
 # Change tool names to ordered factor
 fac <- factor(DF$Approach, ordered = T,
-              levels = toolNames)
+              levels = tool_names)
 DF$Approach <- fac
 
 
@@ -206,7 +209,7 @@ DF <- DF %>% filter(Noise_level == "Realistic")
 
 # Change tool names to ordered factor
 fac <- factor(DF$Approach, ordered = T,
-              levels = toolNames)
+              levels = tool_names)
 DF$Approach <- fac
 # Re-arrange DF
 DF <- DF %>% arrange(Approach,Noise_level,Run)
