@@ -1,0 +1,9 @@
+Noise_level,Approach,mean(PPV),mean(TPR),mean(aver_Sim_TP_only),mean(Composite),sd(Composite)
+Noiseless,mSigHdp,0.971,1.000,0.998,2.97,3.87e-02
+Noiseless,SignatureAnalyzer,0.909,0.769,0.995,2.67,1.75e-06
+Noiseless,signeR,0.649,0.615,0.995,2.26,1.75e-01
+Noiseless,SigProfilerExtractor,1.000,0.769,0.994,2.76,2.14e-04
+Realistic,mSigHdp,0.879,1.000,0.991,2.87,2.77e-02
+Realistic,SignatureAnalyzer,0.567,0.662,0.985,2.21,1.28e-01
+Realistic,signeR,0.573,0.554,0.989,2.12,1.27e-01
+Realistic,SigProfilerExtractor,0.833,0.769,0.989,2.59,1.27e-04
