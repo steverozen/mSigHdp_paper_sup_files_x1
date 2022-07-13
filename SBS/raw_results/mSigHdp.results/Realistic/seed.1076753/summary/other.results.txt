@@ -1,0 +1,24 @@
+Average cosine similarity, only best matches are considered
+[1] 0.9883212
+
+Number of ground-truth signatures
+[1] 23
+
+Number of extracted signatures
+[1] 26
+
+True positive ground-truth signatures
+ [1] "SBS1"   "SBS2"   "SBS3"   "SBS4"   "SBS5"   "SBS7c"  "SBS7d"  "SBS12"  "SBS13" 
+[10] "SBS16"  "SBS17a" "SBS17b" "SBS18"  "SBS22"  "SBS28"  "SBS29"  "SBS38"  "SBS40" 
+[19] "SBS41"  "SBS44" 
+
+True positive extracted signatures
+ [1] "hdp.1"  "hdp.10" "hdp.11" "hdp.12" "hdp.13" "hdp.15" "hdp.16" "hdp.17" "hdp.18"
+[10] "hdp.19" "hdp.2"  "hdp.20" "hdp.21" "hdp.22" "hdp.25" "hdp.3"  "hdp.5"  "hdp.6" 
+[19] "hdp.8"  "hdp.9" 
+
+False positive signatures
+[1] "hdp.14" "hdp.23" "hdp.24" "hdp.26" "hdp.4"  "hdp.7" 
+
+False negative signatures
+[1] "SBS7a" "SBS7b" "SBS35"
