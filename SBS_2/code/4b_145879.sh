@@ -1,7 +1,7 @@
 #!/bin/bash
-#PBS -q super
-#PBS -l walltime=360:00:00
-#PBS -l select=1:ncpus=50:mem=200gb
+#PBS -q long
+#PBS -l walltime=72:00:00
+#PBS -l select=1:ncpus=100:mem=200gb
 #PBS -N 4b_145879
 #PBS -o /data/rozen/home/e0240162/practice/6_Mo_mSigHdp/mSigHdp_paper_sup_files_x1/SBS_2/raw_results/4b_145879_out.txt
 #PBS -e /data/rozen/home/e0240162/practice/6_Mo_mSigHdp/mSigHdp_paper_sup_files_x1/SBS_2/raw_results/4b_145879_err.txt
