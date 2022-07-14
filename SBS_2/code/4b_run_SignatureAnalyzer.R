@@ -26,7 +26,7 @@ require(SynSigRun)
 # Do not insert trailing "/" to prevent failing unzip
 SA_home <- "./common_code"
 
-SA_path <- paste0(SA_home, "/SignatureAnalzyer.052418")
+SA_path <- paste0(SA_home, "/SignatureAnalyzer.052418")
 
 if (!dir.exists(SA_path)) {
   dir.create(SA_home, showWarnings = F, recursive = T)
@@ -44,16 +44,16 @@ if (!dir.exists(SA_path)) {
 
 # Specify global variables ----------------------------------------------------
 
-home_for_data <- "./SBS/input"
-home_for_run <- "./SBS/raw_results"
+home_for_data <- "./SBS_2/input"
+home_for_run <- "./SBS_2/raw_results"
 
 # Guessed signatures.
-# We assume SignatureAnalyzer does not know the ground-truth K (23),
-# then we should specify max_K as 46.
-max_K <- 46
+# We assume SignatureAnalyzer does not know the ground-truth K (32),
+# then we should specify max_K as 64.
+max_K <- 64
 
 # Names of data sets
-dataset_names <- c("Noiseless", "Moderate", "Realistic")
+dataset_names <- c("Realistic", "Noiseless")
 
 # Specify 5 seeds used in software running
 seeds_in_use <- c(145879, 200437, 310111, 528401, 1076753)
