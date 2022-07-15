@@ -8,5 +8,7 @@ home_for_summary <- "./indel_down_samp/summary/"
 plot.meta.info <- paste("indel_down_samp",
                         Sys.Date(), 
                         "down-sampled from 'Realistic' data set with size = 10; gamma.beta = 50, burnin = 30k")
+dataset_names <- c("1k", "3k", "5k", "10k", "non_hyper")
+tool_names <- c("mSigHdp", "SigProfilerExtractor")
 
 source("common_code/main_text_plotting_down_samp.R")

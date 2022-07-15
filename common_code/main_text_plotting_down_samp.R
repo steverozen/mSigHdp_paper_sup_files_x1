@@ -129,7 +129,7 @@ DF <- DF %>% mutate(Composite = PPV + TPR + aver_Sim_TP_only)
 
 # Change Down_samp_level to ordered factor
 fac <- factor(DF$Down_samp_level, ordered = T,
-              levels = c("1k", "3k", "5k", "10k"))
+              levels = dataset_names)
 DF$Down_samp_level <- fac
 
 

@@ -7,3 +7,5 @@ Down_samp_level,Approach,mean(PPV),mean(TPR),mean(aver_Sim_TP_only),mean(Composi
 3k,SigProfilerExtractor,0.900,0.818,0.991,2.71,0.000421
 5k,mSigHdp,0.786,1.000,0.991,2.78,0.103692
 5k,SigProfilerExtractor,0.867,0.818,0.990,2.68,0.043873
+non_hyper,mSigHdp,0.664,1.000,0.986,2.65,0.032938
+non_hyper,SigProfilerExtractor,1.000,0.891,0.986,2.88,0.041312
