@@ -33,7 +33,8 @@ folder4ToolwiseSummary <- "./indel_down_samp/summary/toolwise_summary"
 folder4CombinedSummary <- "./indel_down_samp/summary/top_level_summary"
 
 # Specify dataset names
-datasetNames <- c("500", "1k", "3k", "5k", "10k")
+# Do not sample "500"
+datasetNames <- c("1k", "3k", "5k", "10k")
 
 
 # Specify names of computational approaches
