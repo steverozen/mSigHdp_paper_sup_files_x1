@@ -26,7 +26,7 @@ require(SynSigRun)
 # Do not insert trailing "/" to prevent failing unzip
 SA_home <- "./common_code"
 
-SA_path <- paste0(SA_home, "/SignatureAnalzyer.052418")
+SA_path <- paste0(SA_home, "/SignatureAnalyzer.052418")
 
 if (!dir.exists(SA_path)) {
   dir.create(SA_home, showWarnings = F, recursive = T)
@@ -38,6 +38,19 @@ if (!dir.exists(SA_path)) {
   }
   unzip(paste0(SA_home, "/SignatureAnalyzer.052418.zip"), exdir = SA_home)
   unlink(paste0(SA_home, "/SignatureAnalyzer.052418.zip"))
+}
+
+
+
+# Import optional trailing args ------------------------------------------------
+curr_args <- commandArgs(trailing = T)
+message("args: ", as.character(curr_args))
+if (length(curr_args)==0) {
+  # In this case, use the DEFAULT seed numbers
+  args_flag <- FALSE
+} else {
+  args_flag <- TRUE
+  seeds_in_use <- as.integer(curr_args)
 }
 
 
@@ -56,8 +69,9 @@ max_K <- 46
 dataset_names <- c("Noiseless", "Moderate", "Realistic")
 
 # Specify 5 seeds used in software running
+if (args_flag == FALSE) {
 seeds_in_use <- c(145879, 200437, 310111, 528401, 1076753)
-
+}
 
 
 # Run SignatureAnalyzer -------------------------------------------------------
