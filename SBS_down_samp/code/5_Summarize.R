@@ -33,11 +33,8 @@ folder4ToolwiseSummary <- "./SBS_down_samp/summary/toolwise_summary"
 folder4CombinedSummary <- "./SBS_down_samp/summary/top_level_summary"
 
 # Specify dataset names
-if (TRUE) {
-  datasetNames <- c("1k", "3k", "5k", "10k")
-} else {
-  datasetNames <- c("1k", "3k", "5k", "10k", "20k")
-}
+datasetNames <- c("1k", "3k", "5k", "10k")
+
 
 # Specify names of computational approaches
 RBasedExtrAttrToolNames <- c("mSigHdp", "SigProfilerExtractor")
