@@ -10,9 +10,12 @@ message(Sys.time(), " running ", paste(commandArgs(), collapse = " "))
 
 args <- commandArgs(trailingOnly = TRUE)
 
-seeds_in_use <- args[2]
-
 home_for_run <- args[1]
+if (length(args) > 1) {
+  seeds_in_use <- args[-1]
+} else {
+  seeds_in_use <- c(145879, 200437, 310111, 528401, 1076753)
+}
 
 message(Sys.time(), " running on seed ", seeds_in_use)
 
