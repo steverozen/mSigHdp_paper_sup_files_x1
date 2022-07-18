@@ -102,10 +102,35 @@ main_text_plot <- function(DF, var.name, var.title, inputRange){
       strip.text = ggplot2::element_text(size = 10),
       # remove legends.
       legend.position = "top")  +
+    # Make sure that no more than 2 tools 
+    # can be drawn on a line of legend
+    ggplot2::guides(
+      color = ggplot2::guide_legend(
+        nrow = ceiling(length(tool_names)/3), 
+        byrow = TRUE)
+    )
     # Add border lines across different data sets
-    geom_vline(xintercept = c(1.5, 2.5), 
-               color = "black", 
-               size = 0.2)
+  #
+  # If the results are on 3 data sets 
+  # (e.g. Noiseless, Moderate, Realistic)
+  # then we only need to draw only one line.
+  #
+  # Similarly, if there are 2/5 data sets,
+  # we only need to draw 1/4 lines.
+  #
+  # Each categorical group corresponds to an
+  # INTEGER COORDINATE on the x axis (e.g. 1, 2, ...)
+  #
+  # Thus the lines should have x-coords:
+  # 1.5, 2.5, ...
+  num_data_sets <- length(unique(DF$Down_samp_level))
+  if (num_data_sets > 1) {
+    x_coords <- seq(1.5, num_data_sets-0.5, 1)
+    ggObj <- ggObj + 
+      geom_vline(xintercept = x_coords, 
+                 color = "black", 
+                 size = 0.2)
+  }
   
   return(ggObj)
 } # End main_text_plot
@@ -113,7 +138,6 @@ main_text_plot <- function(DF, var.name, var.title, inputRange){
 
 
 # Plot extraction measures -------------------------------------------------
-
 # a. Import results of extraction measures.
 file <- paste0(home_for_summary, "/all_results.csv")
 DF <- read.csv(file, header = T)
@@ -204,8 +228,7 @@ if (FALSE) {
   
   # Change tool names to ordered factor
   fac <- factor(DF$Approach, ordered = T,
-                levels = c("mSigHdp", "SigProfilerExtractor",
-                           "SignatureAnalyzer", "signeR"))
+                levels = tool_names)
   DF$Approach <- fac
   # Re-arrange DF
   DF <- DF %>% arrange(Approach,Down_samp_level,Run)
