@@ -102,7 +102,7 @@ main_text_plot <- function(DF, var.name, var.title, inputRange){
       strip.text = ggplot2::element_text(size = 10),
       # remove legends.
       legend.position = "top")  +
-    # Make sure that no more than 2 tools 
+    # Make sure that no more than 3 tools 
     # can be drawn on a line of legend
     ggplot2::guides(
       color = ggplot2::guide_legend(
@@ -198,7 +198,11 @@ for(vn in c("Composite", var.names)){
 }
 
 # Arrange and save the plot
-arr.figs <- ggpubr::ggarrange(plotlist = figs, common.legend = T)
+#
+# align = "v" Makes the reference lines of the grid region (canvas region)
+# align together. This guarantees the 4 grid regions to have the same area,
+# despite the number of digits on the y-axis vary.
+arr.figs <- ggpubr::ggarrange(plotlist = figs, align = "v", common.legend = T)
 # Temporarily, also add titles to plots to include meta-information:
 #
 arr.figs <- ggpubr::annotate_figure(
@@ -261,7 +265,11 @@ if (FALSE) {
   }
   
   # Arrange 4 panels into one ggplot object.
-  arr.figs <- ggpubr::ggarrange(plotlist = figs, common.legend = T)
+  #
+  # align = "v" Makes the reference lines of the grid region (canvas region)
+  # align together. This guarantees the 4 grid regions to have the same area,
+  # despite the number of digits on the y-axis vary.
+  arr.figs <- ggpubr::ggarrange(plotlist = figs, align = "v", common.legend = T)
   # Temporarily, also add titles to plots to include meta-information:
   #
   
