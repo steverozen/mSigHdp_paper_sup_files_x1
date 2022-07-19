@@ -42,7 +42,7 @@ for (dataset_name in dataset_names) {
     # This very deep path will break some program on Windows,
     # and thus we copied these files to sig.path.
     sig.path <- paste0(sp_run_dir, "/ID83_De-Novo_Signatures.txt")
-    file.copy(from = old.sig.path, to = sig.path)
+    file.copy(from = old.sig.path, to = sig.path, copy.date = TRUE)
   }
 }
 
