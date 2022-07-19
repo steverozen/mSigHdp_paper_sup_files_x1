@@ -1,0 +1,109 @@
+Loading required package: ICAMS
+Loading required package: SynSigRun
+
+
+===========================================
+
+
+Begin running SignatureAnalyzer on data set Realistic using seed 145879...
+
+
+
+===========================================
+
+
+Error in RunSignatureAnalyzerOnFile(input.catalog = input.catalog, out.dir = out.dir,  : 
+  ./SBS_2/raw_results/SignatureAnalyzer.results/Realistic/seed.145879/sa.run.1 already exits
+Calls: system.time ... SignatureAnalyzerOneRun -> RunSignatureAnalyzerOnFile
+In addition: Warning message:
+In SynSigRun::SAMultiRunOneCatalog(num.runs = 20, signatureanalyzer.code.dir = SA_path,  :
+  ./SBS_2/raw_results/SignatureAnalyzer.results/Realistic/seed.145879exists, overwriting
+Timing stopped at: 0.165 0.02 0.228
+Execution halted
+Loading required package: ICAMS
+Loading required package: SynSigRun
+args: 528401
+
+
+===========================================
+
+
+Begin running SignatureAnalyzer on data set Realistic using seed 528401...
+
+
+
+===========================================
+
+
+
+ BestSignatureAnalyzerResult vector of K:
+ sa.run.1 sa.run.10 sa.run.11 sa.run.12 sa.run.13 sa.run.14 sa.run.15 sa.run.16 
+       62        61        60        62        60        64        63        61 
+sa.run.17 sa.run.18 sa.run.19  sa.run.2 sa.run.20  sa.run.3  sa.run.4  sa.run.5 
+       61        62        62        62        64        62        63        60 
+ sa.run.6  sa.run.7  sa.run.8  sa.run.9 
+       61        62        63        64 
+
+
+
+ BestSignatureAnalyzerResult vector of evidence:
+ sa.run.1 sa.run.10 sa.run.11 sa.run.12 sa.run.13 sa.run.14 sa.run.15 sa.run.16 
+ 88448.24  86223.75  88066.88  87760.36  86945.50  88995.80  87393.44  86961.53 
+sa.run.17 sa.run.18 sa.run.19  sa.run.2 sa.run.20  sa.run.3  sa.run.4  sa.run.5 
+ 84499.13  87336.89  87667.30  90497.52  88863.65  87560.33  90837.20  87426.61 
+ sa.run.6  sa.run.7  sa.run.8  sa.run.9 
+ 86712.49  85211.73  90684.13  89551.30 
+
+
+
+ BestSignatureAnalyzerResult  most common numbers of extracted signatures: 62 
+
+
+ BestSignatureAnalyzerResult evidences for most common Ks:
+ sa.run.1 sa.run.12 sa.run.18 sa.run.19  sa.run.2  sa.run.3  sa.run.7 
+ 88448.24  87760.36  87336.89  87667.30  90497.52  87560.33  85211.73 
+
+
+
+
+===========================================
+
+
+Begin running SignatureAnalyzer on data set Noiseless using seed 528401...
+
+
+
+===========================================
+
+
+
+ BestSignatureAnalyzerResult vector of K:
+ sa.run.1 sa.run.10 sa.run.11 sa.run.12 sa.run.13 sa.run.14 sa.run.15 sa.run.16 
+       25        25        26        26        25        25        25        25 
+sa.run.17 sa.run.18 sa.run.19  sa.run.2 sa.run.20  sa.run.3  sa.run.4  sa.run.5 
+       25        25        26        26        25        25        25        25 
+ sa.run.6  sa.run.7  sa.run.8  sa.run.9 
+       26        25        25        25 
+
+
+
+ BestSignatureAnalyzerResult vector of evidence:
+ sa.run.1 sa.run.10 sa.run.11 sa.run.12 sa.run.13 sa.run.14 sa.run.15 sa.run.16 
+-60637.02 -60641.92 -59234.49 -59236.43 -60639.23 -60639.45 -60641.46 -60639.05 
+sa.run.17 sa.run.18 sa.run.19  sa.run.2 sa.run.20  sa.run.3  sa.run.4  sa.run.5 
+-60610.95 -60574.35 -59233.70 -59232.45 -60637.20 -60569.51 -60642.02 -60637.37 
+ sa.run.6  sa.run.7  sa.run.8  sa.run.9 
+-59236.30 -60637.58 -60640.00 -60640.97 
+
+
+
+ BestSignatureAnalyzerResult  most common numbers of extracted signatures: 25 
+
+
+ BestSignatureAnalyzerResult evidences for most common Ks:
+ sa.run.1 sa.run.10 sa.run.13 sa.run.14 sa.run.15 sa.run.16 sa.run.17 sa.run.18 
+-60637.02 -60641.92 -60639.23 -60639.45 -60641.46 -60639.05 -60610.95 -60574.35 
+sa.run.20  sa.run.3  sa.run.4  sa.run.5  sa.run.7  sa.run.8  sa.run.9 
+-60637.20 -60569.51 -60642.02 -60637.37 -60637.58 -60640.00 -60640.97 
+
+
