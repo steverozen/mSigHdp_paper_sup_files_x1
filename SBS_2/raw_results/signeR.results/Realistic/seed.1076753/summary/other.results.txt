@@ -1,0 +1,26 @@
+Average cosine similarity, only best matches are considered
+[1] 0.982811
+
+Number of ground-truth signatures
+[1] 32
+
+Number of extracted signatures
+[1] 29
+
+True positive ground-truth signatures
+ [1] "SBS1"   "SBS2"   "SBS3"   "SBS4"   "SBS5"   "SBS7a"  "SBS7b"  "SBS7c"  "SBS7d" 
+[10] "SBS13"  "SBS17a" "SBS17b" "SBS18"  "SBS26"  "SBS40"  "SBS44" 
+
+True positive extracted signatures
+ [1] "signeR.1"  "signeR.10" "signeR.11" "signeR.13" "signeR.15" "signeR.16"
+ [7] "signeR.17" "signeR.18" "signeR.2"  "signeR.23" "signeR.25" "signeR.3" 
+[13] "signeR.4"  "signeR.5"  "signeR.7"  "signeR.9" 
+
+False positive signatures
+ [1] "signeR.12" "signeR.14" "signeR.19" "signeR.20" "signeR.21" "signeR.22"
+ [7] "signeR.24" "signeR.26" "signeR.27" "signeR.28" "signeR.29" "signeR.6" 
+[13] "signeR.8" 
+
+False negative signatures
+ [1] "SBS6"  "SBS8"  "SBS9"  "SBS12" "SBS16" "SBS22" "SBS28" "SBS29" "SBS30" "SBS34"
+[11] "SBS35" "SBS36" "SBS37" "SBS38" "SBS39" "SBS41"
