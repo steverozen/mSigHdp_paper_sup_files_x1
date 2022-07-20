@@ -1,4 +1,4 @@
-# Code from Steve Rozen, 2021 01 24
+# Code from Steve Rozen, 2022 07 20
 # Analyses for Liu Mo's paper, "mSigHdp: hierarchical Dirichlet processes
 # in mutational signature extraction, Liu et al."
 #
@@ -28,7 +28,7 @@ library(tibble)
 myread <- function(ff) as_tibble(fread(ff)[ , -1])
 
 # These are the files to be logically "cbind"ed
-gtSigs <- paste0("ID",c(1:6,8,9,11,13,14))
+gtSigs <- paste0("ID",c(1:6,8:14))
 nSigs <- length(gtSigs)
 
 
