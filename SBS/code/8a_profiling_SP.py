@@ -1,4 +1,4 @@
-# Please run this script from the top directory Liu_et_al_Sup_Files
+# Please run this script from the top directory mSigHdp_paper_sup_files_x1
 
 #%% Cell 1 - Import prerequisites ---------------------------------------------
 import csv

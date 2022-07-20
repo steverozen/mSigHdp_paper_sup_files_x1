@@ -12,7 +12,7 @@ into SigPro formatted TSV catalogs.
 The input and output directories is required to be provided 
 as arguments from stdin.
 """
-# Please run this script from the top directory, Liu_et_al_Sup_Files
+# Please run this script from the top directory, mSigHdp_paper_sup_files_x1
 
 ###############################################################################
 #%% Cell 1: load prerequisites

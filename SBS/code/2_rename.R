@@ -1,6 +1,6 @@
 # Please run this script from the top directory
-if (basename(getwd()) != "Liu_et_al_Sup_Files") {
-  stop("Please run from top level directory, Liu_et_al_Sup_Files")
+if (basename(getwd()) != "mSigHdp_paper_sup_files_x1") {
+  stop("Please run from top level directory, mSigHdp_paper_sup_files_x1")
 }
 # 1. Install and load dependencies --------------------------------------------
 
