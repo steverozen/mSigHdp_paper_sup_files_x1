@@ -96,7 +96,7 @@ main_text_plot <- function(DF, var.name, var.title, inputRange){
         # angle = 30,
         # move axis.text.x right below the tick marks
         # hjust = 1,vjust = 1
-        ),
+      ),
       axis.ticks.x = element_blank(),
       # Make font size of facet label smaller.
       strip.text = ggplot2::element_text(size = 10),
@@ -135,6 +135,72 @@ main_text_plot <- function(DF, var.name, var.title, inputRange){
   return(ggObj)
 } # End main_text_plot
 
+# A function which arranges 4 panels to a single ggplot file.
+#
+# Used twice to generate two figures - 
+# One is a main figure only contains results on "Realistic" data set
+# Another is a supp figure contains results on ALL data sets.
+#
+# DF - Input data.frame object.
+#
+# file_name - Name of the plotting output file in PDF format.
+fig_arr <- function(DF, file_name) {
+  
+  # c. Plotting of 4 panels, and saving arranged figure 
+  # with results on all data sets as a SUPPLEMENTARY figure.
+  #
+  # Plot 4 panels to a Supp Figure
+  var.names <- c("aver_Sim_TP_only","PPV","TPR")
+  axis.titles <- c("Composite" = "Composite measure",
+                   "aver_Sim_TP_only" = "Mean cosine similarity",
+                   "PPV" = "PPV",
+                   "TPR" = "TPR")
+  
+  figs <- list()
+  for(vn in c("Composite", var.names)){
+    # Round range of to 1 decimal place.
+    range.vals <- DF %>% select(all_of(vn)) %>%
+      unlist() %>% range()
+    if (vn != "aver_Sim_TP_only") {
+      range.vals <-
+        c(floor(10 * range.vals[1])/10, ceiling(10 * range.vals[2])/10)
+    } else {
+      range.vals <-
+        c(floor(100 * range.vals[1])/100, ceiling(100 * range.vals[2])/100)
+    }
+    # Generate ggplot object
+    figs[[vn]] <- main_text_plot(DF, vn, axis.titles[vn], range.vals)
+    # For the first and second panel,
+    # remove axis.text and axis.title
+    # on the x axis.
+    if (vn %in% c("Composite", "aver_Sim_TP_only")) {
+      figs[[vn]] <- figs[[vn]] +
+        ggplot2::theme(axis.text.x = element_blank(),
+                       #axis.ticks.x = element_blank(),
+                       axis.title.x = element_blank())
+    }
+  }
+  
+  # Arrange and save the plot
+  #
+  # align = "v" Makes the reference lines of the grid region (canvas region)
+  # align together. This guarantees the 4 grid regions to have the same area,
+  # despite the number of digits on the y-axis vary.
+  arr.figs <- ggpubr::ggarrange(plotlist = figs, align = "v", common.legend = T)
+  # Temporarily, also add titles to plots to include meta-information:
+  #
+  arr.figs <- ggpubr::annotate_figure(
+    arr.figs, 
+    bottom  = text_grob(plot.meta.info, size = 6),
+  )
+  
+  ggplot2::ggsave(
+    filename = file_name,
+    plot = arr.figs,
+    width = unit(9, "inch"),
+    height = unit(6, "inch"))
+}
+
 
 
 # Plot extraction measures -------------------------------------------------
@@ -143,103 +209,67 @@ file <- paste0(home_for_summary, "/all_results.csv")
 DF <- read.csv(file, header = T)
 
 
-# b. Data pre-processing.
+# b. Plotting all extraction accuracy measures to a SUPP figure.
 #
 # Plot for PPV, TPR, mean Cosine similarity,
 # and Composite Measure equals to the sum of
-# these 3 measures.
-# Calculate composite measure
+# these 3 measures on ALL data sets.
+#
+# b1. Data processing
 DF <- DF %>% mutate(Composite = PPV + TPR + aver_Sim_TP_only)
-
 DF$Noise_level[DF$Noise_level == "Noiseless"] <- "None"
 # Change Noise_level to ordered factor
+factor_levels <- unique(DF$Noise_level)
 fac <- factor(DF$Noise_level, ordered = T,
-              levels = c("None", "Moderate", "Realistic"))
+              levels = factor_levels)
 DF$Noise_level <- fac
-
-
 # Change tool names to ordered factor
 fac <- factor(DF$Approach, ordered = T,
               levels = tool_names)
 DF$Approach <- fac
 
+# b2. Call function fig_arr() to generate supp figure.
+fig_arr(DF = DF,
+        file_name = paste0(home_for_summary,"/extraction.accuracy.supp.pdf"))
 
-# c. Plotting of 4 panels, and saving arranged plot.
+
+# c. Plotting extraction accuracy measures on "Realistic" data set
+# to a MAIN figure.
 #
-# Plot 4 panels to Figure 1
-var.names <- c("aver_Sim_TP_only","PPV","TPR")
-axis.titles <- c("Composite" = "Composite measure",
-                 "aver_Sim_TP_only" = "Mean cosine similarity",
-                 "PPV" = "PPV",
-                 "TPR" = "TPR")
-
-figs <- list()
-for(vn in c("Composite", var.names)){
-  # Round range of to 1 decimal place.
-  range.vals <- DF %>% select(all_of(vn)) %>%
-    unlist() %>% range()
-  if (vn != "aver_Sim_TP_only") {
-    range.vals <-
-      c(floor(10 * range.vals[1])/10, ceiling(10 * range.vals[2])/10)
-  } else {
-    range.vals <-
-      c(floor(100 * range.vals[1])/100, ceiling(100 * range.vals[2])/100)
-  }
-  # Generate ggplot object
-  figs[[vn]] <- main_text_plot(DF, vn, axis.titles[vn], range.vals)
-  # For the first and second panel,
-  # remove axis.text and axis.title
-  # on the x axis.
-  if (vn %in% c("Composite", "aver_Sim_TP_only")) {
-    figs[[vn]] <- figs[[vn]] +
-      ggplot2::theme(axis.text.x = element_blank(),
-                     #axis.ticks.x = element_blank(),
-                     axis.title.x = element_blank())
-  }
-}
-
-# Arrange and save the plot
-#
-# align = "v" Makes the reference lines of the grid region (canvas region)
-# align together. This guarantees the 4 grid regions to have the same area,
-# despite the number of digits on the y-axis vary.
-arr.figs <- ggpubr::ggarrange(plotlist = figs, align = "v", common.legend = T)
-# Temporarily, also add titles to plots to include meta-information:
-#
-arr.figs <- ggpubr::annotate_figure(
-  arr.figs, 
-  bottom  = text_grob(plot.meta.info, size = 6),
-)
-
-ggplot2::ggsave(
-  filename = paste0(home_for_summary,"/extraction.accuracy.pdf"),
-  plot = arr.figs,
-  width = unit(9, "inch"),
-  height = unit(6, "inch"))
-
-
+# Plot for PPV, TPR, mean Cosine similarity,
+# and Composite Measure equals to the sum of
+# these 3 measures on "Realistic" data set.
+DF_Realistic <- DF %>% dplyr::filter(Noise_level == "Realistic")
+fac <- factor(DF_Realistic$Noise_level, ordered = T,
+              levels = c("Realistic"))
+DF_Realistic$Noise_level <- fac
+fig_arr(DF = DF_Realistic,
+        file_name = paste0(home_for_summary,"/extraction.accuracy.pdf"))
+  
+  
+  
 
 # Plot running time only for Realistic noise level ----------------------------
 #
 #
 # a. Import results of profiling measures.
 file <- paste0(home_for_summary, "/cpu_time.csv")
-DF <- read.csv(file,header = T)
+DF_time <- read.csv(file, header = T)
 
 
 # b. Data pre-processing.
-DF <- DF %>% filter(Noise_level == "Realistic")
+DF_time <- DF_time %>% filter(Noise_level == "Realistic")
 
 # Change tool names to ordered factor
-fac <- factor(DF$Approach, ordered = T,
+fac <- factor(DF_time$Approach, ordered = T,
               levels = tool_names)
-DF$Approach <- fac
-# Re-arrange DF
-DF <- DF %>% arrange(Approach,Noise_level,Run)
+DF_time$Approach <- fac
+# Re-arrange DF_time
+DF_time <- DF_time %>% arrange(Approach, Noise_level, Run)
 
 # Change storage unit from bytes to MB.
 # Change time unit from secs to hours.
-DF <- DF %>% mutate(
+DF_time <- DF_time %>% mutate(
   CPU_time = CPU_time / 3600
   #,
   # wall_clock_time = wall_clock_time / 3600,
@@ -255,13 +285,13 @@ axis.titles <- c("CPU_time" = "CPU time (hours)")
 for(vn in var.names){
   
   # Round range of var to 1 decimal place.
-  range.vals <- DF %>% select(starts_with(vn)) %>% na.omit() %>%
+  range.vals <- DF_time %>% select(starts_with(vn)) %>% na.omit() %>%
     unlist() %>% range()
   # Maximum values of all measures are more than 100, 
   # thus we round the upper-bound to the nearest hundreds.
   range.vals <- c(0, ceiling(100 * range.vals[2])/100)
   # Generate ggplot object
-  figs[[vn]] <- main_text_plot(DF, vn, axis.titles[vn], range.vals)
+  figs[[vn]] <- main_text_plot(DF_time, vn, axis.titles[vn], range.vals)
 }
 
 # Arrange 4 panels into one ggplot object.
