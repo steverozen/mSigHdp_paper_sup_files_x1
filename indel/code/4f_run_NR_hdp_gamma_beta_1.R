@@ -1,5 +1,5 @@
 # How to run:
-# $ nice Rscript indel/code/4f_run_NR_hdp_gamma_beta_1.R <seed> >& indel/raw_results/NR_hdp_gamma_beta_1/log &
+# $ nice Rscript indel/code/4f_run_NR_hdp_gamma_beta_1.R <seed> >>& indel/raw_results/NR_hdp_gb_1.results/log &
 
 basedir <- "mSigHdp_paper_sup_files_x1" 
 if (basename(getwd()) != basedir) {
@@ -10,9 +10,8 @@ message(Sys.time(), " running ", paste(commandArgs(), collapse = " "))
 
 args <- commandArgs(trailingOnly = TRUE)
 
-home_for_run <- args[1]
-if (length(args) > 1) {
-  seeds_in_use <- args[-1]
+if (length(args) > 0) {
+  seeds_in_use <- args
 } else {
   seeds_in_use <- c(145879, 200437, 310111, 528401, 1076753)
 }
@@ -34,6 +33,8 @@ num.child.process  <- 20
 # Guessed number of raw clusters
 start_K            <- 22
 
+home_for_run       <- paste0("./indel/raw_results/NR_hdp_gb_", 
+                             GLOBAL.gamma.beta, ".results/")
 home_for_data      <- "./indel/input"
 
 # Names of data sets

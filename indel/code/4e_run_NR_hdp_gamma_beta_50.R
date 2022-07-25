@@ -1,5 +1,5 @@
 # How to run:
-# $ nice Rscript indel/code/4e_run_NR_hdp_gamma_beta_50.R <seed> >& indel/raw_results/NR_hdp_gamma_beta_50/log &
+# $ nice Rscript indel/code/4e_run_NR_hdp_gamma_beta_50.R <seed> >>& indel/raw_results/NR_hdp_gb_50.results/log &
 
 basedir <- "mSigHdp_paper_sup_files_x1" 
 if (basename(getwd()) != basedir) {
@@ -10,15 +10,11 @@ message(Sys.time(), " running ", paste(commandArgs(), collapse = " "))
 
 args <- commandArgs(trailingOnly = TRUE)
 
-
-if (TRUE) {
-seeds_in_use <- args 
+if (length(args) > 0) {
+  seeds_in_use <- args
 } else {
-seeds_in_use <- args[2]
-
-home_for_run <- args[1]
+  seeds_in_use <- c(145879, 200437, 310111, 528401, 1076753)
 }
-stop("update the qsub scripts for this")
 
 message(Sys.time(), " running on seed ", seeds_in_use)
 
@@ -33,14 +29,13 @@ num.child.process  <- 20
 # Guessed number of raw clusters
 start_K            <- 22
 
-home_for_run       <- paste0("./indel/raw_results/NR_hdp_gamma_beta_", 
-                             GLOBAL.gamma.beta)
+home_for_run       <- paste0("./indel/raw_results/NR_hdp_gb_", 
+                             GLOBAL.gamma.beta, ".results/")
 home_for_data      <- "./indel/input"
 
 # Names of data sets
 # dataset_names <- c("Noiseless", "Moderate", "Realistic")
 dataset_names <- c("Realistic")
-
 
 
 # Run mSigHdp -----------------------------------------------------------------

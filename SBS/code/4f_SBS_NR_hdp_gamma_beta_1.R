@@ -1,5 +1,5 @@
 # How to run:
-# $ nice Rscript SBS/code/4f_SBS_run_NR_hdp_gamma_beta_1.R >& SBS/raw_results/NR_hdp_gamma_beta_1/log &
+# $ nice Rscript SBS/code/4f_SBS_run_NR_hdp_gamma_beta_1.R >>& SBS/raw_results/NR_hdp_gb_1.results/log &
 
 basedir <- "mSigHdp_paper_sup_files_x1" 
 if (basename(getwd()) != basedir) {
@@ -10,9 +10,8 @@ message(Sys.time(), " running ", paste(commandArgs(), collapse = " "))
 
 args <- commandArgs(trailingOnly = TRUE)
 
-home_for_run <- args[1]
-if (length(args) > 1) {
-  seeds_in_use <- args[-1]
+if (length(args) > 0) {
+  seeds_in_use <- args
 } else {
   seeds_in_use <- c(145879, 200437, 310111, 528401, 1076753)
 }
@@ -27,13 +26,14 @@ GLOBAL.gamma.beta  <- 1  # This will be used inside mSigHdp::SetupAndPosterior;
                          # for selection of 1 see page 132 of 
                          # https://www.repository.cam.ac.uk/bitstream/handle/1810/275454/Roberts-2018-PhD.pdf,
                          # and also page 161
-                         
 burnin.iterations  <- 5000 * 20
 CPU.cores          <- 20
 num.child.process  <- 20
 # Guessed number of raw clusters
 start_K            <- 46
 
+home_for_run       <- paste0("./SBS/raw_results/NR_hdp_gb_", 
+                             GLOBAL.gamma.beta, ".results/")
 home_for_data      <- "./SBS/input"
 
 # Names of data sets

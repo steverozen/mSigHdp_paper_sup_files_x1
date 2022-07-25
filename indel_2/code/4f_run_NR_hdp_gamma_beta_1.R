@@ -1,5 +1,5 @@
 # How to run:
-# $ nice Rscript indel_2/code/4e_run_NR_hdp_gamma_beta_1.R <seed> >>& indel_2/raw_results/NR_hdp_gamma_beta_1/log &
+# $ nice Rscript indel_2/code/4f_run_NR_hdp_gamma_beta_1.R <seed> >>& indel_2/raw_results/NR_hdp_gb_1.results/log &
 
 basedir <- "mSigHdp_paper_sup_files_x1" 
 if (basename(getwd()) != basedir) {
