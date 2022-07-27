@@ -9,6 +9,6 @@ plot.meta.info <- paste("indel_2",
                         Sys.Date(), 
                         "Realistic size = 10; gamma.beta = 50, burnin = 30k")
 tool_names <- c("mSigHdp", "SigProfilerExtractor",
-                "SignatureAnalyzer", "signeR")
+                "SignatureAnalyzer", "signeR", "NR_hdp_gb_1")
 
 source("common_code/main_text_plotting.R")
