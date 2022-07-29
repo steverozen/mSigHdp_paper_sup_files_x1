@@ -42,9 +42,9 @@ home_for_data <- "./SBS_2_down_samp/input"
 home_for_run <- "./SBS_2_down_samp/raw_results"
 
 # Guessed signatures.
-# We assume mSigHdp does not know the ground-truth K (23),
-# then we should specify start_K as 46.
-start_K <- 46
+# We assume mSigHdp does not know the ground-truth K (32),
+# then we should specify start_K as 64.
+start_K <- 64
 
 # Names of data sets
 dataset_names <- c("1k", "3k", "5k", "10k")
