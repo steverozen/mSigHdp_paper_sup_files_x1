@@ -27,9 +27,38 @@ import sys
 import tracemalloc               # RAM profiler
 import argparse
 
+###############################################################################
+#%% Cell 2: Built an arg parser
+###############################################################################
+parser = argparse.ArgumentParser(description="Run SigProfilerExtractor on designated data set(s), with designated seed number(s).\n",
+    formatter_class=argparse.ArgumentDefaultsHelpFormatter) ## __init__ of ArgumentParser object.
+
+## Expects 2 positional arguments (must-have arguments)
+## The first is the file or folder to be renamed
+## The second is the new name of the file or folder.
+parser.add_argument('--seeds', '-s', nargs='*', type = int,
+    help='Integer values to be used as random seeds.')
+parser.add_argument('--datasets', '-d', nargs='*', type = str,
+    help='The name of data sets from which SigProfiler is going to extract signatures.')
+    
+default_seeds = False
+default_datasets = False
+if len(sys.argv) > 1: ## The first argument (sys.argv[0]) would be the filename of this script 
+    arguments = parser.parse_args(sys.argv[1:])
+    seed_numbers = arguments.seeds
+    dataset_names = arguments.datasets
+    if (seed_numbers is None):
+        default_seeds = True
+    if (dataset_names is None):
+        default_datasets = True
+else:
+    default_seeds = True
+    default_datasets = True
+
+
 
 ###############################################################################
-# From Cell 2 and onwards:
+# From Cell 3 and onwards:
 # Must add the statement if __name__=="__main__".
 # Otherwise SigProfilerExtractor will raise a RunTimeError
 # see GitHub repo issue #88:
@@ -37,57 +66,33 @@ import argparse
 ###############################################################################
 
 ###############################################################################
-#%% Cell 2: Set global variables and import SigProfilerExtractor
+#%% Cell 3: Set global variables and import SigProfilerExtractor
 ###############################################################################
 
 if __name__ == "__main__":
     
-    ##
-    #%% 2.1 : Built an arg parser
-    ##
-    parser = argparse.ArgumentParser(description="Run SigProfilerExtractor on designated data set(s), with designated seed number(s).\n",
-        formatter_class=argparse.ArgumentDefaultsHelpFormatter) ## __init__ of ArgumentParser object.
-
-    ## Expects 2 positional arguments (must-have arguments)
-    ## The first is the file or folder to be renamed
-    ## The second is the new name of the file or folder.
-    parser.add_argument('--seeds', '-s', nargs='*', type = int,
-        help='Integer values to be used as random seeds.')
-    parser.add_argument('--datasets', '-d', nargs='*', type = str,
-        help='The name of data sets from which SigProfiler is going to extract signatures.')
-    
-    
-    if len(sys.argv) > 1: ## The first argument (sys.argv[0]) would be the filename of this script 
-        default_flag = FALSE
-        arguments = parser.parse_args(sys.argv[1:])
-        seed_numbers = arguments.seeds
-        dataset_names = arguments.datasets
-        if (seed_numbers is None):
-            default_seeds = True
-        if (dataset_names is None):
-            default_datasets = True
-    else:
-        default_seeds = True
-        default_datasets = True
+   
 
     ###########################################################################
-    #  2.1: Set global variables
+    #  3.1: Set global variables
     ###########################################################################
     # Read old working directory
     old_wd = os.getcwd()
     # os.path.abspath extends a relative path to an absolute one.
     home_for_data = os.path.abspath("./SBS_down_samp/input")
     home_for_run = os.path.abspath("./SBS_down_samp/raw_results")
-    # Seed numbers
+    # Specify default seed numbers,
+    # if seed numbers not in sys.argv[1:]
     if default_seeds == True:
         seed_numbers = (145879, 200437, 310111, 528401, 1076753)
     seed_numbers = [(sn % 10000000) for sn in seed_numbers]
-    # Naming the datasets for cycling
+    # Naming the datasets for cycling,
+    # if dataset_names not in sys.argv[1:]
     if default_datasets == True:
         dataset_names = ("1k", "3k", "5k", "10k")
 
     ###########################################################################
-    #  2.2: Set NON-DEFAULT argument values
+    #  3.2: Set NON-DEFAULT argument values
     ###########################################################################
     # 96 - signatures and spectra in SBS context
     context_type = "96"
@@ -104,14 +109,14 @@ if __name__ == "__main__":
     numcpus = 60
 
     ###########################################################################
-    #  2.3: Import SigProfilerExtractor
+    #  3.3: Import SigProfilerExtractor
     ###########################################################################
     from SigProfilerExtractor import sigpro as sig
 
 
 
 ###############################################################################
-#%% Cell 3: Fetch argument values for each run,
+#%% Cell 4: Fetch argument values for each run,
 #   and run SigProfilerExtractor using these values.
 ###############################################################################
 
@@ -119,7 +124,7 @@ if __name__ == "__main__":
     for dataset_name in dataset_names:
         for seed_number in seed_numbers:
             ###################################################################
-            #  3.1: Set argument values specific for each run
+            #  4.1: Set argument values specific for each run
             ###################################################################
             input_dir = home_for_data+"/"+dataset_name
             input_catalog = input_dir+"/ground.truth.syn.catalog.tsv"
@@ -140,7 +145,7 @@ if __name__ == "__main__":
             seeds = os.path.abspath(output_dir+"/Seeds.txt")
 
             ###################################################################
-            #  3.2: Enable profiling before running SigProfilerExtractor
+            #  4.2: Enable profiling before running SigProfilerExtractor
             ###################################################################
             # Messages
             print("\n\n#####################")
@@ -164,7 +169,7 @@ if __name__ == "__main__":
             times_start = os.times()
             
             ###################################################################
-            #  3.3: Run sigProfilerExtractor -
+            #  4.3: Run sigProfilerExtractor -
             #  extract signatures and infer exposures
             #
             #  Argument values provided as constants are default values;
@@ -194,7 +199,7 @@ if __name__ == "__main__":
                 cpu=numcpus)
             
             ###################################################################
-            #  3.4: Stop profiling, and calculate time and RAM usage.
+            #  4.4: Stop profiling, and calculate time and RAM usage.
             ###################################################################
             times_end=os.times()
             # Diff in os.times() in seconds
