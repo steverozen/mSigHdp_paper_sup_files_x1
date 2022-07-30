@@ -80,17 +80,17 @@ for(datasetName in datasetNames){
       summarize.exp = F,
       overwrite = T
     )
-  }
-  ## Also summarize tools in toolNamesExt, on data set "Realistic"
-  if(datasetName != "Realistic") next
-  for(extrAttrToolName in toolNamesExt){
-    SynSigEval::SummarizeSigOneExtrAttrSubdir(
-      run.dir = paste0(topLevelFolder4Run,"/",extrAttrToolName,
-                       ".results/Realistic/seed.",seedInUse,"/"),
-      ground.truth.exposure.dir = paste0(topLevelFolder4Data,"/Realistic/"),
-      summarize.exp = F,
-      overwrite = T
-    )
+  
+    ## Also summarize tools in toolNamesExt, on data set "Realistic"
+    if(datasetName != "Realistic") next
+    for(extrAttrToolName in toolNamesExt){
+      SynSigEval::SummarizeSigOneExtrAttrSubdir(
+        run.dir = paste0(topLevelFolder4Run,"/",extrAttrToolName,
+                         ".results/Realistic/seed.",seedInUse,"/"),
+        ground.truth.exposure.dir = paste0(topLevelFolder4Data,"/Realistic/"),
+        summarize.exp = F,
+        overwrite = T)
+    }
   }
 }
 
