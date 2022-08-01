@@ -16,4 +16,4 @@ if (FALSE) {
                  "SignatureAnalyzer", "signeR")
 }
 
-source("common_code/main_text_plotting.R")
+source("common_code/plotting.R")

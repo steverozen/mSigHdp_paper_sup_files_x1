@@ -18,4 +18,4 @@ if (FALSE) {
                  "NR_hdp_gb_20")
 }
 
-source("common_code/main_text_plotting.R")
+source("common_code/plotting.R")

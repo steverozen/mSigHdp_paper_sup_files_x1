@@ -12,4 +12,4 @@ tool_names <- c("mSigHdp", "SigProfilerExtractor",
                 "SignatureAnalyzer", "signeR",
                 "NR_hdp_gb_1", "NR_hdp_gb_50")
 
-source("common_code/main_text_plotting.R")
+source("common_code/plotting.R")
