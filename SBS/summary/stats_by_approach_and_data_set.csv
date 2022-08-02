@@ -8,6 +8,7 @@ Noiseless,SignatureAnalyzer,0.955,0.913,0.977,2.84,2.43e-05
 Noiseless,signeR,0.737,0.730,0.989,2.46,5.10e-02
 Noiseless,SigProfilerExtractor,0.935,0.878,0.986,2.80,7.22e-02
 Realistic,mSigHdp,0.776,0.870,0.988,2.63,2.53e-02
+Realistic,mSigHdp_ds_10k,0.964,0.930,0.988,2.88,2.48e-02
 Realistic,NR_hdp_gb_20,0.535,0.930,0.984,2.45,3.60e-02
 Realistic,SignatureAnalyzer,0.291,0.583,0.965,1.84,5.90e-02
 Realistic,signeR,0.560,0.722,0.980,2.26,1.28e-01

@@ -54,6 +54,11 @@ NR_hdp_gb_50,Realistic,seed.200437,892686.251
 NR_hdp_gb_50,Realistic,seed.310111,884789.879
 NR_hdp_gb_50,Realistic,seed.528401,890890.352
 NR_hdp_gb_50,Realistic,seed.1076753,890706.8
+mSigHdp_ds_5k,Realistic,seed.145879,137145.154
+mSigHdp_ds_5k,Realistic,seed.200437,136565.606
+mSigHdp_ds_5k,Realistic,seed.310111,138269.108
+mSigHdp_ds_5k,Realistic,seed.528401,138132.701
+mSigHdp_ds_5k,Realistic,seed.1076753,137460.958
 SigProfilerExtractor,Noiseless,seed.145879,2291542.66
 SigProfilerExtractor,Noiseless,seed.200437,2272226.03
 SigProfilerExtractor,Noiseless,seed.310111,2274198.46

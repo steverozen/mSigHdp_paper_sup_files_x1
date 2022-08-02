@@ -30,7 +30,7 @@ RBasedToolNames <- c("mSigHdp", "signeR", "SignatureAnalyzer")
 if (FALSE) {
   toolNamesExt <- c("NR_hdp_gb_1", "NR_hdp_gb_20")
 } else {
-  toolNamesExt <- "NR_hdp_gb_20"
+  toolNamesExt <- c("NR_hdp_gb_20", "mSigHdp_ds_10k")
 }
 
 # Specify seeds used in analysis.

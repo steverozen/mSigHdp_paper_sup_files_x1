@@ -46,7 +46,7 @@ RBasedExtrAttrToolNames <- c("mSigHdp", "signeR", "SigProfilerExtractor")
 if (FALSE) {
   toolNamesExt <- c("NR_hdp_gb_1", "NR_hdp_gb_20")
 } else {
-  toolNamesExt <- c("NR_hdp_gb_20")
+  toolNamesExt <- c("NR_hdp_gb_20", "mSigHdp_ds_10k")
 }
 
 

@@ -8,7 +8,11 @@ home_for_summary <- "./indel/summary/"
 plot.meta.info <- paste("indel",
                         Sys.Date(), 
                         "Realistic size = 10; gamma.beta = 50, burnin = 30k")
-tool_names <- c("mSigHdp", "SigProfilerExtractor",
+# Note: mSigHdp_ds_10k is listed as the second program,
+# becasue down-sampling makes mSigHdp to have WORSE
+# extraction accuracy on data set SBS/Realistic.
+tool_names <- c("mSigHdp", "mSigHdp_ds_5k",
+                "SigProfilerExtractor",
                 "SignatureAnalyzer", "signeR",
                 "NR_hdp_gb_1", "NR_hdp_gb_50")
 
