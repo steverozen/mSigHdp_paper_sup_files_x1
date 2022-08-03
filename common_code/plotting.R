@@ -129,29 +129,7 @@ main_text_plot <- function(DF, var.name, var.title, inputRange) {
       strip.text = ggplot2::element_text(size = 10),
       # remove legends.
       legend.position = "none")
-  # Add border lines across different programs
-  #
-  # If the results are on 3 data sets 
-  # (e.g. Noiseless, Moderate, Realistic)
-  # then we only need to draw only one line.
-  #
-  # Similarly, if there are 2/5 data sets,
-  # we only need to draw 1/4 lines.
-  #
-  # Each categorical group corresponds to an
-  # INTEGER COORDINATE on the x axis (e.g. 1, 2, ...)
-  #
-  # Thus the lines should have x-coords:
-  # 1.5, 2.5, ...
-  num_approaches <- length(unique(DF$Approach))
-  if (num_approaches > 1) {
-    x_coords <- seq(1.5, num_approaches-0.5, 1)
-    ggObj <- ggObj + 
-      geom_vline(xintercept = x_coords, 
-                 color = "black", 
-                 size = 0.2)
-  }
-  
+
   return(ggObj)
 } # End main_text_plot
 
