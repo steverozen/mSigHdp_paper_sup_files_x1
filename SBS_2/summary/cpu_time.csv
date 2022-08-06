@@ -19,6 +19,11 @@ SignatureAnalyzer,Realistic,seed.200437,5603919.865
 SignatureAnalyzer,Realistic,seed.310111,6500565.178
 SignatureAnalyzer,Realistic,seed.528401,5898554.229
 SignatureAnalyzer,Realistic,seed.1076753,6397205.75
+mSigHdp,Realistic,seed.145879,23800788.824
+mSigHdp,Realistic,seed.200437,25439862.31
+mSigHdp,Realistic,seed.310111,24911450.045
+mSigHdp,Realistic,seed.528401,25037565.107
+mSigHdp,Realistic,seed.1076753,24462112.846
 SigProfilerExtractor,Noiseless,seed.145879,4711557.24
 SigProfilerExtractor,Noiseless,seed.200437,5381131.21
 SigProfilerExtractor,Noiseless,seed.310111,5727189.63
