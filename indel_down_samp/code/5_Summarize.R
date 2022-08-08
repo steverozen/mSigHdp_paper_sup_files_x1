@@ -89,7 +89,7 @@ for(toolName in toolsToEval){
   SummarizeOneToolMultiDatasets(
     datasetNames = datasetNames,
     datasetGroup = datasetGroup,
-    datasetGroupName = "Noise level",
+    datasetGroupName = "Down-sampling threshold",
     datasetSubGroup = NULL,
     datasetSubGroupName = NULL,
     toolName = toolName,

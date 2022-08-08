@@ -7,16 +7,14 @@ if (basename(getwd()) != "mSigHdp_paper_sup_files_x1") {
 if (!requireNamespace("remotes", quietly = TRUE)) {
   install.packages("remotes")
 }
-
-if (!("ICAMS" %in% rownames(installed.packages())) ||
-    packageVersion("ICAMS") < "3.0.5") {
-  remotes::install_github("steverozen/ICAMS", ref = "v3.0.5-branch")
+if ((!requireNamespace("ICAMS", quietly = TRUE)) ||
+    (packageVersion("ICAMS") < "3.0.6")) {
+  remotes::install_github("steverozen/ICAMS", ref = "v3.0.6-branch")
 }
-if (!("SynSigEval" %in% rownames(installed.packages())) ||
-    packageVersion("SynSigEval") < "0.3.1") {
+if ((!requireNamespace("SynSigEval", quietly = TRUE)) ||
+    (packageVersion("SynSigEval") < "0.3.1")) {
   remotes::install_github(repo = "WuyangFF95/SynSigEval", ref = "0.3.1-branch")
 }
-
 require(ICAMS)
 require(SynSigEval)
 require(readr)

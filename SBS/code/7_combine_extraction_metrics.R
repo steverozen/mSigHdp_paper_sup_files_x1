@@ -12,6 +12,8 @@ if (basename(getwd()) != "mSigHdp_paper_sup_files_x1") {
   stop("Please run from top level directory, mSigHdp_paper_sup_files_x1")
 }
 
+# Please run 6_Summarize.R before running this code.
+
 # 0. Install and load dependencies --------------------------------------------
 
 library(data.table)
