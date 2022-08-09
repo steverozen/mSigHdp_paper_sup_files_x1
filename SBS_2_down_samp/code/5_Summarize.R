@@ -33,7 +33,7 @@ folder4ToolwiseSummary <- "./SBS_2_down_samp/summary/toolwise_summary"
 folder4CombinedSummary <- "./SBS_2_down_samp/summary/top_level_summary"
 
 # Specify dataset names
-datasetNames <- c("1k", "3k", "5k")
+datasetNames <- c("1k", "3k", "5k", "no_down_samp")
 # data set names with some runs failed
 dn_part <- "10k"
 

@@ -24,7 +24,7 @@ folder4Summary <- "./SBS_2_down_samp/summary/"
 
 
 # Specify dataset names
-datasetNames <- c("1k", "3k", "5k")
+datasetNames <- c("1k", "3k", "5k", "no_down_samp")
 dn_part <- "10k"
 
 
