@@ -1,0 +1,5 @@
+Down_samp_level,Approach,mean(PPV),mean(TPR),mean(aver_Sim_TP_only),mean(Composite),sd(Composite)
+10k,mSigHdp,0.871,0.789,0.993,2.65,0.0436
+1k,mSigHdp,0.899,0.775,0.994,2.67,0.0240
+3k,mSigHdp,0.899,0.775,0.992,2.67,0.0227
+5k,mSigHdp,0.881,0.781,0.994,2.66,0.0172
