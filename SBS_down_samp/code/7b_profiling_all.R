@@ -24,12 +24,12 @@ folder4Summary <- "./SBS_down_samp/summary/"
 
 
 # Specify dataset names
-datasetNames <- c("1k", "3k", "5k", "10k")
+datasetNames <- c("1k", "3k", "5k", "10k", "no_down_samp")
 
 
 # Specify names of computational approaches
 # to summarize from their profiling output.
-RBasedToolNames <- c("mSigHdp")
+RBasedToolNames <- "mSigHdp"
 
 
 # Specify seeds used in analysis.

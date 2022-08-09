@@ -15,7 +15,7 @@ folder4Summary = "./SBS_down_samp/summary"
 if os.path.isdir(folder4Summary) == False:
     os.mkdir(folder4Summary)
 # Specify dataset names
-datasetNames = ("1k", "3k", "5k", "10k")
+datasetNames = ("1k", "3k", "5k", "10k", "no_down_samp")
 # Specify name of computational approach
 # to summarize from their profiling output.
 toolName = "SigProfilerExtractor"

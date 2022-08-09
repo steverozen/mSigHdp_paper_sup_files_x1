@@ -33,7 +33,7 @@ folder4ToolwiseSummary <- "./SBS_down_samp/summary/toolwise_summary"
 folder4CombinedSummary <- "./SBS_down_samp/summary/top_level_summary"
 
 # Specify dataset names
-datasetNames <- c("1k", "3k", "5k", "10k")
+datasetNames <- c("1k", "3k", "5k", "10k", "no_down_samp")
 
 
 # Specify names of computational approaches

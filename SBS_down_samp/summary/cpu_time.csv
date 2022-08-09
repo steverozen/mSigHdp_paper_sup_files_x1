@@ -19,6 +19,11 @@ mSigHdp,10k,seed.200437,3985939.807
 mSigHdp,10k,seed.310111,4548819.569
 mSigHdp,10k,seed.528401,4112199.206
 mSigHdp,10k,seed.1076753,3503522.863
+mSigHdp,no_down_samp,seed.145879,17777271.397
+mSigHdp,no_down_samp,seed.200437,17756133.684
+mSigHdp,no_down_samp,seed.310111,17459401.501
+mSigHdp,no_down_samp,seed.528401,18103805.217
+mSigHdp,no_down_samp,seed.1076753,17875397.175
 SigProfilerExtractor,1k,seed.145879,538460.66
 SigProfilerExtractor,1k,seed.200437,466286.09
 SigProfilerExtractor,1k,seed.310111,428856.76
@@ -39,3 +44,8 @@ SigProfilerExtractor,10k,seed.200437,589011.170000001
 SigProfilerExtractor,10k,seed.310111,565562.02
 SigProfilerExtractor,10k,seed.528401,525516.25
 SigProfilerExtractor,10k,seed.1076753,529757.19
+SigProfilerExtractor,no_down_samp,seed.145879,647702.69
+SigProfilerExtractor,no_down_samp,seed.200437,650540.22
+SigProfilerExtractor,no_down_samp,seed.310111,672238.73
+SigProfilerExtractor,no_down_samp,seed.528401,674590.03
+SigProfilerExtractor,no_down_samp,seed.1076753,673146.93
