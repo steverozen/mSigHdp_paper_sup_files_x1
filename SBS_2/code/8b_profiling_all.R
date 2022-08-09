@@ -27,7 +27,7 @@ datasetNames <- c("Noiseless", "Realistic")
 # Specify names of computational approaches
 # to summarize from their profiling output.
 RBasedToolNames <- c("signeR", "SignatureAnalyzer")
-  toolNamesExt <- "mSigHdp"
+toolNamesExt <- c("mSigHdp", "mSigHdp_ds_1k")
 
 # Specify seeds used in analysis.
 # Specify 5 seeds used in software running

@@ -41,7 +41,7 @@ datasetNames <- c("Noiseless", "Realistic")
 # SigProfilerExtractor is included, but we should run
 # 5_rename_SA_SP_files before this summarization.
 RBasedExtrAttrToolNames <- c("signeR", "SigProfilerExtractor")
-toolNamesExt <- "mSigHdp"
+toolNamesExt <- c("mSigHdp", "mSigHdp_ds_1k")
 
 
 # Specify seeds used in analysis.

@@ -9,7 +9,8 @@ plot.meta.info <- paste("SBS_2",
                         Sys.Date(), 
                         "Realistic size = 30; gamma.beta = 20, burnin = 100k")
 
-tool_names <- c("mSigHdp", "SigProfilerExtractor",
+tool_names <- c("mSigHdp_ds_1k", "mSigHdp",
+                "SigProfilerExtractor",
                 "SignatureAnalyzer", "signeR")
 
 
