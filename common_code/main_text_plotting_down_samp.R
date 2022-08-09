@@ -142,11 +142,16 @@ DF <- read.csv(file, header = T)
 # Calculate composite measure
 DF <- DF %>% mutate(Composite = PPV + TPR + aver_Sim_TP_only)
 
+# Keep only selected down_samp_level
+DF <- DF %>% filter(Down_samp_level %in% dataset_names)
+
 # Change Down_samp_level to ordered factor
 fac <- factor(DF$Down_samp_level, ordered = T,
               levels = dataset_names)
 DF$Down_samp_level <- fac
 
+# Keep only selected tool names
+DF <- DF %>% filter(Approach %in% tool_names)
 
 # Change tool names to ordered factor
 fac <- factor(DF$Approach, ordered = T,
