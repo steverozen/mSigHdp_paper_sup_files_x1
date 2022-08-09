@@ -1,6 +1,9 @@
 
-##This script contains source functions for /indel/code/9_plotting.R and /SBS/code/9_plotting.R 
-##This script is not designed to run independently
+## This script contains source functions for /indel/code/9_plotting.R and /SBS/code/9_plotting.R 
+## This script is not designed to run independently
+
+# Import prerequisites --------------------------------------------------------
+
 require(ggplot2)
 require(dplyr)
 require(ggbeeswarm)
@@ -8,9 +11,16 @@ require(ggpubr)
 require(data.table)
 
 
+# Constants -------------------------------------------------------------------
+
 dot.sym <- 16
 
 # A plotting function which accepts a data frame sliced
+# Plotting function for down-sampled data sets --------------------------------
+
+# A plotting function aims for generating ONE panel to summarize performance
+# of programs on down-sampled data sets.
+#
 # form all_results.csv as input,
 # and a ggplot object contains beeswarm plot for a variable as output.
 #
@@ -25,7 +35,7 @@ dot.sym <- 16
 # inputRange - Range of y axis for variable. Passed to limits argument of
 # scale_y_continuous().
 
-main_text_plot <- function(DF, var.name, var.title, inputRange){
+main_text_plot <- function(DF, var.name, var.title, inputRange) {
   
   DF1 <- DF[!is.na(DF[[var.name]]),]
   
@@ -84,7 +94,7 @@ main_text_plot <- function(DF, var.name, var.title, inputRange){
   ggplot2::labs(x = "Threshold for down-sampling",
                 y = var.title,
                 color = "Computational Approach:") +
-    # Rotate axis.text.x 90 degrees,
+    # Rotate axis.text.x 60 degrees,
     # move axis.text.x right below the tick marks,
     # and remove legends.
     ggplot2::theme(
@@ -92,16 +102,19 @@ main_text_plot <- function(DF, var.name, var.title, inputRange){
       panel.background = ggplot2::element_rect(fill = "white",
                                                color = "black"),
       panel.grid = element_blank(),
+      # Remove excessive margins between panels
+      panel.spacing = unit(0.25, "lines"),
       axis.text.x = ggplot2::element_text(
-        # angle = 30,
+        angle = 60,
         # move axis.text.x right below the tick marks
-        # hjust = 1,vjust = 1
-      ),
+        hjust = 1,
+        # font size
+        size = 8),
       axis.ticks.x = element_blank(),
       # Make font size of facet label smaller.
       strip.text = ggplot2::element_text(size = 10),
       # remove legends.
-      legend.position = "top")  +
+      legend.position = "bottom")  +
     # Make sure that no more than 3 tools 
     # can be drawn on a line of legend
     ggplot2::guides(
@@ -109,29 +122,7 @@ main_text_plot <- function(DF, var.name, var.title, inputRange){
         nrow = ceiling(length(tool_names)/3), 
         byrow = TRUE)
     )
-    # Add border lines across different data sets
-  #
-  # If the results are on 3 data sets 
-  # (e.g. Noiseless, Moderate, Realistic)
-  # then we only need to draw only one line.
-  #
-  # Similarly, if there are 2/5 data sets,
-  # we only need to draw 1/4 lines.
-  #
-  # Each categorical group corresponds to an
-  # INTEGER COORDINATE on the x axis (e.g. 1, 2, ...)
-  #
-  # Thus the lines should have x-coords:
-  # 1.5, 2.5, ...
-  num_data_sets <- length(unique(DF$Down_samp_level))
-  if (num_data_sets > 1) {
-    x_coords <- seq(1.5, num_data_sets-0.5, 1)
-    ggObj <- ggObj + 
-      geom_vline(xintercept = x_coords, 
-                 color = "black", 
-                 size = 0.2)
-  }
-  
+
   return(ggObj)
 } # End main_text_plot
 
@@ -191,30 +182,37 @@ for(vn in c("Composite", var.names)){
   # on the x axis.
   if (vn %in% c("Composite", "aver_Sim_TP_only")) {
     figs[[vn]] <- figs[[vn]] +
-      ggplot2::theme(axis.text.x = element_blank(),
-                     #axis.ticks.x = element_blank(),
-                     axis.title.x = element_blank())
+      ggplot2::theme(
+                     axis.title.x = element_blank(),
+                     axis.ticks.x = element_blank(),
+                     plot.margin = unit(c(0.5,0.5,0.5,0.5), "lines"))
   }
 }
 
 # Arrange and save the plot
 #
+# align = "h" guarantees the grid regions (canvas surrounded by 
+# a rectangle) of the 4 facets to have the same height.
+#
 # align = "v" Makes the reference lines of the grid region (canvas region)
 # align together. This guarantees the 4 grid regions to have the same area,
 # despite the number of digits on the y-axis vary.
-arr.figs <- ggpubr::ggarrange(plotlist = figs, align = "v", common.legend = T)
+arr.figs <- ggpubr::ggarrange(plotlist = figs, 
+                              align = "hv",
+                              legend = "bottom",
+                              common.legend = T)
 # Temporarily, also add titles to plots to include meta-information:
 #
 arr.figs <- ggpubr::annotate_figure(
   arr.figs, 
-  bottom  = text_grob(plot.meta.info, size = 6),
+  bottom  = text_grob(plot.meta.info, size = 6)
 )
 
 ggplot2::ggsave(
   filename = paste0(home_for_summary,"/extraction.accuracy.pdf"),
   plot = arr.figs,
   width = unit(9, "inch"),
-  height = unit(6, "inch"))
+  height = unit(9, "inch"))
 
 
 # Temporarily disabled
