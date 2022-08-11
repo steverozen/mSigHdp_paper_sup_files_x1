@@ -15,7 +15,17 @@ require(data.table)
 
 dot.sym <- 16
 
-# A plotting function which accepts a data frame sliced
+# Names of 4 signature extraction measures to be plotted to a Supp Figure
+var_names_extr <- c("Composite", "aver_Sim_TP_only", "PPV", "TPR")
+
+# The full names of 4 signature extraction measures.
+# To be displayed as y-axis titles.
+y_axis_titles_extr <- 
+  c("Composite" = "Composite measure",
+    "aver_Sim_TP_only" = "Mean cosine similarity",
+    "PPV" = "PPV",
+    "TPR" = "TPR")
+
 # Plotting function for down-sampled data sets --------------------------------
 
 # A plotting function aims for generating ONE panel to summarize performance
@@ -23,6 +33,8 @@ dot.sym <- 16
 #
 # form all_results.csv as input,
 # and a ggplot object contains beeswarm plot for a variable as output.
+#
+# The results of different programs are distinguished by point color.
 #
 # DF - Input data.frame object.
 #
@@ -126,6 +138,89 @@ main_text_plot <- function(DF, var.name, var.title, inputRange) {
   return(ggObj)
 } # End main_text_plot
 
+# A function which arranges 4 panels to a single ggplot file ------------------
+#
+# This function can arrange 4 panels for main text plot, 
+# or 4 panels for supplementary plot.
+#
+# The former is a main figure only contains results on "Realistic" data set,
+# the latter is a supp figure contains results on ALL data sets.
+#
+# DF - Input data.frame object.
+#
+# file_name - Name of the plotting output file in PDF format.
+#
+#
+# legend_pos - passed to ggpubr::ggarrange() - position of legend.
+#
+# width_inch, height_inch - passed to ggplot2::ggsave(), 
+# canvas size for the output PDF file
+#
+fig_arr <- function(DF, file_name, 
+                    plot_func = main_text_plot,
+                    var.names = var_names_extr,
+                    axis.titles = y_axis_titles_extr,
+                    legend_pos  = "bottom",
+                    width_inch = 9,
+                    height_inch = 9) {
+  
+  # c. Plotting of 4 panels, and saving arranged figure 
+  # with signature extraction measures
+  # on all data sets as a figure.
+  figs <- list()
+  for(vn in var.names) {
+    # Round range of to 1 decimal place.
+    range.vals <- DF %>% select(all_of(vn)) %>%
+      unlist() %>% range()
+    if (vn != "aver_Sim_TP_only") {
+      range.vals <-
+        c(floor(10 * range.vals[1])/10, ceiling(10 * range.vals[2])/10)
+    } else {
+      range.vals <-
+        c(floor(100 * range.vals[1])/100, ceiling(100 * range.vals[2])/100)
+    }
+    # Generate ggplot object
+    figs[[vn]] <- plot_func(DF, vn, axis.titles[vn], range.vals)
+    # For the top two panels, 
+    # remove axis.text and axis.title on the x axis.
+    #
+    # Also remove excessive white spaces between the top two
+    # and the lower two panels
+    if (vn %in% c("Composite", "aver_Sim_TP_only")) {
+      figs[[vn]] <- figs[[vn]] +
+        ggplot2::theme(axis.text.x = element_blank(),
+                       axis.title.x = element_blank(),
+                       axis.ticks.x = element_blank(),
+                       plot.margin = unit(c(0.5,0.5,0.5,0.5), "lines"))
+    }
+  }
+  
+  # Arrange and save the plot
+  #
+  # align = "h" guarantees the grid regions (canvas surrounded by 
+  # a rectangle) of the 4 facets to have the same height.
+  #
+  # align = "v" Makes the reference lines of the grid region (canvas region)
+  # align together. This guarantees the 4 grid regions to have the same area,
+  # despite the number of digits on the y-axis vary.
+  arr.figs <- ggpubr::ggarrange(plotlist = figs, 
+                                align = "hv",
+                                legend = legend_pos,
+                                common.legend = T)
+  # Temporarily, also add titles to plots to include meta-information:
+  #
+  arr.figs <- ggpubr::annotate_figure(
+    arr.figs, 
+    bottom  = text_grob(plot.meta.info, size = 6)
+  )
+  
+  ggplot2::ggsave(
+    filename = file_name,
+    plot = arr.figs,
+    width = unit(width_inch, "inch"),
+    height = unit(height_inch, "inch"))
+}
+
 
 
 # Plot extraction measures -------------------------------------------------
@@ -138,7 +233,7 @@ DF <- read.csv(file, header = T)
 #
 # Plot for PPV, TPR, mean Cosine similarity,
 # and Composite Measure equals to the sum of
-# these 3 measures.
+# these 3 measures on ALL data sets.
 # Calculate composite measure
 DF <- DF %>% mutate(Composite = PPV + TPR + aver_Sim_TP_only)
 
@@ -155,136 +250,87 @@ DF <- DF %>% filter(Approach %in% tool_names)
 
 # Change tool names to ordered factor
 fac <- factor(DF$Approach, ordered = T,
-              levels = c("mSigHdp", "SigProfilerExtractor"))
+              levels = tool_names)
 DF$Approach <- fac
 
-
-# c. Plotting of 4 panels, and saving arranged plot.
+# b2. Call function fig_arr() to generate supp figure with 4 panels,
 #
-# Plot 4 panels to Figure 1
-var.names <- c("aver_Sim_TP_only","PPV","TPR")
-axis.titles <- c("Composite" = "Composite measure",
-                 "aver_Sim_TP_only" = "Mean cosine similarity",
-                 "PPV" = "PPV",
-                 "TPR" = "TPR")
+# here, each panel corresponds to an extraction accuracy measure,
+# and measures for different DATA SETS are aligned on the x-axis.
+fig_arr(
+  DF = DF,
+  file_name = paste0(home_for_summary,"/extraction.accuracy.pdf"),
+  plot_func = main_text_plot
+)
 
+
+# Plot running time for all down-sampling levels ------------------------------
+#
+#
+# a. Import results of profiling measures.
+file <- paste0(home_for_summary, "/cpu_time.csv")
+DF_time <- read.csv(file, header = T)
+
+
+# b. Data pre-processing.
+
+# Keep only selected down_samp_level
+DF_time <- DF_time %>% filter(Down_samp_level %in% dataset_names)
+
+# Change Down_samp_level to ordered factor
+fac <- factor(DF_time$Down_samp_level, ordered = T,
+              levels = dataset_names)
+DF$Down_samp_level <- fac
+
+# Keep only selected tool names
+DF_time <- DF_time %>% filter(Approach %in% tool_names)
+
+# Change tool names to ordered factor
+fac <- factor(DF_time$Approach, ordered = T,
+              levels = tool_names)
+DF$Approach <- fac
+
+# Re-arrange DF_time
+DF_time <- DF_time %>% arrange(Approach, Down_samp_level, Run)
+
+# Change storage unit from bytes to MB.
+# Change time unit from secs to hours.
+DF_time <- DF_time %>% mutate(
+  CPU_time = CPU_time / 3600
+  #,
+  # wall_clock_time = wall_clock_time / 3600,
+  # peak_RAM = peak_RAM * 1e-06
+)
+
+# c. Plotting one panel for CPU time.
 figs <- list()
-for(vn in c("Composite", var.names)){
-  # Round range of to 1 decimal place.
-  range.vals <- DF %>% select(all_of(vn)) %>%
+var.names <- "CPU_time"
+axis.titles <- c("CPU_time" = "CPU time (hours)")
+
+
+for(vn in var.names) {
+  # Round range of var to 1 decimal place.
+  range.vals <- DF_time %>% select(starts_with(vn)) %>% na.omit() %>%
     unlist() %>% range()
-  if (vn != "aver_Sim_TP_only") {
-    range.vals <-
-      c(floor(10 * range.vals[1])/10, ceiling(10 * range.vals[2])/10)
-  } else {
-    range.vals <-
-      c(floor(100 * range.vals[1])/100, ceiling(100 * range.vals[2])/100)
-  }
+  # Maximum values of all measures are more than 100, 
+  # thus we round the upper-bound to the nearest hundreds.
+  range.vals <- c(0, ceiling(100 * range.vals[2])/100)
   # Generate ggplot object
-  figs[[vn]] <- main_text_plot(DF, vn, axis.titles[vn], range.vals)
-  # For the first and second panel,
-  # remove axis.text and axis.title
-  # on the x axis.
-  if (vn %in% c("Composite", "aver_Sim_TP_only")) {
-    figs[[vn]] <- figs[[vn]] +
-      ggplot2::theme(
-                     axis.title.x = element_blank(),
-                     axis.ticks.x = element_blank(),
-                     plot.margin = unit(c(0.5,0.5,0.5,0.5), "lines"))
-  }
+  figs[[vn]] <- main_text_plot(DF_time, vn, axis.titles[vn], range.vals)
 }
 
-# Arrange and save the plot
-#
-# align = "h" guarantees the grid regions (canvas surrounded by 
-# a rectangle) of the 4 facets to have the same height.
-#
-# align = "v" Makes the reference lines of the grid region (canvas region)
-# align together. This guarantees the 4 grid regions to have the same area,
-# despite the number of digits on the y-axis vary.
-arr.figs <- ggpubr::ggarrange(plotlist = figs, 
-                              align = "hv",
-                              legend = "bottom",
-                              common.legend = T)
+
 # Temporarily, also add titles to plots to include meta-information:
 #
-arr.figs <- ggpubr::annotate_figure(
-  arr.figs, 
-  bottom  = text_grob(plot.meta.info, size = 6)
+
+ann_fig <- ggpubr::annotate_figure(
+  figs$CPU_time, 
+  bottom  = text_grob(plot.meta.info, size = 6),
 )
 
 ggplot2::ggsave(
-  filename = paste0(home_for_summary,"/extraction.accuracy.pdf"),
-  plot = arr.figs,
-  width = unit(9, "inch"),
-  height = unit(9, "inch"))
-
-
-# Temporarily disabled
-if (FALSE) {
-  # Plot running time only all down-sampling thresholds ---------------------
-  #
-  #
-  # a. Import results of profiling measures.
-  file <- paste0(home_for_summary, "/cpu_time.csv")
-  DF <- read.csv(file,header = T)
-  
-  
-  # b. Data pre-processing.
-  DF <- DF %>% filter(Down_samp_level == "Realistic")
-  
-  # Change tool names to ordered factor
-  fac <- factor(DF$Approach, ordered = T,
-                levels = tool_names)
-  DF$Approach <- fac
-  # Re-arrange DF
-  DF <- DF %>% arrange(Approach,Down_samp_level,Run)
-  
-  # Change storage unit from bytes to MB.
-  # Change time unit from secs to hours.
-  DF <- DF %>% mutate(
-    CPU_time = CPU_time / 3600
-    #,
-    # wall_clock_time = wall_clock_time / 3600,
-    # peak_RAM = peak_RAM * 1e-06
-  )
-  
-  
-  figs <- list()
-  var.names <- c("CPU_time")
-  axis.titles <- c("CPU_time" = "CPU time (hours)")
-  
-  
-  for(vn in var.names){
-    
-    # Round range of var to 1 decimal place.
-    range.vals <- DF %>% select(starts_with(vn)) %>% na.omit() %>%
-      unlist() %>% range()
-    # Maximum values of all measures are more than 100, 
-    # thus we round the upper-bound to the nearest hundreds.
-    range.vals <- c(0, ceiling(100 * range.vals[2])/100)
-    # Generate ggplot object
-    figs[[vn]] <- main_text_plot(DF, vn, axis.titles[vn], range.vals)
-  }
-  
-  # Arrange 4 panels into one ggplot object.
-  #
-  # align = "v" Makes the reference lines of the grid region (canvas region)
-  # align together. This guarantees the 4 grid regions to have the same area,
-  # despite the number of digits on the y-axis vary.
-  arr.figs <- ggpubr::ggarrange(plotlist = figs, align = "v", common.legend = T)
-  # Temporarily, also add titles to plots to include meta-information:
-  #
-  
-  arr.figs <- ggpubr::annotate_figure(
-    arr.figs, 
-    bottom  = text_grob(plot.meta.info, size = 6),
-  )
-  
-  ggplot2::ggsave(
-    filename = paste0(home_for_summary,"/cpu.profiling.pdf"),
-    plot = arr.figs,
-    width = unit(6.5, "inch"),
-    height = unit(4.5, "inch"))
-}
+  filename = paste0(home_for_summary,"/cpu.profiling.pdf"),
+  plot = ann_fig,
+  width = unit(6.5, "inch"),
+  height = unit(4.5, "inch"))
 
