@@ -11,4 +11,4 @@ plot.meta.info <- paste("SBS_2_down_samp",
 dataset_names <- c("1k", "3k", "5k", "10k", "no_down_samp")
 tool_names <- "mSigHdp"
 
-source("common_code/main_text_plotting_down_samp.R")
+source("common_code/plotting_down_samp.R")
