@@ -30,7 +30,7 @@ dn_part <- "10k"
 
 # Specify names of computational approaches
 # to summarize from their profiling output.
-RBasedToolNames <- c("mSigHdp")
+RBasedToolNames <- "mSigHdp"
 
 # Specify seeds used in analysis.
 # Specify 5 seeds used in software running
@@ -61,7 +61,7 @@ for (toolName in RBasedToolNames) {
       
       foo <- data.frame(
         Approach = toolName,
-        Noise_level = datasetName,
+        Dataset_name = datasetName,
         Run = paste0("seed.",seedInUse),
         CPU_time = CPU_time)
       
@@ -87,7 +87,7 @@ for (toolName in RBasedToolNames) {
       
       foo <- data.frame(
         Approach = toolName,
-        Noise_level = datasetName,
+        Down_samp_level = datasetName,
         Run = paste0("seed.",seedInUse),
         CPU_time = CPU_time)
       

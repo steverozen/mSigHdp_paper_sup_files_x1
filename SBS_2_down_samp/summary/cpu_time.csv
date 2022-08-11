@@ -1,4 +1,4 @@
-Approach,Noise_level,Run,CPU_time
+Approach,Down_samp_level,Run,CPU_time
 mSigHdp,1k,seed.200437,2300224.641
 mSigHdp,1k,seed.310111,2300023.205
 mSigHdp,1k,seed.528401,2295492.415

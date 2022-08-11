@@ -31,7 +31,6 @@ datasetNames <- c("1k", "3k", "5k", "10k", "no_down_samp")
 # to summarize from their profiling output.
 RBasedToolNames <- "mSigHdp"
 
-
 # Specify seeds used in analysis.
 # Specify 5 seeds used in software running
 seedsInUse <- c(145879, 200437, 310111, 528401, 1076753)
@@ -42,7 +41,6 @@ DF <- data.table()
 
 
 # 3. Summarizing code-profiling results from R packages. ----------------------
-
 for (toolName in RBasedToolNames) {
   for (datasetName in datasetNames) {
     for (seedInUse in seedsInUse) {
@@ -59,7 +57,7 @@ for (toolName in RBasedToolNames) {
       
       foo <- data.frame(
         Approach = toolName,
-        Noise_level = datasetName,
+        Down_samp_level = datasetName,
         Run = paste0("seed.",seedInUse),
         CPU_time = CPU_time)
       
@@ -67,14 +65,6 @@ for (toolName in RBasedToolNames) {
     }
   }
 }
-
-
-fn <- paste0(folder4Summary, "/", "cpu_time_SigProfilerExtractor.csv")
-
-DF_PY <- read.csv(fn, header = T)
-
-DF <- rbind(DF, DF_PY)
-
 
 write.csv(DF,
           file = paste0(folder4Summary, "/cpu_time.csv"),
