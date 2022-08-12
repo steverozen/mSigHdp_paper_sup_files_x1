@@ -42,9 +42,9 @@ datasetNames <- c("Noiseless", "Moderate", "Realistic")
 # 5_rename_SA_SP_files before this summarization.
 RBasedExtrAttrToolNames <- c("mSigHdp", "signeR", "SigProfilerExtractor")
 if (FALSE) {
-  toolNamesExt <- c("NR_hdp_gb_1", "NR_hdp_gb_20")
+  toolNamesExt <- c("NR_hdp_gb_1", "NR_hdp_gb_20", "mSigHdp_ds_3k")
 } else {
-  toolNamesExt <- c("NR_hdp_gb_20", "mSigHdp_ds_10k")
+  toolNamesExt <- c("NR_hdp_gb_20", "mSigHdp_ds_3k")
 }
 
 

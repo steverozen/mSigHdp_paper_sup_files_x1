@@ -3,7 +3,7 @@ Noiseless,SignatureAnalyzer,0.760,0.594,0.987,2.34,0.000281
 Noiseless,signeR,0.732,0.512,0.991,2.24,0.069980
 Noiseless,SigProfilerExtractor,0.818,0.556,0.983,2.36,0.092270
 Realistic,mSigHdp,0.726,0.800,0.990,2.52,0.032052
-Realistic,mSigHdp_ds_1k,0.899,0.775,0.994,2.67,0.023958
+Realistic,mSigHdp_ds_3k,0.899,0.775,0.992,2.67,0.022748
 Realistic,SignatureAnalyzer,0.192,0.375,0.970,1.54,0.032361
 Realistic,signeR,0.577,0.512,0.981,2.07,0.082417
 Realistic,SigProfilerExtractor,0.895,0.388,0.965,2.25,0.121053

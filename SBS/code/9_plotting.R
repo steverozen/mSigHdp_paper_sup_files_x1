@@ -12,12 +12,12 @@ plot.meta.info <- paste("SBS",
 # becasue down-sampling makes mSigHdp to have the BEST
 # extraction accuracy on data set SBS/Realistic.
 if (FALSE) {
-  tool_names <- c("mSigHdp_ds_10k", "mSigHdp",
+  tool_names <- c("mSigHdp_ds_3k", "mSigHdp",
                   "SigProfilerExtractor",
                   "SignatureAnalyzer", "signeR",
                   "NR_hdp_gb_1", "NR_hdp_gb_20")
 } else {
-  tool_names <- c("mSigHdp_ds_10k", "mSigHdp",
+  tool_names <- c("mSigHdp_ds_3k", "mSigHdp",
                   "SigProfilerExtractor",
                  "SignatureAnalyzer", "signeR",
                  "NR_hdp_gb_20")
