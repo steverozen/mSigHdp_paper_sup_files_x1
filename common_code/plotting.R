@@ -61,7 +61,7 @@ main_text_plot <- function(DF, var.name, var.title, inputRange) {
     # Add a dot plot
     # Dot plot is a better visualization
     # compared to boxplot or violin plot,
-    # as there are only 20 points in each group
+    # as there are only a few points in each group
     ggbeeswarm::geom_beeswarm(
       mapping = aes(
         # Run from different computational approach
@@ -84,7 +84,7 @@ main_text_plot <- function(DF, var.name, var.title, inputRange) {
       groupOnX = T) +
     # Order the groups by variable "ordered.names".
     ggplot2::scale_x_discrete(
-      limits = DF$Approach %>% unique() %>% gtools::mixedsort()) +
+      limits = dataset_names %>% gtools::mixedsort()) +
     # Change the range for different scatterplots to be the same.
     ggplot2::scale_y_continuous(
       labels = function(x) format(x, scientific = FALSE),
@@ -194,7 +194,7 @@ supp_plot <- function(DF, var.name, var.title, inputRange) {
       groupOnX = T) +
     # Order the groups by variable "ordered.names".
     ggplot2::scale_x_discrete(
-      limits = DF$Noise_level %>% unique() %>% gtools::mixedsort()) +
+      limits = dataset_names %>% gtools::mixedsort()) +
     # Change the range for different scatterplots to be the same.
     ggplot2::scale_y_continuous(
       labels = function(x) format(x, scientific = FALSE),
@@ -365,16 +365,14 @@ DF <- read.csv(file, header = T)
 # these 3 measures on ALL data sets.
 #
 # b1. Data processing
-DF$Noise_level[DF$Noise_level == "Noiseless"] <- "None"
-# Change Noise_level to ordered factor
-factor_levels <- unique(DF$Noise_level)
-fac <- factor(DF$Noise_level, ordered = T,
-              levels = factor_levels)
-DF$Noise_level <- fac
-# Change tool names to ordered factor
-fac <- factor(DF$Approach, ordered = T,
-              levels = tool_names)
-DF$Approach <- fac
+# Remove unwanted data sets and tools 
+DF <- DF %>% 
+  filter(Noise_level %in% dataset_names &
+         Approach %in% tool_names)
+# Change "Noiseless" to "None", if "Noiseless" is in dataset_names
+if ("Noiseless" %in% dataset_names) {
+  DF$Noise_level[DF$Noise_level == "Noiseless"] <- "None"
+}
 
 # b2. Call function fig_arr() to generate supp figure with 4 panels,
 #
@@ -396,10 +394,6 @@ fig_arr(
 # Plot for PPV, TPR, mean Cosine similarity,
 # and Composite Measure equals to the sum of
 # these 3 measures on "Realistic" data set.
-DF_Realistic <- DF %>% dplyr::filter(Noise_level == "Realistic")
-fac <- factor(DF_Realistic$Noise_level, ordered = T,
-              levels = c("Realistic"))
-DF_Realistic$Noise_level <- fac
 fig_arr(
   DF = DF_Realistic,
   file_name = paste0(home_for_summary,"/extraction.accuracy.pdf"),
@@ -420,12 +414,12 @@ DF_time <- read.csv(file, header = T)
 
 
 # b. Data pre-processing.
-DF_time <- DF_time %>% filter(Noise_level == "Realistic")
+# Keep only selected down_samp_levels and tool_names
+DF_time <- DF_time %>% 
+  filter(Noise_level == "Realistic") %>%
+  filter(Approach %in% tool_names)
 
-# Change tool names to ordered factor
-fac <- factor(DF_time$Approach, ordered = T,
-              levels = tool_names)
-DF_time$Approach <- fac
+
 # Re-arrange DF_time
 DF_time <- DF_time %>% arrange(Approach, Noise_level, Run)
 
@@ -433,14 +427,11 @@ DF_time <- DF_time %>% arrange(Approach, Noise_level, Run)
 # Change time unit from secs to hours.
 DF_time <- DF_time %>% mutate(
   CPU_time = CPU_time / 3600
-  #,
-  # wall_clock_time = wall_clock_time / 3600,
-  # peak_RAM = peak_RAM * 1e-06
 )
 
-
+# c. Plotting one panel for CPU time.
 figs <- list()
-var.names <- c("CPU_time")
+var.names <- "CPU_time"
 axis.titles <- c("CPU_time" = "CPU time (hours)")
 
 
@@ -469,5 +460,4 @@ ggplot2::ggsave(
   plot = ann_fig,
   width = unit(6.5, "inch"),
   height = unit(4.5, "inch"))
-
 
