@@ -58,7 +58,7 @@ main_text_plot <- function(DF, var.name, var.title, inputRange) {
     # Add a dot plot
     # Dot plot is a better visualization
     # compared to boxplot or violin plot,
-    # as there are only 20 points in each group
+    # as there are only a few points in each group
     ggbeeswarm::geom_beeswarm(
       mapping = aes(
         # Run from different computational approach
@@ -81,7 +81,7 @@ main_text_plot <- function(DF, var.name, var.title, inputRange) {
       groupOnX = T) +
     # Order the groups by variable "ordered.names".
     ggplot2::scale_x_discrete(
-      limits = DF$Down_samp_level %>% unique() %>% gtools::mixedsort()) +
+      limits = dataset_names %>% gtools::mixedsort()) +
     # Change the range for different scatterplots to be the same.
     ggplot2::scale_y_continuous(
       labels = function(x) format(x, scientific = FALSE),
@@ -237,21 +237,12 @@ DF <- read.csv(file, header = T)
 # Calculate composite measure
 DF <- DF %>% mutate(Composite = PPV + TPR + aver_Sim_TP_only)
 
-# Keep only selected down_samp_level
-DF <- DF %>% filter(Down_samp_level %in% dataset_names)
 
-# Change Down_samp_level to ordered factor
-fac <- factor(DF$Down_samp_level, ordered = T,
-              levels = dataset_names)
-DF$Down_samp_level <- fac
+# Remove unwanted data sets and tools 
+DF <- DF %>% 
+  filter(Down_samp_level %in% dataset_names &
+         Approach %in% tool_names)
 
-# Keep only selected tool names
-DF <- DF %>% filter(Approach %in% tool_names)
-
-# Change tool names to ordered factor
-fac <- factor(DF$Approach, ordered = T,
-              levels = tool_names)
-DF$Approach <- fac
 
 # b2. Call function fig_arr() to generate supp figure with 4 panels,
 #
@@ -273,22 +264,11 @@ DF_time <- read.csv(file, header = T)
 
 
 # b. Data pre-processing.
+# Keep only selected down_samp_levels and tool_names
+DF_time <- DF_time %>% 
+  filter(Down_samp_level %in% dataset_names) %>%
+  filter(Approach %in% tool_names)
 
-# Keep only selected down_samp_level
-DF_time <- DF_time %>% filter(Down_samp_level %in% dataset_names)
-
-# Change Down_samp_level to ordered factor
-fac <- factor(DF_time$Down_samp_level, ordered = T,
-              levels = dataset_names)
-DF$Down_samp_level <- fac
-
-# Keep only selected tool names
-DF_time <- DF_time %>% filter(Approach %in% tool_names)
-
-# Change tool names to ordered factor
-fac <- factor(DF_time$Approach, ordered = T,
-              levels = tool_names)
-DF$Approach <- fac
 
 # Re-arrange DF_time
 DF_time <- DF_time %>% arrange(Approach, Down_samp_level, Run)
@@ -297,9 +277,6 @@ DF_time <- DF_time %>% arrange(Approach, Down_samp_level, Run)
 # Change time unit from secs to hours.
 DF_time <- DF_time %>% mutate(
   CPU_time = CPU_time / 3600
-  #,
-  # wall_clock_time = wall_clock_time / 3600,
-  # peak_RAM = peak_RAM * 1e-06
 )
 
 # c. Plotting one panel for CPU time.
