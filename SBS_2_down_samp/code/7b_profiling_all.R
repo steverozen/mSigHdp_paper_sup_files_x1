@@ -4,20 +4,17 @@ if (basename(getwd()) != "mSigHdp_paper_sup_files_x1") {
 }
 
 # 0. Install and load dependencies --------------------------------------------
-
 require(data.table)
 require(dplyr)
 
 
 
 # 1. Specify default options --------------------------------------------------
-
 options(stringsAsFactors = F)
 
 
 
 # 2. Specify global variables -------------------------------------------------
-
 topLevelFolder4Data <- "./SBS_2_down_samp/input"
 topLevelFolder4Run <- "./SBS_2_down_samp/raw_results"
 folder4Summary <- "./SBS_2_down_samp/summary/"
@@ -61,7 +58,7 @@ for (toolName in RBasedToolNames) {
       
       foo <- data.frame(
         Approach = toolName,
-        Dataset_name = datasetName,
+        Down_samp_level = datasetName,
         Run = paste0("seed.",seedInUse),
         CPU_time = CPU_time)
       
@@ -95,6 +92,13 @@ for (toolName in RBasedToolNames) {
     }
   }
 }
+
+# Combine CPU time profiling on SigProfilerExtractor results
+fn <- paste0(folder4Summary, "/", "cpu_time_SigProfilerExtractor.csv")
+
+DF_PY <- read.csv(fn, header = T)
+
+DF <- rbind(DF, DF_PY)
 
 
 write.csv(DF,

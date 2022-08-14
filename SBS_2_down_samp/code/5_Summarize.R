@@ -79,6 +79,17 @@ for(datasetName in dn_part){
   }
 }
 
+# Summarize SigPro only on data set "no_down_samp"
+for(seedInUse in c(seedsInUse, seeds_part)){
+  SynSigEval::SummarizeSigOneExtrAttrSubdir(
+    run.dir = paste0(topLevelFolder4Run,"/SigProfilerExtractor.results/",
+                     "/no_down_samp/seed.",seedInUse,"/"),
+    ground.truth.exposure.dir = paste0(topLevelFolder4Data,
+                                       "/no_down_samp/"),
+    summarize.exp = F,
+    overwrite = T)
+}
+
 # Summary of runs on each dataset with each software --------------------------
 for(datasetName in datasetNames){
   ## For each dataset, summarize 5 runs
@@ -104,6 +115,15 @@ for(datasetName in dn_part){
   }
 }
 
+# Summarize SigPro only on data set "no_down_samp"
+SynSigEval::SummarizeMultiRuns(
+  datasetName = "no_down_samp",
+  toolName = "SigProfilerExtractor",
+  resultPath = paste0(topLevelFolder4Run,
+                      "/SigProfilerExtractor.results/",
+                      "/no_down_samp/"),
+  run.names = paste0("seed.", c(seedsInUse, seeds_part)))
+
 
 # Summarize results of multiple data sets by each tool ------------------------
 datasetGroup <- c(datasetNames, dn_part)
@@ -125,10 +145,22 @@ for(toolName in toolsToEval){
     overwrite = T)
 }
 
+SummarizeOneToolMultiDatasets(
+  datasetNames = "no_down_samp",
+  datasetGroup = "no_down_samp",
+  datasetGroupName = "Down-sampling threshold",
+  datasetSubGroup = NULL,
+  datasetSubGroupName = NULL,
+  toolName = "SigProfilerExtractor",
+  toolPath = paste0(topLevelFolder4Run,"/SigProfilerExtractor.results/"),
+  out.dir = paste0(folder4ToolwiseSummary,"/SigProfilerExtractor/"),
+  display.datasetName = FALSE,
+  overwrite = T)
 
 # Summarize results of multi tools on multi data sets -------------------------
 FinalExtrAttr <- SummarizeMultiToolsMultiDatasets(
-  toolSummaryPaths = paste0(folder4ToolwiseSummary,"/",toolsToEval,"/"),
+  toolSummaryPaths = paste0(folder4ToolwiseSummary,"/",
+                            c(toolsToEval, "SigProfilerExtractor"),"/"),
   out.dir = folder4CombinedSummary,
   display.datasetName = FALSE,
   sort.by.composite.extraction.measure = "descending",
@@ -158,8 +190,6 @@ for (datasetName in datasetNames) {
 }
 
 
-
-
 for(datasetName in dn_part){
   for(seedInUse in seedsInUse){
     for (extrAttrToolName in RBasedExtrAttrToolNames) {
@@ -176,6 +206,21 @@ for(datasetName in dn_part){
       matchExToGtFull <- rbind(matchExToGtFull, tmpMatch1)
     }
   }
+}
+
+# SigPro: only include results on "no_down_samp"
+for(seedInUse in c(seedsInUse, seeds_part)){
+  summaryDir <- 
+    paste0(topLevelFolder4Run, "/SigProfilerExtractor.results/",
+           "no_down_samp/seed.", seedInUse, "/summary")
+    tmpMatch <- readr::read_csv(paste0(summaryDir, "/match.ex.to.gt.csv"),
+                                show_col_types = FALSE)
+    tmpMatch1 <- data.frame(prog = "SigProfilerExtractor",
+                            down_samp_thres = "no_down_samp",
+                            seed = seedInUse,
+                            tmpMatch,
+                            stringsAsFactors = F)
+    matchExToGtFull <- rbind(matchExToGtFull, tmpMatch1)
 }
 
 

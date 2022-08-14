@@ -23,3 +23,8 @@ mSigHdp,10k,seed.200437,7811830.414
 mSigHdp,10k,seed.310111,7742424.276
 mSigHdp,10k,seed.528401,7739043.66
 mSigHdp,10k,seed.1076753,7766029.806
+SigProfilerExtractor,no_down_samp,seed.145879,3749668.53
+SigProfilerExtractor,no_down_samp,seed.200437,3949493.73
+SigProfilerExtractor,no_down_samp,seed.310111,3846206.98
+SigProfilerExtractor,no_down_samp,seed.528401,3974440.67
+SigProfilerExtractor,no_down_samp,seed.1076753,3848239.21
