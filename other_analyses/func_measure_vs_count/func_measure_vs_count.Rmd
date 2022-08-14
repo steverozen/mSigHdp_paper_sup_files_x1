@@ -1,0 +1,167 @@
+---
+title: "Function of performance measure vs total mutation count"
+author: "Yang Wu, Steve Rozen"
+GitHub: "@WuyangFF95"
+date: sys.Date()
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+ 
+# 0. Initializaiton 
+
+Import prerequisites and set working directory to top-level directory, `mSigHdp_paper_sup_files_x1`
+
+```{r, echo = FALSE}
+require(dplyr)
+require(ggplot2)
+require(ICAMS)
+top_dir <- normalizePath("../../")
+```
+
+
+# 1. Import performance measures
+
+The performance measures (composite measure and CPU time) to generate the summary plots were imported from:
+
+* `SBS_down_samp/summary/`
+* `SBS_2_down_samp/summary/`
+
+The composite measures are available in `all_results.csv`, while the cpu times are in `cpu_time.csv`.
+
+## a. Specify common variables
+```{r}
+dataset_names <- paste0(c("SBS", "SBS_2"), "_down_samp")
+file_names <- c("all_results", "cpu_time")
+down_samp_levels <- c("1k", "3k", "5k", "10k", "no_down_samp")
+```
+
+
+## b. Import summary tables
+```{r}
+summary_tables <- list()
+cpu_time_tables <- list()
+for(dn in dataset_names) {
+  summary_tables[[dn]] <- utils::read.csv(
+    paste0(top_dir, "/", dn, 
+           "/summary/all_results.csv"),
+           header = T) %>% 
+    filter(Down_samp_level %in% down_samp_levels)
+    
+  cpu_time_tables[[dn]] <- utils::read.csv(
+    paste0(top_dir, "/", dn,
+           "/summary/cpu_time.csv"),
+           header = T) %>% 
+    filter(Down_samp_level %in% down_samp_levels)
+}
+```
+
+## c. Merge into one table
+
+For each data set, cobine sum of all mutations in this data set, plus performance measures of mSigHdp on the data set, into one table
+```{r}
+comb_summary <- data.frame()
+
+for(dn in dataset_names) {
+  for(ds in down_samp_levels){
+    spec <- ICAMS::ReadCatalog(
+      paste0(top_dir, "/", dn, "/input/",
+             ds, "/ground.truth.syn.catalog.csv"))
+    total_counts <- sum(spec)
+
+    
+    # Calculate mean of Composite measure
+    table_slice <- summary_tables[[dn]] %>% 
+      filter(Approach == "mSigHdp" & 
+             Down_samp_level == ds)
+    Composite <- mean(table_slice$Composite)
+    
+    # Calculate mean of CPU time
+    table_slice <- cpu_time_tables[[dn]] %>% 
+      filter(Approach == "mSigHdp" & 
+             Down_samp_level == ds)
+    CPU_time <- mean(table_slice$CPU_time)
+    
+    # rbind results to data.frame `comb_summary`
+    comb_summary <- rbind(
+      comb_summary,
+      data.frame(
+        Approach = "mSigHdp",
+        dn = dn,
+        ds = ds,
+        total_counts = total_counts,
+        Composite = Composite,
+        CPU_time = CPU_time
+        )
+      )
+  }
+}
+```
+
+
+## Add SigPro to combined table
+
+For both data sets without down-sampling (SBS_down_samp/no_down_samp and SBS_2_down_samp/no_down_samp), add the performance measure and CPU time of SigProfilerExtractor to the combined table.
+```{r}
+for(dn in dataset_names) {
+  ds <- "no_down_samp"
+  spec <- ICAMS::ReadCatalog(
+    paste0(top_dir, "/", dn, "/input/",
+           ds, "/ground.truth.syn.catalog.csv"))
+  total_counts <- sum(spec)
+  
+  
+  # Calculate mean of Composite measure
+  table_slice <- summary_tables[[dn]] %>% 
+    filter(Approach == "SigProfilerExtractor" & 
+             Down_samp_level == ds)
+  Composite <- mean(table_slice$Composite)
+  
+  # Calculate mean of CPU time
+  table_slice <- cpu_time_tables[[dn]] %>% 
+    filter(Approach == "SigProfilerExtractor" & 
+             Down_samp_level == ds)
+  CPU_time <- mean(table_slice$CPU_time)
+  
+  # rbind results to data.frame `comb_summary`
+  comb_summary <- rbind(
+    comb_summary,
+    data.frame(
+      Approach = "SigProfilerExtractor",
+      dn = dn,
+      ds = ds,
+      total_counts = total_counts,
+      Composite = Composite,
+      CPU_time = CPU_time
+    )
+  )
+}
+
+```
+
+
+
+2. Plot CPU time vs mutation counts
+
+Plot **mean** CPU time of mSigHdp on two series of data sets, `SBS_down_samp` and `SBS_2_down_samp`.
+```{r}
+comb_summary_dn <- comb_summary %>% filter(dn == "SBS_down_samp")
+
+ggObj <- 
+  ggplot2::ggplot(comb_summary, 
+                  mapping = aes(x = total_counts, y = CPU_time)) +
+  geom_point(mapping = aes(color = dn, shape = Approach)) + 
+  guides(color = guide_legend(title = "Data set series"),
+         shape = guide_legend(title = "Program")) +
+  labs(y = "CPU time (sec)", x = "Total mutation counts")
+
+ggObj
+```
+
+
+
+
+
