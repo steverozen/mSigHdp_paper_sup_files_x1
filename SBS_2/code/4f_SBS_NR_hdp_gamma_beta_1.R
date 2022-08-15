@@ -1,5 +1,5 @@
 # How to run:
-# $ nice Rscript SBS_2/code/4f_SBS_run_NR_hdp_gamma_beta_1.R >>& SBS_2/raw_results/NR_hdp_gb_1.results/log &
+# $ nice Rscript SBS_2/code/4f_SBS_run_NR_hdp_gamma_beta_1.R <seed_number> >>& SBS_2/raw_results/NR_hdp_gb_1.results/log &
 
 basedir <- "mSigHdp_paper_sup_files_x1" 
 if (basename(getwd()) != basedir) {
@@ -34,7 +34,7 @@ start_K            <- 64
 
 home_for_run       <- paste0("./SBS_2/raw_results/NR_hdp_gb_", 
                              GLOBAL.gamma.beta, ".results/")
-home_for_data      <- "./SBS/input"
+home_for_data      <- "./SBS_2/input"
 
 # Names of data sets
 dataset_names <- c("Realistic")
