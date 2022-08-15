@@ -1,36 +1,45 @@
-[1] "2022-01-13 10:25:00 +08"
-R version 4.1.2 (2021-11-01)
-Platform: x86_64-redhat-linux-gnu (64-bit)
-Running under: CentOS Linux 8
+[1] "2022-08-15 17:56:04 EDT"
+R version 4.1.1 (2021-08-10)
+Platform: x86_64-w64-mingw32/x64 (64-bit)
+Running under: Windows 10 x64 (build 19044)
 
 Matrix products: default
-BLAS/LAPACK: /usr/lib64/libopenblas-r0.3.12.so
 
 locale:
- [1] LC_CTYPE=en_SG.UTF-8       LC_NUMERIC=C               LC_TIME=en_SG.UTF-8        LC_COLLATE=en_SG.UTF-8     LC_MONETARY=en_SG.UTF-8   
- [6] LC_MESSAGES=en_SG.UTF-8    LC_PAPER=en_SG.UTF-8       LC_NAME=C                  LC_ADDRESS=C               LC_TELEPHONE=C            
-[11] LC_MEASUREMENT=en_SG.UTF-8 LC_IDENTIFICATION=C       
+[1] LC_COLLATE=English_United States.1252  LC_CTYPE=English_United States.1252   
+[3] LC_MONETARY=English_United States.1252 LC_NUMERIC=C                          
+[5] LC_TIME=English_United States.1252    
 
 attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
-[1] readr_2.1.1      SynSigEval_0.3.1 ICAMS_3.0.5.9001
+[1] SynSigEval_0.3.1
 
 loaded via a namespace (and not attached):
- [1] Rcpp_1.0.7                  lattice_0.20-45             Rsamtools_2.10.0            Biostrings_2.62.0           gtools_3.9.2               
- [6] assertthat_0.2.1            utf8_1.2.2                  R6_2.5.1                    GenomeInfoDb_1.30.0         stats4_4.1.2               
-[11] ggplot2_3.3.5               pillar_1.6.4                zlibbioc_1.40.0             rlang_0.4.12                mSigAct_2.1.3.9007         
-[16] rstudioapi_0.13             data.table_1.14.2           S4Vectors_0.32.3            Matrix_1.4-0                BiocParallel_1.28.3        
-[21] RCurl_1.98-1.5              munsell_0.5.0               philentropy_0.5.0           DelayedArray_0.20.0         compiler_4.1.2             
-[26] vipor_0.4.5                 rtracklayer_1.54.0          pkgconfig_2.0.3             BiocGenerics_0.40.0         ICAMSxtra_0.0.8            
-[31] ggbeeswarm_0.6.0            tidyselect_1.1.1            SummarizedExperiment_1.24.0 tibble_3.1.6                GenomeInfoDbData_1.2.7     
-[36] IRanges_2.28.0              matrixStats_0.61.0          XML_3.99-0.8                fansi_1.0.0                 tzdb_0.2.0                 
-[41] crayon_1.4.2                dplyr_1.0.7                 GenomicAlignments_1.30.0    bitops_1.0-7                grid_4.1.2                 
-[46] gtable_0.3.0                lifecycle_1.0.1             DBI_1.1.2                   magrittr_2.0.1              scales_1.1.1               
-[51] zip_2.2.0                   cli_3.1.0                   stringi_1.7.6               XVector_0.34.0              remotes_2.4.2              
-[56] ellipsis_0.3.2              generics_0.1.1              vctrs_0.3.8                 boot_1.3-28                 cowplot_1.1.1              
-[61] rjson_0.2.21                restfulr_0.0.13             tools_4.1.2                 simpleboot_1.1-7            BSgenome_1.62.0            
-[66] Biobase_2.54.0              glue_1.6.0                  beeswarm_0.4.0              purrr_0.3.4                 hms_1.1.1                  
-[71] MatrixGenerics_1.6.0        parallel_4.1.2              yaml_2.2.1                  clue_0.3-60                 colorspace_2.0-2           
-[76] cluster_2.1.2               GenomicRanges_1.46.1        BiocIO_1.4.0               
+ [1] Rcpp_1.0.9                  lattice_0.20-44             prettyunits_1.1.1          
+ [4] Rsamtools_2.8.0             ps_1.7.1                    Biostrings_2.60.2          
+ [7] gtools_3.9.2                rprojroot_2.0.3             utf8_1.2.2                 
+[10] R6_2.5.1                    GenomeInfoDb_1.28.4         stats4_4.1.1               
+[13] pillar_1.8.0                zlibbioc_1.38.0             rlang_1.0.4                
+[16] curl_4.3.2                  rstudioapi_0.13             data.table_1.14.2          
+[19] callr_3.7.1                 S4Vectors_0.30.2            Matrix_1.3-4               
+[22] BiocParallel_1.26.2         readr_2.0.2                 RCurl_1.98-1.8             
+[25] philentropy_0.6.0           DelayedArray_0.18.0         compiler_4.1.1             
+[28] rtracklayer_1.52.1          pkgconfig_2.0.3             BiocGenerics_0.38.0        
+[31] pkgbuild_1.2.0              ICAMSxtra_0.1.0             tidyselect_1.1.2           
+[34] SummarizedExperiment_1.22.0 tibble_3.1.8                GenomeInfoDbData_1.2.6     
+[37] IRanges_2.26.0              matrixStats_0.62.0          XML_3.99-0.10              
+[40] fansi_1.0.3                 crayon_1.5.1                dplyr_1.0.9                
+[43] tzdb_0.1.2                  withr_2.5.0                 GenomicAlignments_1.28.0   
+[46] bitops_1.0-7                grid_4.1.1                  lifecycle_1.0.1            
+[49] magrittr_2.0.3              ICAMS_3.0.5                 zip_2.2.0                  
+[52] cli_3.3.0                   stringi_1.7.6               XVector_0.32.0             
+[55] remotes_2.4.1               ellipsis_0.3.2              generics_0.1.3             
+[58] vctrs_0.4.1                 boot_1.3-28                 rjson_0.2.21               
+[61] restfulr_0.0.15             tools_4.1.1                 simpleboot_1.1-7           
+[64] BSgenome_1.60.0             Biobase_2.52.0              glue_1.6.2                 
+[67] purrr_0.3.4                 hms_1.1.1                   MatrixGenerics_1.4.3       
+[70] processx_3.7.0              parallel_4.1.1              yaml_2.3.5                 
+[73] clue_0.3-61                 cluster_2.1.2               GenomicRanges_1.44.0       
+[76] BiocIO_1.2.0               
