@@ -139,7 +139,7 @@ summarize_something <- function(a.folder) {
   } # for (analysis.name in tools)
   
   out <- out[-1, ]
-  data.table::fwrite(as.data.table(out), file.path(a.folder, "all_sub_results.csv"))
+  data.table::fwrite(data.table::as.data.table(out), file.path(a.folder, "all_sub_results.csv"))
   invisible(out)
 } # function summarize_something
 
