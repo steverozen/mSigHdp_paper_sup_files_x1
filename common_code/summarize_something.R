@@ -54,6 +54,9 @@ source("common_code/all.seeds.R")
 
 summarize_something <- function(a.folder) {
   message("summarizing a.folder=", a.folder)
+  stopifnot(dir.exists(a.folder))
+  dataset.name.to.use <- sub("_down_samp", "", a.folder)
+  message("using dataset name ", dataset.name.to.use)
   
   out <- list(Data_set         = "",
                    Noise_level      = "",
@@ -118,7 +121,7 @@ summarize_something <- function(a.folder) {
         } # else SignatureAnalyzer
         
         tff <- extract_from_one_seeds_summary(file.path(seedInUse, "summary"))
-        row <- list(Data_set = a.folder,
+        row <- list(Data_set         = dataset.name.to.use,
                     Noise_level      = noise.level,
                     Approach         = toolName,
                     Run              = basename(seedInUse),
@@ -144,7 +147,7 @@ summarize_something <- function(a.folder) {
 } # function summarize_something
 
 # debug(summarize_something)
-xx <- summarize_something("indel_set1")
+#xx <- summarize_something("indel_set1")
 # xx <- summarize_something("indel_set2")
-# xx <- summarize_something("indel_down_samp")
+xx <- summarize_something("indel_set1_down_samp")
 # xx <- summarize_something("indel_2_down_samp")

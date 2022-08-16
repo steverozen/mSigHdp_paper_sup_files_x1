@@ -34,19 +34,6 @@ one_top_level_dir <- function(dir.name, data.set) {
   return(dd)
 }
 
-main_text_SBS_fig <- function(tt) {
-  stopifnot(tibble::is_tibble(tt))
-  approach.to.use <- 
-    c("mSigHdp.ds.3k",
-      "mSigHdp",
-      "SigProfilerExtractor",
-      "NR_hdp_gb_20",
-      "signeR",
-      "SignatureAnalyzer" # "NR_HDP_gb_1 is not present yet
-    )
-  
-  main_text_SBS_or_indel_fig(tt, approach.to.use, "SBS")
-}
 
 main_text_SBS_or_indel_fig <- function(tt, approach.to.use, sbs.or.indel) {
 
@@ -98,6 +85,7 @@ main_text_SBS_fig <- function(tt) {
   
   main_text_SBS_or_indel_fig(tt, approach.to.use, "SBS")
 }
+
 
 main_text_indel_fig <- function(tt) {
   stopifnot(tibble::is_tibble(tt))
