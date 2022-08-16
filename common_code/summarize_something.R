@@ -39,20 +39,44 @@ folder4CombinedSummary <- "./indel/summary/top_level_summary"
 }
 
 
+extract_from_one_seeds_summary <- function(summary.directory.path) {
+  gt <- ICAMS::ReadCatalog(file.path(summary.directory.path, "ground.truth.sigs.csv"))
+  ex <- ICAMS::ReadCatalog(file.path(summary.directory.path, "extracted.sigs.csv"))
+  tff <- mSigTools::TP_FP_FN_avg_sim(ex, gt)
+  tff$PPV <- tff$TP / (tff$TP + tff$FP)
+  tff$TPR <- tff$TP / (tff$TP + tff$FN)
+  return(tff)
+}
+
+
 # Must source 5_rename_SA_SP_files.R before calling summarize.results.
 source("common_code/all.seeds.R")
 
 summarize_something <- function(a.folder) {
   message("summarizing a.folder=", a.folder)
   
+  out <- list(Data_set         = "",
+                   Noise_level      = "",
+                   Approach         = "",
+                   Run              = "",
+                   PPV              = -1,
+                   TPR              = -1,
+                   aver_Sim_TP_only = -1,
+                   Composite        = -1,
+                   N_Sigs           = -1,
+                   FN               = -1,
+                   FP               = -1)
+  
+  
   start.here <- file.path(a.folder, "raw_results")
   
-  tools <- dir(start.here, full.names = TRUE)
+  tools <- dir(start.here, pattern = "\\.results", full.names = TRUE)
   
-  for(analysis.name in tools) {
+  for (analysis.name in tools) {
     stopifnot(dir.exists(analysis.name)) # A full directory path, e.g "indel/raw_results/mSigHdp.results"
     # if (!grepl("NR_hdp_gamma_beta", x = analysis.name)) next
     message("summarizing analysis.name=", analysis.name)
+    toolName <- sub(".results", "", basename(analysis.name), fixed = TRUE)
     
     datasetNames <- dir(analysis.name, full.names = TRUE)
     
@@ -61,14 +85,14 @@ summarize_something <- function(a.folder) {
       # if (!grepl("Realistic", datasetpath)) next
   
       # datasetName <- basename(datasetpath)
-      moderate.noiseless.realistic <- basename(datasetpath)
-      if (!moderate.noiseless.realistic %in% 
+      noise.level <- basename(datasetpath)
+      if (!noise.level %in% 
                     c("Noiseless", "Moderate", "Realistic")) {
         next
       }
       message("summarizing datasetpath=", datasetpath)
       ground.truth.exposure.dir <-
-        file.path(a.folder, "input", moderate.noiseless.realistic)           
+        file.path(a.folder, "input", noise.level)           
       seedsInUse <- dir(datasetpath, pattern = "seed\\.\\d+", full.names = TRUE)
       
       for(seedInUse in seedsInUse) {
@@ -84,7 +108,6 @@ summarize_something <- function(a.folder) {
             overwrite = T
           )
         } else {
-          # browser()
           SynSigEval:::SummarizeSigOneSASubdir(
             run.dir = seedInUse,
             ground.truth.exposure.dir = ground.truth.exposure.dir,
@@ -92,93 +115,36 @@ summarize_something <- function(a.folder) {
             summarize.exp = F,
             overwrite = T
           )
-        }
+        } # else SignatureAnalyzer
+        
+        tff <- extract_from_one_seeds_summary(file.path(seedInUse, "summary"))
+        row <- list(Data_set = a.folder,
+                    Noise_level      = noise.level,
+                    Approach         = toolName,
+                    Run              = basename(seedInUse),
+                    PPV              = tff$PPV,
+                    TPR              = tff$TPR,
+                    aver_Sim_TP_only = tff$avg.cos.sim,
+                    Composite        = tff$PPV + tff$TPR + tff$avg.cos.sim,
+                    N_Sigs           = tff$TP + tff$FP,
+                    FN               = tff$FN,
+                    FP               = tff$FP)
+        
+        out <- rbind(out, row)
+
+                
       } # for(seedInUse)
       
-      basenames.seeds <- unlist(lapply(seedsInUse, FUN = basename))
-      datasetName     <- basename(datasetpath) # e.g. Moderate
-      toolName        <- sub(".results", "", basename(analysis.name), fixed = TRUE)
-      
-      # resultPath will be e.g. indel/raw_results/mSigHdp.results/Moderate, i.e. datasetpath
-      SynSigEval::SummarizeMultiRuns(
-        datasetName = datasetName,
-        toolName    = toolName,
-        resultPath  = datasetpath,
-        run.names   = basenames.seeds)
-    }
-  }
-}
+    } # for (datasetpath in datasetNames)
+  } # for (analysis.name in tools)
+  
+  out <- out[-1, ]
+  data.table::fwrite(as.data.table(out), file.path(a.folder, "all_sub_results.csv"))
+  invisible(out)
+} # function summarize_something
 
 # debug(summarize_something)
-summarize_something("indel")
-
-if (FALSE) {
-
-
-# Summarize results of multiple data sets by each tool ------------------------
-
-datasetGroup <- datasetNames
-names(datasetGroup) <- datasetNames
-
-toolsToEval <- RBasedExtrAttrToolNames
-
-for(toolName in toolsToEval){
-  SummarizeOneToolMultiDatasets(
-    datasetNames = datasetNames,
-    datasetGroup = datasetGroup,
-    datasetGroupName = "Noise level",
-    datasetSubGroup = NULL,
-    datasetSubGroupName = NULL,
-    toolName = toolName,
-    toolPath = paste0(topLevelFolder4Run,"/",toolName,".results/"),
-    out.dir = paste0(folder4ToolwiseSummary,"/",toolName,"/"),
-    display.datasetName = FALSE,
-    overwrite = T
-  )
-}
-
-
-
-# Summarize results of multi tools on multi data sets -------------------------
-
-FinalExtrAttr <- SummarizeMultiToolsMultiDatasets(
-  toolSummaryPaths = paste0(folder4ToolwiseSummary,"/",toolsToEval,"/"),
-  out.dir = folder4CombinedSummary,
-  display.datasetName = FALSE,
-  sort.by.composite.extraction.measure = "descending",
-  overwrite = T
-)
-
-
-
-# Combine match.ex.to.gt.csv in summary of each run ---------------------------
-
-matchExToGtFull <- data.frame()
-
-for (datasetName in datasetNames) {
-  for (seedInUse in seedsInUse) {
-    for (extrAttrToolName in RBasedExtrAttrToolNames) {
-      summaryDir <- 
-        paste0(topLevelFolder4Run, "/", extrAttrToolName, ".results/"
-               ,datasetName, "/seed.", seedInUse, "/summary")
-      tmpMatch <- readr::read_csv(paste0(summaryDir, "/match.ex.to.gt.csv"),
-                                  show_col_types = FALSE)
-      tmpMatch1 <- data.frame(prog = extrAttrToolName,
-                              noise = datasetName,
-                              seed = seedInUse,
-                              tmpMatch,
-                              stringsAsFactors = F)
-      matchExToGtFull <- rbind(matchExToGtFull, tmpMatch1)
-    }
-  }
-}
-
-matchExToGtFull$sim <- round(matchExToGtFull$sim, digits = 3)
-
-readr::write_csv(
-  matchExToGtFull, 
-  file = paste0(folder4CombinedSummary,
-                "/../indel.extracted.signature.to.gt.signature.csv")
-)
-
-}
+xx <- summarize_something("indel_set1")
+# xx <- summarize_something("indel_set2")
+# xx <- summarize_something("indel_down_samp")
+# xx <- summarize_something("indel_2_down_samp")
