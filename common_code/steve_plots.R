@@ -101,3 +101,4 @@ downsample_SBS_fig <- function(tt) {
 main_text_indel_fig(tt)
 main_text_SBS_fig(tt)
 downsample_indel_fig(tt)
+downsample_SBS_fig(tt)
