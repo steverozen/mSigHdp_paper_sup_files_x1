@@ -25,8 +25,7 @@ require(SynSigEval)
 require(readr)
 }
 
-# Specify global options ------------------------------------------------------
-options(stringsAsFactors = F)
+library(data.table)
 
 extract_from_one_seeds_summary <- function(summary.directory.path) {
   gt <- ICAMS::ReadCatalog(file.path(summary.directory.path, "ground.truth.sigs.csv"))
@@ -37,7 +36,7 @@ extract_from_one_seeds_summary <- function(summary.directory.path) {
   return(tff)
 }
 
-summarize_top_dir <- function(a.folder) {
+summarize_level1_dirs <- function(a.folder) {
   message("summarizing a.folder=", a.folder)
   stopifnot(dir.exists(a.folder))
   dataset.name.to.use <- sub("_down_samp", "", a.folder)
@@ -132,7 +131,7 @@ summarize_top_dir <- function(a.folder) {
   invisible(out)
 } # function summarize_something
 
-# xx <- summarize_top_dir("indel_set1_down_samp") # ok
+# xx <- summarize_level1_dirs("indel_set1_down_samp") # ok
 
 level1.dirs <- c("indel_set1",
                  "indel_set1_down_samp",
@@ -143,10 +142,13 @@ level1.dirs <- c("indel_set1",
                  "SBS_set2",
                  "SBS_set2_down_samp")
 
-all.out.list <- lapply(level1.dirs, summarize_top_dir)
+all.out.list <- lapply(level1.dirs, summarize_level1_dirs)
 
 all.out <- do.call(rbind, all.out.list)
 
 data.table::fwrite(all.out, "all_results_by_seed.csv")
 
 tt <- tibble::as_tibble(all.out)
+
+tt.indel <- dplyr::filter(tt, Data_set %in% c("indel_set1", "indel_set2"))
+tt.SBS   <- dplyr::filter(tt, Data_set %in% c("SBS_set1",   "SBS_set2"))
