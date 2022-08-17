@@ -134,16 +134,16 @@ summarize_top_dir <- function(a.folder) {
 
 # xx <- summarize_top_dir("indel_set1_down_samp") # ok
 
-top.dirs <- c("indel_set1",
-              "indel_set1_down_samp",
-              "indel_set2",
-              "indel_set2_down_samp",
-              "SBS_set1",
-              "SBS_set1_down_samp",
-              "SBS_set2",
-              "SBS_set2_down_samp")
+level1.dirs <- c("indel_set1",
+                 "indel_set1_down_samp",
+                 "indel_set2",
+                 "indel_set2_down_samp",
+                 "SBS_set1",
+                 "SBS_set1_down_samp",
+                 "SBS_set2",
+                 "SBS_set2_down_samp")
 
-all.out.list <- lapply(top.dirs, summarize_top_dir)
+all.out.list <- lapply(level1.dirs, summarize_top_dir)
 
 all.out <- do.call(rbind, all.out.list)
 

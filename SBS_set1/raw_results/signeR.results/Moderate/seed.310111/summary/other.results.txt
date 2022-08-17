@@ -8,17 +8,15 @@ Number of extracted signatures
 [1] 30
 
 True positive ground-truth signatures
- [1] "SBS1"   "SBS2"   "SBS3"   "SBS4"   "SBS5"   "SBS7a"  "SBS7b"  "SBS7c"  "SBS7d"  "SBS12"  "SBS13"  "SBS17a"
-[13] "SBS17b" "SBS18"  "SBS22"  "SBS28"  "SBS40"  "SBS41"  "SBS44" 
+ [1] "SBS1"   "SBS2"   "SBS3"   "SBS4"   "SBS5"   "SBS7a"  "SBS7b"  "SBS7c"  "SBS7d"  "SBS12"  "SBS13"  "SBS17a" "SBS17b" "SBS18"  "SBS22"  "SBS28" 
+[17] "SBS40"  "SBS41"  "SBS44" 
 
 True positive extracted signatures
- [1] "signeR.1"  "signeR.10" "signeR.11" "signeR.14" "signeR.15" "signeR.18" "signeR.19" "signeR.2"  "signeR.22"
-[10] "signeR.23" "signeR.28" "signeR.29" "signeR.30" "signeR.3"  "signeR.4"  "signeR.5"  "signeR.6"  "signeR.7" 
-[19] "signeR.9" 
+ [1] "signeR.1"  "signeR.10" "signeR.11" "signeR.14" "signeR.15" "signeR.18" "signeR.19" "signeR.2"  "signeR.22" "signeR.23" "signeR.28" "signeR.29"
+[13] "signeR.30" "signeR.3"  "signeR.4"  "signeR.5"  "signeR.6"  "signeR.7"  "signeR.9" 
 
 False positive signatures
- [1] "signeR.12" "signeR.13" "signeR.16" "signeR.17" "signeR.20" "signeR.21" "signeR.24" "signeR.25" "signeR.26"
-[10] "signeR.27" "signeR.8" 
+ [1] "signeR.12" "signeR.13" "signeR.16" "signeR.17" "signeR.20" "signeR.21" "signeR.24" "signeR.25" "signeR.26" "signeR.27" "signeR.8" 
 
 False negative signatures
 [1] "SBS16" "SBS29" "SBS35" "SBS38"
