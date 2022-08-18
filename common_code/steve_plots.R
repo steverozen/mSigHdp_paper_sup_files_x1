@@ -25,7 +25,7 @@ four_beeswarms <- function(ww, main, col, pch, filename) {
            main = main)
   beeswarm(x = ww$ppv, las = 2,  ylab = "PPV", 
            pwpch = pch, pwcol = col)
-  beeswarm(x = ww$ppv, las = 2, ylab = "TPR", 
+  beeswarm(x = ww$tpr, las = 2, ylab = "TPR", 
            pwpch = pch, pwcol = col)
   beeswarm(x = ww$sim, las = 2, ylab = "Cosine similarity", 
            pwpch = pch, pwcol = col)
