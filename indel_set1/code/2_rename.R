@@ -1,4 +1,4 @@
-# Please run this script from the top directory
+# Please run this script from the top-level directory
 if (basename(getwd()) != "mSigHdp_paper_sup_files_x1") {
   stop("Please run from top level directory, mSigHdp_paper_sup_files_x1")
 }
@@ -16,8 +16,8 @@ require(ICAMS)
 
 # 2. Copy and shorten the names of folders and files under input/raw ----------
 
-old_indel_home <- "indel/input/raw"
-indel_home <- "indel/input"
+old_indel_home <- "indel_set1/input/raw"
+indel_home <- "indel_set1/input"
 dir.create(indel_home, showWarnings = FALSE, recursive = TRUE)
 
 # Shortening the names of folders
@@ -56,7 +56,8 @@ for (dn in dataset_names) {
   }
 }
 
-# 3. Export ICAMS-formatted indel catalog and sigs to SigPro tsv format -------
+# 3. Export ICAMS-formatted indel catalog to tsv format -----------------------
+# supported by SigProfilerExtractor -------------------------------------------
 
 for (dn in dataset_names) {
   spectra <- ICAMS::ReadCatalog(
@@ -74,6 +75,6 @@ for (dn in dataset_names) {
   )
   ICAMS:::ConvertCatalogToSigProfilerFormat(
     sigs,
-    file = paste0(indel_home, "/", dn, "/ground.truth.syn.catalog.tsv"),
+    file = paste0(indel_home, "/", dn, "/ground.truth.syn.sigs.tsv"),
     sep = "\t")
 }

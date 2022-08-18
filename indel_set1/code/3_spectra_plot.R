@@ -12,7 +12,7 @@ if (!requireNamespace("ICAMS", quietly = TRUE)) {
 library(ICAMS)
 source("./common_code/data_gen_utils.R")
 
-id_plot_home <- "./indel/input/"
+id_plot_home <- "./indel_set1/input/"
 dataset_names <- c("Noiseless", "Realistic", "Moderate")
 file_suffixes <- c("no_noise", "realistic_noise", "moderate_noise")
 identifiers <- gsub(pattern = "_", replacement = " ", x = file_suffixes)

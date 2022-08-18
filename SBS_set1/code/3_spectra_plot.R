@@ -1,4 +1,4 @@
-# Please run this script from the top directory
+# Please run this script from the top-level directory
 if (basename(getwd()) != "mSigHdp_paper_sup_files_x1") {
   stop("Please run from top level directory, mSigHdp_paper_sup_files_x1")
 }
@@ -12,13 +12,13 @@ if (!requireNamespace("ICAMS", quietly = TRUE)) {
 library(ICAMS)
 source("./common_code/data_gen_utils.R")
 
-sbs96_plot_home <- "./SBS/input/"
+sbs96_plot_home <- "./SBS_set1/input/"
 dataset_names <- c("Noiseless", "Realistic", "Moderate")
 file_suffixes <- c("no_noise", "realistic_noise", "moderate_noise")
 identifiers <- gsub(pattern = "_", replacement = " ", x = file_suffixes)
 
 ##################################################################
-##              Plot SBS synthetic tumor spectra              ##
+##                  Plot synthetic tumor spectra                ##
 ##################################################################
 for (i in seq_along(dataset_names)) {
   input_file <-

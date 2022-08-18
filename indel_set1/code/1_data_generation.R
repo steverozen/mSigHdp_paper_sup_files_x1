@@ -1,4 +1,4 @@
-# Please run this script from the top directory
+# Please run this script from the top-level directory
 if (basename(getwd()) != "mSigHdp_paper_sup_files_x1") {
   stop("Please run from top level directory, mSigHdp_paper_sup_files_x1")
 }
@@ -23,9 +23,6 @@ if (!requireNamespace("SynSigGen", quietly = TRUE) ||
   )
 }
 
-# Restart R after installing the new packages
-.rs.restartR()
-
 source("./common_code/data_gen_utils.R")
 
 library(cosmicsig)
@@ -33,7 +30,7 @@ library(PCAWG7)
 library(SynSigGen)
 
 ##################################################################
-##                      Data preprocessing                      ##
+##                     Data pre-processing                      ##
 ##################################################################
 # Get the real exposures from PCAWG assignments
 real_exposures_id <- PCAWG7::exposure$PCAWG$ID
@@ -127,14 +124,14 @@ sum(num_samples_msi) + sum(num_samples_pole) +
 ##                 Generation of synthetic data                 ##
 ##################################################################
 
-output_dir_id_no_msi_pole <- "./indel/input/raw/PCAWG.ID.syn.exposures.no.msi.pole"
-output_dir_id_msi <- "./indel/input/raw/PCAWG.ID.syn.exposures.msi"
-output_dir_id_pole <- "./indel/input/raw/PCAWG.ID.syn.exposures.pole"
-output_dir_id <- "./indel/input/raw/PCAWG.ID.syn.exposures.no.noise"
+output_dir_id_no_msi_pole <- "./indel_set1/input/raw/PCAWG.ID.syn.exposures.no.msi.pole"
+output_dir_id_msi <- "./indel_set1/input/raw/PCAWG.ID.syn.exposures.msi"
+output_dir_id_pole <- "./indel_set1/input/raw/PCAWG.ID.syn.exposures.pole"
+output_dir_id <- "./indel_set1/input/raw/PCAWG.ID.syn.exposures.no.noise"
 output_dir_id_nb_size_10 <-
-  "./indel/input/raw/PCAWG.ID.syn.exposures.noisy.neg.binom.size.10"
+  "./indel_set1/input/raw/PCAWG.ID.syn.exposures.noisy.neg.binom.size.10"
 output_dir_id_nb_size_100 <-
-  "./indel/input/raw/PCAWG.ID.syn.exposures.noisy.neg.binom.size.100"
+  "./indel_set1/input/raw/PCAWG.ID.syn.exposures.noisy.neg.binom.size.100"
 
 distribution <- "neg.binom"
 sample_prefix_name <- "SP.Syn."
@@ -149,7 +146,7 @@ sig_params_id_nine_types <-
     sig.params = SynSigGen::signature.params$ID
   )
 
-# Generate synthetic tumors that are not MSI-H or POLE-mutated
+# Generate synthetic tumors that are not MSI-H (MSI-High) or POLE-mutated
 syn_tumors_id_no_msi_pole <-
   SynSigGen::GenerateSyntheticTumors(
     seed = seed,
@@ -257,7 +254,7 @@ noisy_exposures_size_100_id <- id_noisy_tumors_size_100$exposures
 #################################################################
 
 data_distribution_file <-
-  "./indel/input/indel_syn_data_distributions.pdf"
+  "./indel_set1/input/indel_syn_data_distributions.pdf"
 grDevices::pdf(
   file = data_distribution_file,
   width = 11.6929, height = 8.2677, onefile = TRUE
