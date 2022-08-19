@@ -1,5 +1,5 @@
 # How to run:
-# $ nice Rscript SBS/code/4e_SBS_run_NR_hdp_gamma_beta_20.R >>& SBS/raw_results/NR_hdp_gb_20.results/log &
+# $ nice Rscript SBS_set1/code/4e_SBS_run_NR_hdp_gamma_beta_20.R  <seed_number> >>& SBS_set1/raw_results/NR_hdp_gb_20.results/log &
 
 basedir <- "mSigHdp_paper_sup_files_x1" 
 if (basename(getwd()) != basedir) {
@@ -13,7 +13,8 @@ args <- commandArgs(trailingOnly = TRUE)
 if (length(args) > 0) {
   seeds_in_use <- args
 } else {
-  seeds_in_use <- c(145879, 200437, 310111, 528401, 1076753)
+  source("common_code/all.seeds.R")
+  seeds_in_use <- all.seeds()
 }
 
 message(Sys.time(), " running on seed ", seeds_in_use)
@@ -29,12 +30,11 @@ num.child.process  <- 20
 # Guessed number of raw clusters
 start_K            <- 46
 
-home_for_run       <- paste0("./SBS/raw_results/NR_hdp_gb_", 
+home_for_run       <- paste0("./SBS_set1/raw_results/NR_hdp_gb_", 
                              GLOBAL.gamma.beta, ".results/")
-home_for_data      <- "./SBS/input"
+home_for_data      <- "./SBS_set1/input"
 
 # Names of data sets
-# dataset_names <- c("Noiseless", "Moderate", "Realistic")
 dataset_names <- c("Realistic")
 
 # Run mSigHdp -----------------------------------------------------------------

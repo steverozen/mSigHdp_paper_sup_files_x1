@@ -1,5 +1,5 @@
 # How to run:
-# $ nice Rscript indel/code/4e_run_NR_hdp_gamma_beta_50.R <seed> >>& indel/raw_results/NR_hdp_gb_50.results/log &
+# $ nice Rscript indel_set1/code/4e_run_NR_hdp_gamma_beta_50.R <seed_number> >>& indel_set1/raw_results/NR_hdp_gb_50.results/log &
 
 basedir <- "mSigHdp_paper_sup_files_x1" 
 if (basename(getwd()) != basedir) {
@@ -13,7 +13,8 @@ args <- commandArgs(trailingOnly = TRUE)
 if (length(args) > 0) {
   seeds_in_use <- args
 } else {
-  seeds_in_use <- c(145879, 200437, 310111, 528401, 1076753)
+  source("common_code/all.seeds.R")
+  seeds_in_use <- all.seeds()
 }
 
 message(Sys.time(), " running on seed ", seeds_in_use)
@@ -29,14 +30,12 @@ num.child.process  <- 20
 # Guessed number of raw clusters
 start_K            <- 22
 
-home_for_run       <- paste0("./indel/raw_results/NR_hdp_gb_", 
+home_for_run       <- paste0("./indel_set1/raw_results/NR_hdp_gb_", 
                              GLOBAL.gamma.beta, ".results/")
-home_for_data      <- "./indel/input"
+home_for_data      <- "./indel_set1/input"
 
 # Names of data sets
-# dataset_names <- c("Noiseless", "Moderate", "Realistic")
 dataset_names <- c("Realistic")
-
 
 # Run mSigHdp -----------------------------------------------------------------
 # Install and load package versions to test Nicola Roberts's algorithms 

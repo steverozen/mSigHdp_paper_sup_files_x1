@@ -12,7 +12,7 @@ into SigPro formatted TSV catalogs.
 The input and output directories is required to be provided 
 as arguments from stdin.
 """
-# Please run this script from the top directory, mSigHdp_paper_sup_files_x1
+# Please run this script from the top-level directory, mSigHdp_paper_sup_files_x1
 
 ###############################################################################
 #%% Cell 1: load prerequisites
@@ -48,8 +48,8 @@ if __name__ == "__main__":
     # Read old working directory
     old_wd = os.getcwd()
     # os.path.abspath extends a relative path to an absolute one.
-    home_for_data = os.path.abspath("./indel/input")
-    home_for_run = os.path.abspath("./indel/raw_results")
+    home_for_data = os.path.abspath("./indel_set1/input")
+    home_for_run = os.path.abspath("./indel_set1/raw_results")
     # Seed numbers
     seed_numbers = (145879, 200437, 310111, 528401, 1076753)
     seed_numbers = [(sn % 10000000) for sn in seed_numbers]

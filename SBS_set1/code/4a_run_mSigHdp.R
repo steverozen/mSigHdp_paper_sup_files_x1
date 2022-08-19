@@ -1,4 +1,4 @@
-# Please run this script from the top directory
+# Please run this script from the top-level directory
 if (basename(getwd()) != "mSigHdp_paper_sup_files_x1") {
   stop("Please run from top level directory, mSigHdp_paper_sup_files_x1")
 }
@@ -38,8 +38,8 @@ if (length(curr_args)==0) {
 
 # Specify global variables ----------------------------------------------------
 
-home_for_data <- "./SBS/input"
-home_for_run <- "./SBS/raw_results"
+home_for_data <- "./SBS_set1/input"
+home_for_run <- "./SBS_set1/raw_results"
 
 # Guessed signatures.
 # We assume mSigHdp does not know the ground-truth K (23),
@@ -50,9 +50,10 @@ start_K <- 46
 dataset_names <- c("Noiseless", "Moderate", "Realistic")
 
 # If seeds_in_use is not specified, 
-# Specify 5 seeds used in software running
-if(args_flag == FALSE) {
-  seeds_in_use <- c(145879, 200437, 310111, 528401, 1076753)
+# specify 5 seeds used in software running
+if (args_flag == FALSE) {
+  source("common_code/all.seeds.R")
+  seeds_in_use <- all.seeds()
 }
 
 
@@ -141,8 +142,8 @@ for (dataset_name in dataset_names) {
     save(code.profile, file = paste0(out_dir, "/code.profile.Rdata"))
     
     # Delete mSigHdp return-value object.
-    # This makes the measurement of peak-memory usage
-    # for the next job accurate.
+    # This ensures the measurement of peak-memory usage
+    # for the next job to be accurate.
     rm(multi.chains.etc)
   }
 }

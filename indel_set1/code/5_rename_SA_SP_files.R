@@ -1,4 +1,4 @@
-# Please run this script from the top directory
+# Please run this script from the top-level directory
 if (basename(getwd()) != "mSigHdp_paper_sup_files_x1") {
   stop("Please run from top level directory, mSigHdp_paper_sup_files_x1")
 }
@@ -18,8 +18,8 @@ require(mSigAct)
 
 
 # Specify global variables ----------------------------------------------------
-home_for_data <- "indel/input"
-home_for_run <- "indel/raw_results"
+home_for_data <- "indel_set1/input"
+home_for_run <- "indel_set1/raw_results"
 
 # Import data set names
 dataset_names <- c("Noiseless", "Moderate", "Realistic")

@@ -1,4 +1,4 @@
-# Please run this script from the top directory
+# Please run this script from the top-level directory
 if (basename(getwd()) != "mSigHdp_paper_sup_files_x1") {
   stop("Please run from top level directory, mSigHdp_paper_sup_files_x1")
 }
@@ -35,11 +35,22 @@ require(SynSigRun)
 require(signeR)
 
 
+# Import optional trailing args ------------------------------------------------
+curr_args <- commandArgs(trailing = T)
+message("args: ", as.character(curr_args))
+if (length(curr_args)==0) {
+  # In this case, use the DEFAULT seed numbers
+  args_flag <- FALSE
+} else {
+  args_flag <- TRUE
+  seeds_in_use <- as.integer(curr_args)
+}
+
 
 # Specify global variables ----------------------------------------------------
 
-home_for_data <- "./indel/input"
-home_for_run <- "./indel/raw_results"
+home_for_data <- "./indel_set1/input"
+home_for_run <- "./indel_set1/raw_results"
 
 # Range of signatures to choose from.
 # We assume SignatureAnalyzer does not know the ground-truth K (11),
@@ -53,9 +64,12 @@ K_range <- c(2, 20)
 # Names of data sets
 dataset_names <- c("Noiseless", "Moderate", "Realistic")
 
-# Specify 5 seeds used in software running
-seeds_in_use <- c(145879, 200437, 310111, 528401, 1076753)
-
+# If seeds_in_use is not specified, 
+# specify 5 seeds used in software running
+if (args_flag == FALSE) {
+  source("common_code/all.seeds.R")
+  seeds_in_use <- all.seeds()
+}
 
 
 # Run signeR ------------------------------------------------------------------

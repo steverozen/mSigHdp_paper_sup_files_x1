@@ -1,4 +1,4 @@
-# Please run this script from the top directory
+# Please run this script from the top-level directory
 if (basename(getwd()) != "mSigHdp_paper_sup_files_x1") {
   stop("Please run from top level directory, mSigHdp_paper_sup_files_x1")
 }
@@ -57,8 +57,8 @@ if (length(curr_args)==0) {
 
 # Specify global variables ----------------------------------------------------
 
-home_for_data <- "./SBS_2/input"
-home_for_run <- "./SBS_2/raw_results"
+home_for_data <- "./SBS_set2/input"
+home_for_run <- "./SBS_set2/raw_results"
 
 # Guessed signatures.
 # We assume SignatureAnalyzer does not know the ground-truth K (32),
@@ -68,9 +68,11 @@ max_K <- 64
 # Names of data sets
 dataset_names <- c("Realistic", "Noiseless")
 
-# Specify 5 seeds used in software running
+# If seeds_in_use is not specified,
+# specify 5 seeds used in software running
 if (args_flag == FALSE) {
-seeds_in_use <- c(145879, 200437, 310111, 528401, 1076753)
+  source("common_code/all.seeds.R")
+  seeds_in_use <- all.seeds()
 }
 
 
@@ -120,7 +122,6 @@ for (dataset_name in dataset_names) {
     #   elapsed: 3.
     code.profile[["system.time"]] <- system.time(
       {
-        
         # SignatureAnalyzer needs to run 20 parallel runs,
         # and pick the best run as the final result.
         SynSigRun::SAMultiRunOneCatalog(
@@ -142,7 +143,6 @@ for (dataset_name in dataset_names) {
           sa.results.dir = out_dir,
           verbose = TRUE,
           overwrite = FALSE)
-        
       },
       gcFirst = FALSE
     )

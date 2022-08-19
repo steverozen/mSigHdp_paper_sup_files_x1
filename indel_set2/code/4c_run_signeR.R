@@ -1,4 +1,4 @@
-# Please run this script from the top directory
+# Please run this script from the top-level directory
 if (basename(getwd()) != "mSigHdp_paper_sup_files_x1") {
   stop("Please run from top level directory, mSigHdp_paper_sup_files_x1")
 }
@@ -47,11 +47,10 @@ if (length(curr_args)==0) {
 }
 
 
-
 # Specify global variables ----------------------------------------------------
 
-home_for_data <- "./indel_2/input"
-home_for_run <- "./indel_2/raw_results"
+home_for_data <- "./SBS_set1/input"
+home_for_run <- "./SBS_set1/raw_results"
 
 # Range of signatures to choose from.
 # We assume SignatureAnalyzer does not know the ground-truth K (13),
@@ -65,9 +64,11 @@ K_range <- c(2, 24)
 # Names of data sets
 dataset_names <- c("Realistic", "Noiseless")
 
-# Specify 5 seeds used in software running
+# If seeds_in_use is not specified, 
+# specify 5 seeds used in software running
 if (args_flag == FALSE) {
-seeds_in_use <- c(145879, 200437, 310111, 528401, 1076753)
+  source("common_code/all.seeds.R")
+  seeds_in_use <- all.seeds()
 }
 
 
