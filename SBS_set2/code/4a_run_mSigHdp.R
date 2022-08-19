@@ -10,12 +10,12 @@ if (!requireNamespace("remotes", quietly = TRUE)) {
 }
 # "@*release" installs the latest release
 if (!("hdpx" %in% rownames(installed.packages())) ||
-    packageVersion("hdpx") < "1.0.1") {
-  remotes::install_github("steverozen/hdpx@*release")
+    packageVersion("hdpx") < "1.0.3.9") {
+  remotes::install_github("steverozen/hdpx@master")
 }
 if (!("mSigHdp" %in% rownames(installed.packages())) ||
-    packageVersion("mSigHdp") < "2.0.0") {
-  remotes::install_github(repo = "steverozen/mSigHdp@*release")
+    packageVersion("mSigHdp") < "2.0.1.10") {
+  remotes::install_github(repo = "steverozen/mSigHdp@master")
 }
 
 # ICAMS is installed when installing mSigHdp
