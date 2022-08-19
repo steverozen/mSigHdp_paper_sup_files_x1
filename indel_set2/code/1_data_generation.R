@@ -1,4 +1,4 @@
-# Please run this script from the top directory
+# Please run this script from the top-level directory
 if (basename(getwd()) != "mSigHdp_paper_sup_files_x1") {
   stop("Please run from top level directory, mSigHdp_paper_sup_files_x1")
 }
@@ -16,15 +16,12 @@ if (!requireNamespace("PCAWG7", quietly = TRUE)) {
   remotes::install_github(repo = "steverozen/PCAWG7", ref = "v0.1.3-branch")
 }
 if (!requireNamespace("SynSigGen", quietly = TRUE) ||
-  packageVersion("SynSigGen") < "1.1.1") {
+  packageVersion("SynSigGen") < "1.2.0") {
   remotes::install_github(
     repo = "steverozen/SynSigGen",
-    ref = "1.1.1-branch"
+    ref = "1.2.0-branch"
   )
 }
-
-# Restart R after installing the new packages
-.rs.restartR()
 
 source("./common_code/data_gen_utils_2.R")
 
@@ -130,12 +127,12 @@ sum(num_samples_msi) + sum(num_samples_pole) +
 ##                 Generation of synthetic data                 ##
 ##################################################################
 
-output_dir_id_no_msi_pole <- "./indel/input/raw/PCAWG.ID.syn.exposures.no.msi.pole"
-output_dir_id_msi <- "./indel/input/raw/PCAWG.ID.syn.exposures.msi"
-output_dir_id_pole <- "./indel/input/raw/PCAWG.ID.syn.exposures.pole"
-output_dir_id <- "./indel/input/raw/PCAWG.ID.syn.exposures.no.noise"
+output_dir_id_no_msi_pole <- "./indel_set2/input/raw/PCAWG.ID.syn.exposures.no.msi.pole"
+output_dir_id_msi <- "./indel_set2/input/raw/PCAWG.ID.syn.exposures.msi"
+output_dir_id_pole <- "./indel_set2/input/raw/PCAWG.ID.syn.exposures.pole"
+output_dir_id <- "./indel_set2/input/raw/PCAWG.ID.syn.exposures.no.noise"
 output_dir_id_nb_size_10 <-
-  "./indel/input/raw/PCAWG.ID.syn.exposures.noisy.neg.binom.size.10"
+  "./indel_set2/input/raw/PCAWG.ID.syn.exposures.noisy.neg.binom.size.10"
 
 distribution <- "neg.binom"
 sample_prefix_name <- "SP.Syn."
@@ -248,7 +245,7 @@ noisy_exposures_size_10_id <- id_noisy_tumors_size_10$exposures
 #################################################################
 
 data_distribution_file <-
-  "./indel/input/indel_syn_data_distributions.pdf"
+  "./indel_set2/input/indel_syn_data_distributions.pdf"
 grDevices::pdf(
   file = data_distribution_file,
   width = 8.2677, height = 11.6929, onefile = TRUE

@@ -16,10 +16,10 @@ if (!requireNamespace("PCAWG7", quietly = TRUE)) {
   remotes::install_github(repo = "steverozen/PCAWG7", ref = "v0.1.3-branch")
 }
 if (!requireNamespace("SynSigGen", quietly = TRUE) ||
-  packageVersion("SynSigGen") < "1.1.1") {
+  packageVersion("SynSigGen") < "1.2.0") {
   remotes::install_github(
     repo = "steverozen/SynSigGen",
-    ref = "1.1.1-branch"
+    ref = "1.2.0-branch"
   )
 }
 

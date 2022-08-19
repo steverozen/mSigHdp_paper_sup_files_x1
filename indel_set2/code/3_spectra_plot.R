@@ -1,4 +1,4 @@
-# Please run this script from the top directory
+# Please run this script from the top-level directory
 if (basename(getwd()) != "mSigHdp_paper_sup_files_x1") {
   stop("Please run from top level directory, mSigHdp_paper_sup_files_x1")
 }
@@ -12,14 +12,14 @@ if (!requireNamespace("ICAMS", quietly = TRUE)) {
 library(ICAMS)
 source("./common_code/data_gen_utils_2.R")
 
-id_plot_home <- "./indel/input/"
+id_plot_home <- "./indel_set2/input/"
 dataset_names <- c("Noiseless", "Realistic")
 file_suffixes <- c("no_noise", "realistic_noise")
 identifiers <- gsub(pattern = "_", replacement = " ", x = file_suffixes)
 
-#################################################################
-##               Plot indel synthetic tumor spectra               ##
-#################################################################
+##################################################################
+##                  Plot synthetic tumor spectra                ##
+##################################################################
 for (i in seq_along(dataset_names)) {
   input_file <-
     file.path(id_plot_home, dataset_names[i], "ground.truth.syn.catalog.csv")

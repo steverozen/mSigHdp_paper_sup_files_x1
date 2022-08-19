@@ -1,11 +1,11 @@
 # This file should be sourced from
-# SBS/code/1_data_generation.R
-# SBS/code/3_spectra_plot.R
-# indel/code/1_data_generation.R
-# indel/code/3_spectra_plot.R
-# other_analyses/noise_selection/code/SBS_noise_selection.R
-# other_analyses/noise_selection/code/indel_noise_selection.R
-# other_analyses/missed_sig_analysis/code/missed_sig_analysis.R
+# SBS_set1/code/1_data_generation.R
+# SBS_set1/code/3_spectra_plot.R
+# indel_set1/code/1_data_generation.R
+# indel_set1/code/3_spectra_plot.R
+# common_code/noise_selection/code/SBS_noise_selection.R
+# common_code/noise_selection/code/indel_noise_selection.R
+# common_code/missed_sig_analysis/code/missed_sig_analysis.R
 ###########################################################################
 
 #' Remove signatures which have zero activity from an exposure matrix

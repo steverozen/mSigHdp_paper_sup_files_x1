@@ -1,4 +1,4 @@
-# Please run this script from the top directory
+# Please run this script from the top-level directory
 if (basename(getwd()) != "mSigHdp_paper_sup_files_x1") {
   stop("Please run from top level directory, mSigHdp_paper_sup_files_x1")
 }
@@ -16,17 +16,14 @@ if (!requireNamespace("PCAWG7", quietly = TRUE)) {
   remotes::install_github(repo = "steverozen/PCAWG7", ref = "v0.1.3-branch")
 }
 if (!requireNamespace("SynSigGen", quietly = TRUE) ||
-  packageVersion("SynSigGen") < "1.1.1") {
+  packageVersion("SynSigGen") < "1.2.0") {
   remotes::install_github(
     repo = "steverozen/SynSigGen",
-    ref = "1.1.1-branch"
+    ref = "1.2.0-branch"
   )
 }
 
-# Restart R after installing the new packages
-.rs.restartR()
-
-source("./common_code/data_gen_utils.R")
+source("./common_code/data_gen_utils_2.R")
 
 library(cosmicsig)
 library(PCAWG7)
@@ -126,8 +123,9 @@ num_samples_msi <- calculate_num_samples(real_exposures_sbs96_msi)
 cancer_types_msi <- names(num_samples_msi)
 num_samples_no_msi <- calculate_num_samples(real_exposures_sbs96_no_msi)
 
-# Only generate 60 synthetic tumors for the selected cancer types (total 1080). Scale
-# the original number of tumors in each cancer type in real exposure accordingly
+# Only generate 60 synthetic tumors for the selected cancer types 
+# (total 1080). Scale the original number of tumors in each cancer type
+# in real exposure accordingly
 scale_factors <- 60 / num_samples_total
 
 # Calculate the number of MSI-H synthetic tumors in each cancer type
@@ -153,11 +151,11 @@ sum(num_samples_msi_scaled) + sum(num_samples_no_msi_scaled)
 ##                 Generation of synthetic data                 ##
 ##################################################################
 
-output_dir_sbs96_no_msi <- "./SBS/input/raw/PCAWG.SBS96.syn.exposures.no.msi"
-output_dir_sbs96_msi <- "./SBS/input/raw/PCAWG.SBS96.syn.exposures.msi"
-output_dir_sbs96 <- "./SBS/input/raw/PCAWG.SBS96.syn.exposures.no.noise"
+output_dir_sbs96_no_msi <- "./SBS_set2/input/raw/PCAWG.SBS96.syn.exposures.no.msi"
+output_dir_sbs96_msi <- "./SBS_set2/input/raw/PCAWG.SBS96.syn.exposures.msi"
+output_dir_sbs96 <- "./SBS_set2/input/raw/PCAWG.SBS96.syn.exposures.no.noise"
 output_dir_sbs96_nb_size_30 <-
-  "./SBS/input/raw/PCAWG.SBS96.syn.exposures.noisy.neg.binom.size.30"
+  "./SBS_set2/input/raw/PCAWG.SBS96.syn.exposures.noisy.neg.binom.size.30"
 
 distribution <- "neg.binom"
 sample_prefix_name <- "SP.Syn."
@@ -250,7 +248,7 @@ noisy_exposures_size_30_sbs96 <- sbs96_noisy_tumors_size_30$exposures
 #################################################################
 
 data_distribution_file <-
-  "./SBS/input/SBS_syn_data_distribution.pdf"
+  "./SBS_set2/input/SBS_syn_data_distribution.pdf"
 grDevices::pdf(
   file = data_distribution_file,
   width = 8.2677, height = 11.6929, onefile = TRUE
