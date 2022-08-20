@@ -23,7 +23,7 @@ if (!requireNamespace("SynSigGen", quietly = TRUE) ||
   )
 }
 
-source("./common_code/data_gen_utils_2.R")
+source("./common_code/data_gen_utils_set2.R")
 
 library(cosmicsig)
 library(PCAWG7)

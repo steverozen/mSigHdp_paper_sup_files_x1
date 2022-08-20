@@ -33,6 +33,9 @@ for (i in seq_along(dataset_names)) {
   plot_catalog_to_pdf(
     catalog = catalog,
     identifier = identifiers[i],
-    file = output_file
+    file = output_file,
+    grid = FALSE,
+    upper = TRUE,
+    xlabels = TRUE
   )
 }

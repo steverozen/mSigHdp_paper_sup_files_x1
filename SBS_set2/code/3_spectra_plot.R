@@ -10,7 +10,7 @@ if (!requireNamespace("ICAMS", quietly = TRUE)) {
   remotes::install_github("steverozen/ICAMS", ref = "v3.0.5-branch")
 }
 library(ICAMS)
-source("./common_code/data_gen_utils_2.R")
+source("./common_code/data_gen_utils.R")
 
 sbs96_plot_home <- "./SBS_set2/input/"
 dataset_names <- c("Noiseless", "Realistic")
