@@ -1,4 +1,4 @@
-# Code from Steve Rozen, 2021 01 24
+# Code from Steve Rozen, 2022 08 01
 # Analyses for Liu Mo's paper, "mSigHdp: hierarchical Dirichlet processes
 # in mutational signature extraction, Liu et al."
 #

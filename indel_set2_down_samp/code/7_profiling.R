@@ -18,8 +18,8 @@ options(stringsAsFactors = F)
 
 # 2. Specify global variables -------------------------------------------------
 
-topLevelFolder4Data <- "./indel_2_down_samp/input"
-topLevelFolder4Run <- "./indel_2_down_samp/raw_results"
+topLevelFolder4Data <- "./indel_set2_down_samp/input"
+topLevelFolder4Run <- "./indel_set2_down_samp/raw_results"
 folder4Summary <- "./indel_2_down_samp/summary/"
 
 

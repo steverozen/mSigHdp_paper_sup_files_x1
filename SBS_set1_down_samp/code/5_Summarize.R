@@ -37,7 +37,7 @@ datasetNames <- c("1k", "3k", "5k", "10k", "no_down_samp")
 
 
 # Specify names of computational approaches
-RBasedExtrAttrToolNames <- c("mSigHdp", "SigProfilerExtractor")
+RBasedExtrAttrToolNames <- "mSigHdp"
 
 # Specify seeds used in analysis.
 # Specify 5 seeds used in software running

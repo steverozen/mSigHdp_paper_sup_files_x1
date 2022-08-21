@@ -93,12 +93,6 @@ for (toolName in RBasedToolNames) {
   }
 }
 
-# Combine CPU time profiling on SigProfilerExtractor results
-fn <- paste0(folder4Summary, "/", "cpu_time_SigProfilerExtractor.csv")
-
-DF_PY <- read.csv(fn, header = T)
-
-DF <- rbind(DF, DF_PY)
 
 
 write.csv(DF,

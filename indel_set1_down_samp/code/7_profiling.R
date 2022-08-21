@@ -29,7 +29,7 @@ datasetNames <- c("1k", "3k", "5k", "10k", "non_hyper")
 
 # Specify names of computational approaches
 # to summarize from their profiling output.
-RBasedToolNames <- c("mSigHdp")
+RBasedToolNames <- "mSigHdp"
 
 
 # Specify seeds used in analysis.
@@ -67,13 +67,6 @@ for (toolName in RBasedToolNames) {
     }
   }
 }
-
-
-fn <- paste0(folder4Summary, "/", "cpu_time_SigProfilerExtractor.csv")
-
-DF_PY <- read.csv(fn, header = T)
-
-DF <- rbind(DF, DF_PY)
 
 
 write.csv(DF,
