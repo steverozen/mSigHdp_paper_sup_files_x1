@@ -15,9 +15,9 @@ options(stringsAsFactors = F)
 
 
 # 2. Specify global variables -------------------------------------------------
-topLevelFolder4Data <- "./indel/input"
-topLevelFolder4Run <- "./indel/raw_results"
-folder4Summary <- "./indel/summary/"
+topLevelFolder4Data <- "./indel_set1/input"
+topLevelFolder4Run <- "./indel_set1/raw_results"
+folder4Summary <- "./indel_set1/summary/"
 
 
 # Specify dataset names

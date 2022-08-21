@@ -15,9 +15,9 @@ options(stringsAsFactors = F)
 
 
 # 2. Specify global variables -------------------------------------------------
-topLevelFolder4Data <- "./SBS_2/input"
-topLevelFolder4Run <- "./SBS_2/raw_results"
-folder4Summary <- "./SBS_2/summary/"
+topLevelFolder4Data <- "./SBS_set2/input"
+topLevelFolder4Run <- "./SBS_set2/raw_results"
+folder4Summary <- "./SBS_set2/summary/"
 
 
 # Specify dataset names
