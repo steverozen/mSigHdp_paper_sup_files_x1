@@ -38,8 +38,8 @@ if (length(curr_args)==0) {
 
 # Specify global variables ----------------------------------------------------
 
-home_for_data <- "./SBS_down_samp/input"
-home_for_run <- "./SBS_down_samp/raw_results"
+home_for_data <- "./SBS_set1_down_samp/input"
+home_for_run <- "./SBS_set1_down_samp/raw_results"
 
 # Guessed signatures.
 # We assume mSigHdp does not know the ground-truth K (23),
