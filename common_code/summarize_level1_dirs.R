@@ -15,15 +15,16 @@ if (!("ICAMS" %in% rownames(installed.packages())) ||
     packageVersion("ICAMS") < "3.0.5") {
   remotes::install_github("steverozen/ICAMS", ref = "v3.0.5-branch")
 }
+}
+
 if (!("SynSigEval" %in% rownames(installed.packages())) ||
-    packageVersion("SynSigEval") < "0.3.1") {
-  remotes::install_github(repo = "WuyangFF95/SynSigEval", ref = "0.3.1-branch")
+    packageVersion("SynSigEval") < "0.3.2") {
+  remotes::install_github(repo = "WuyangFF95/SynSigEval", ref = "main")
 }
 
 require(ICAMS)
 require(SynSigEval)
-require(readr)
-}
+
 
 library(tibble)
 
@@ -41,20 +42,20 @@ summarize_level1_dirs <- function(a.folder) {
   stopifnot(dir.exists(a.folder))
   dataset.name.to.use <- sub("_down_samp", "", a.folder)
   message("using dataset name ", dataset.name.to.use)
-  
-  out <- tibble(Data_set         = "",
-                Noise_level      = "",
-                Approach         = "",
-                Run              = "",
-                PPV              = -1,
-                TPR              = -1,
-                aver_Sim_TP_only = -1,
-                Composite        = -1,
-                N_Sigs           = -1,
-                FN               = -1,
-                FP               = -1,
-                FP.sigs          = character(0),
-                FN.sigs          = character(0))
+
+  level1.results <- tibble_row(Data_set         = "",
+                               Noise_level      = "",
+                               Approach         = "",
+                               Run              = "",
+                               PPV              = -1,
+                               TPR              = -1,
+                               aver_Sim_TP_only = -1,
+                               Composite        = -1,
+                               N_Sigs           = -1,
+                               FN               = -1,
+                               FP               = -1,
+                               FP.sigs          = list(character(0)),
+                               FN.sigs          = list(character(0)))
   
   start.here <- file.path(a.folder, "raw_results")
   
@@ -109,31 +110,31 @@ summarize_level1_dirs <- function(a.folder) {
         } # else SignatureAnalyzer
         
         tff <- extract_from_one_seeds_summary(file.path(seedInUse, "summary"))
-        row <- tibble(Data_set         = dataset.name.to.use,
-                      Noise_level      = noise.level,
-                      Approach         = toolName,
-                      Run              = basename(seedInUse),
-                      PPV              = tff$PPV,
-                      TPR              = tff$TPR,
-                      aver_Sim_TP_only = tff$avg.cos.sim,
-                      Composite        = tff$PPV + tff$TPR + tff$avg.cos.sim,
-                      N_Sigs           = tff$TP + tff$FP,
-                      FN               = tff$FN,
-                      FP               = tff$FP,
-                      FP.sigs          = tff$unmatched.ex.sigs,
-                      FN.sigs          = tff$unmatched.ref.sigs)
-        
-        out <- rbind(out, row)
+        a.row <- tibble_row(Data_set         = dataset.name.to.use,
+                            Noise_level      = noise.level,
+                            Approach         = toolName,
+                            Run              = basename(seedInUse),
+                            PPV              = tff$PPV,
+                            TPR              = tff$TPR,
+                            aver_Sim_TP_only = tff$avg.cos.sim,
+                            Composite        = tff$PPV + tff$TPR + tff$avg.cos.sim,
+                            N_Sigs           = tff$TP + tff$FP,
+                            FN               = tff$FN,
+                            FP               = tff$FP,
+                            FP.sigs          = list(tff$unmatched.ex.sigs),
+                            FN.sigs          = list(tff$unmatched.ref.sigs))
+
+        level1.results <- rbind(level1.results, a.row)
         
       } # for(seedInUse)
       
     } # for (datasetpath in datasetNames)
   } # for (analysis.name in tools)
   
-  out <- out[-1, ]
-  readr::write_csv(data.table::as.data.table(out), file.path(a.folder, "new_all_sub_results.csv"))
-  save(out, file=file.path(a.folder, "level1_results.Rdata"))
-  invisible(out)
+  level1.results <- level1.results[-1, ]
+  readr::write_csv(data.table::as.data.table(level1.results), file.path(a.folder, "new_all_sub_results.csv"))
+  save(level1.results, file=file.path(a.folder, "level1_results.Rdata"))
+  invisible(level1.results)
 } # function summarize_something
 
 # xx <- summarize_level1_dirs("indel_set1_down_samp") # ok
