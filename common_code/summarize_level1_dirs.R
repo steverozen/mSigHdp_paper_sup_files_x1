@@ -15,17 +15,18 @@ if (!("ICAMS" %in% rownames(installed.packages())) ||
     packageVersion("ICAMS") < "3.0.5") {
   remotes::install_github("steverozen/ICAMS", ref = "v3.0.5-branch")
 }
+}
+
 if (!("SynSigEval" %in% rownames(installed.packages())) ||
-    packageVersion("SynSigEval") < "0.3.1") {
-  remotes::install_github(repo = "WuyangFF95/SynSigEval", ref = "0.3.1-branch")
+    packageVersion("SynSigEval") < "0.3.2") {
+  remotes::install_github(repo = "WuyangFF95/SynSigEval", ref = "main")
 }
 
 require(ICAMS)
 require(SynSigEval)
-require(readr)
-}
 
-library(data.table)
+
+library(tibble)
 
 extract_from_one_seeds_summary <- function(summary.directory.path) {
   gt <- ICAMS::ReadCatalog(file.path(summary.directory.path, "ground.truth.sigs.csv"))
@@ -35,25 +36,27 @@ extract_from_one_seeds_summary <- function(summary.directory.path) {
   tff$TPR <- tff$TP / (tff$TP + tff$FN)
   return(tff)
 }
-
 # debug(SynSigEval:::SummarizeSigOneSubdir)
-summarize_level1_dirs <- function(a.folder) {
+
+summarize_level1_dirs <- function(a.folder, delete.non.text = TRUE) {
   message("summarizing a.folder=", a.folder)
   stopifnot(dir.exists(a.folder))
   dataset.name.to.use <- sub("_down_samp", "", a.folder)
   message("using dataset name ", dataset.name.to.use)
-  
-  out <- data.table(Data_set         = "",
-                    Noise_level      = "",
-                    Approach         = "",
-                    Run              = "",
-                    PPV              = -1,
-                    TPR              = -1,
-                    aver_Sim_TP_only = -1,
-                    Composite        = -1,
-                    N_Sigs           = -1,
-                    FN               = -1,
-                    FP               = -1)
+
+  level1.results <- tibble_row(Data_set         = "",
+                               Noise_level      = "",
+                               Approach         = "",
+                               Run              = "",
+                               PPV              = -1,
+                               TPR              = -1,
+                               aver_Sim_TP_only = -1,
+                               Composite        = -1,
+                               N_Sigs           = -1,
+                               FN               = -1,
+                               FP               = -1,
+                               FP.sigs          = list(character(0)),
+                               FN.sigs          = list(character(0)))
   
   start.here <- file.path(a.folder, "raw_results")
   
@@ -88,7 +91,7 @@ summarize_level1_dirs <- function(a.folder) {
       for(seedInUse in seedsInUse) {
         # seedInUse e.g. "indel/raw_results/mSigHdp.results/Moderate/seed.528401"
         message("summarizing seedInUse=", seedInUse)
-        
+
         if (!grepl("SignatureAnalyzer", analysis.name)) {
           
           SynSigEval::SummarizeSigOneExtrAttrSubdir(
@@ -107,29 +110,41 @@ summarize_level1_dirs <- function(a.folder) {
           )
         } # else SignatureAnalyzer
         
+        if (delete.non.text) {
+          # browser()
+          summary.path <- file.path(seedInUse,"summary")
+          pdfs.to.delete <- dir(summary.path, pattern = "\\.pdf")
+          unlink(pdfs.to.delete)
+          also.delete <- dir(summary.path, pattern = "assessment.sessionInfo\\.txt")
+          unlink(also.delete)
+        }
+        
         tff <- extract_from_one_seeds_summary(file.path(seedInUse, "summary"))
-        row <- data.table(Data_set         = dataset.name.to.use,
-                          Noise_level      = noise.level,
-                          Approach         = toolName,
-                          Run              = basename(seedInUse),
-                          PPV              = tff$PPV,
-                          TPR              = tff$TPR,
-                          aver_Sim_TP_only = tff$avg.cos.sim,
-                          Composite        = tff$PPV + tff$TPR + tff$avg.cos.sim,
-                          N_Sigs           = tff$TP + tff$FP,
-                          FN               = tff$FN,
-                          FP               = tff$FP)
+        a.row <- tibble_row(Data_set         = dataset.name.to.use,
+                            Noise_level      = noise.level,
+                            Approach         = toolName,
+                            Run              = basename(seedInUse),
+                            PPV              = tff$PPV,
+                            TPR              = tff$TPR,
+                            aver_Sim_TP_only = tff$avg.cos.sim,
+                            Composite        = tff$PPV + tff$TPR + tff$avg.cos.sim,
+                            N_Sigs           = tff$TP + tff$FP,
+                            FN               = tff$FN,
+                            FP               = tff$FP,
+                            FP.sigs          = list(tff$unmatched.ex.sigs),
+                            FN.sigs          = list(tff$unmatched.ref.sigs))
 
-        out <- rbind(out, row)
+        level1.results <- rbind(level1.results, a.row)
         
       } # for(seedInUse)
       
     } # for (datasetpath in datasetNames)
   } # for (analysis.name in tools)
   
-  out <- out[-1, ]
-  data.table::fwrite(data.table::as.data.table(out), file.path(a.folder, "all_sub_results.csv"))
-  invisible(out)
+  level1.results <- level1.results[-1, ]
+  readr::write_csv(data.table::as.data.table(level1.results), file.path(a.folder, "new_all_sub_results.csv"))
+  save(level1.results, file=file.path(a.folder, "level1_results.Rdata"))
+  invisible(level1.results)
 } # function summarize_something
 
 # xx <- summarize_level1_dirs("indel_set1_down_samp") # ok
@@ -145,11 +160,18 @@ level1.dirs <- c("indel_set1",
 
 all.out.list <- lapply(level1.dirs, summarize_level1_dirs)
 
-all.out <- do.call(rbind, all.out.list)
+all.results <- do.call(rbind, all.out.list)
 
-data.table::fwrite(all.out, "all_results_by_seed.csv")
+readr::write_csv(all.out, "new_all_results_by_seed.csv")
+save(all.results, file = "all_results_by_seed.Rdata")
 
-tt <- tibble::as_tibble(all.out)
+# tt <- tibble::as_tibble(all.out)
 
 tt.indel <- dplyr::filter(tt, Data_set %in% c("indel_set1", "indel_set2"))
 tt.SBS   <- dplyr::filter(tt, Data_set %in% c("SBS_set1",   "SBS_set2"))
+
+
+foo <- dplyr::filter(all.results, Data_set == "SBS_set1" & Noise_level == "Realistic" & Approach == "mSigHdp_ds_3k")
+bar <- dplyr::filter(all.results, Data_set == "SBS_set1" & Noise_level == "Realistic" & Approach == "SigProfilerExtractor")
+bar2 <- dplyr::filter(all.results, Data_set == "SBS_set2" & Noise_level == "Realistic" & Approach == "SigProfilerExtractor")
+bar2$FN.sigs
