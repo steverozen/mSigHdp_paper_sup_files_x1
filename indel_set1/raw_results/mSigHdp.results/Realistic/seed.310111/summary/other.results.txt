@@ -8,7 +8,7 @@ Number of extracted signatures
 [1] 13
 
 True positive ground-truth signatures
-NULL
+ [1] "ID1"  "ID2"  "ID3"  "ID4"  "ID5"  "ID6"  "ID8"  "ID9"  "ID11" "ID13" "ID14"
 
 True positive extracted signatures
  [1] "hdp.1"  "hdp.10" "hdp.11" "hdp.12" "hdp.2"  "hdp.4"  "hdp.5"  "hdp.6"  "hdp.7"  "hdp.8"  "hdp.9" 
@@ -17,4 +17,4 @@ False positive signatures
 [1] "hdp.13" "hdp.3" 
 
 False negative signatures
- [1] "ID1"  "ID2"  "ID3"  "ID4"  "ID5"  "ID6"  "ID8"  "ID9"  "ID11" "ID13" "ID14"
+character(0)

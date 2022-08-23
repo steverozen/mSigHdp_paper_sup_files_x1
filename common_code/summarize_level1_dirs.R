@@ -36,6 +36,7 @@ extract_from_one_seeds_summary <- function(summary.directory.path) {
   tff$TPR <- tff$TP / (tff$TP + tff$FN)
   return(tff)
 }
+# debug(SynSigEval:::SummarizeSigOneSubdir)
 
 summarize_level1_dirs <- function(a.folder) {
   message("summarizing a.folder=", a.folder)
@@ -159,3 +160,9 @@ save(all.results, file = "all_results_by_seed.Rdata")
 
 tt.indel <- dplyr::filter(tt, Data_set %in% c("indel_set1", "indel_set2"))
 tt.SBS   <- dplyr::filter(tt, Data_set %in% c("SBS_set1",   "SBS_set2"))
+
+
+foo <- dplyr::filter(all.results, Data_set == "SBS_set1" & Noise_level == "Realistic" & Approach == "mSigHdp_ds_3k")
+bar <- dplyr::filter(all.results, Data_set == "SBS_set1" & Noise_level == "Realistic" & Approach == "SigProfilerExtractor")
+bar2 <- dplyr::filter(all.results, Data_set == "SBS_set2" & Noise_level == "Realistic" & Approach == "SigProfilerExtractor")
+bar2$FN.sigs
