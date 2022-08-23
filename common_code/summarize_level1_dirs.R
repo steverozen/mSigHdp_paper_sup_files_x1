@@ -155,31 +155,47 @@ summarize_level1_dirs <- function(a.folder, delete.non.text = TRUE) {
   invisible(level1.results)
 } # function summarize_something
 
-# xx <- summarize_level1_dirs("indel_set1_down_samp") # ok
+summarize_all <- function()  {
+  
+  level1.dirs <- c("indel_set1",
+                   "indel_set1_down_samp",
+                   "indel_set2",
+                   "indel_set2_down_samp",
+                   "SBS_set1",
+                   "SBS_set1_down_samp",
+                   "SBS_set2",
+                   "SBS_set2_down_samp")
+  
+  all.out.list <- lapply(level1.dirs, summarize_level1_dirs)
+  
+  all.results <- do.call(rbind, all.out.list)
+  
+  NR.approach <- c("NR_hdp_gb_1", "NR_hdp_gb_50", "NR_hdp_gb_20")
+  
+  all.results.fixed <- 
+    dplyr::mutate(all.results, 
+                  FP = dplyr::if_else(Approach %in% NR.approach, FP - 1, FP))
+  
+  foox <- dplyr::filter(all.results, !(Approach %in% NR.approach))
+  foo2x <- dplyr::filter(all.results.fixed, !(Approach %in% NR.approach))
+  stopifnot(all.equal(foox, foo2x)) # paranoid checking
+                         
+  readr::write_csv(all.results.fixed, "new_all_results_fixed_by_seed.csv")
+  save(all.results.fixed, file = "all_results_fixed_by_seed.Rdata")
+  invisible(all.results.fixed)
+}
 
-level1.dirs <- c("indel_set1",
-                 "indel_set1_down_samp",
-                 "indel_set2",
-                 "indel_set2_down_samp",
-                 "SBS_set1",
-                 "SBS_set1_down_samp",
-                 "SBS_set2",
-                 "SBS_set2_down_samp")
 
-all.out.list <- lapply(level1.dirs, summarize_level1_dirs)
+all.results.fixed <- summarize_all()
+# development code:
 
-all.results <- do.call(rbind, all.out.list)
-
-readr::write_csv(all.out, "new_all_results_by_seed.csv")
-save(all.results, file = "all_results_by_seed.Rdata")
-
-# tt <- tibble::as_tibble(all.out)
-
-tt.indel <- dplyr::filter(tt, Data_set %in% c("indel_set1", "indel_set2"))
-tt.SBS   <- dplyr::filter(tt, Data_set %in% c("SBS_set1",   "SBS_set2"))
-
-
-foo <- dplyr::filter(all.results, Data_set == "SBS_set1" & Noise_level == "Realistic" & Approach == "mSigHdp_ds_3k")
-bar <- dplyr::filter(all.results, Data_set == "SBS_set1" & Noise_level == "Realistic" & Approach == "SigProfilerExtractor")
-bar2 <- dplyr::filter(all.results, Data_set == "SBS_set2" & Noise_level == "Realistic" & Approach == "SigProfilerExtractor")
+foo <- dplyr::filter(
+  all.results.fixed,
+  Data_set == "SBS_set1" & Noise_level == "Realistic" & Approach == "mSigHdp_ds_3k")
+bar <- dplyr::filter(
+  all.results.fixed,
+  Data_set == "SBS_set1" & Noise_level == "Realistic" & Approach == "SigProfilerExtractor")
+bar2 <- dplyr::filter(
+  all.results.fixed, 
+  Data_set == "SBS_set2" & Noise_level == "Realistic" & Approach == "SigProfilerExtractor")
 bar2$FN.sigs
