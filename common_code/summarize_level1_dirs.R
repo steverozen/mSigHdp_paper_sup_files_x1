@@ -36,6 +36,7 @@ extract_from_one_seeds_summary <- function(summary.directory.path) {
   return(tff)
 }
 
+# debug(SynSigEval:::SummarizeSigOneSubdir)
 summarize_level1_dirs <- function(a.folder) {
   message("summarizing a.folder=", a.folder)
   stopifnot(dir.exists(a.folder))

@@ -21,5 +21,5 @@ False positive signatures
  [9] "signeR.24" "signeR.28" "signeR.4" 
 
 False negative signatures
- [1] "SBS6"  "SBS7b" "SBS8"  "SBS12" "SBS16" "SBS28" "SBS29" "SBS30" "SBS34" "SBS35" "SBS36" "SBS37" "SBS39"
-[14] "SBS41"
+ [1] "SBS6"  "SBS7b" "SBS8"  "SBS12" "SBS16" "SBS28" "SBS29" "SBS30" "SBS34" "SBS35" "SBS36" "SBS37"
+[13] "SBS39" "SBS41"
