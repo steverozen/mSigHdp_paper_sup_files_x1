@@ -1,3 +1,9 @@
+basedir <- "mSigHdp_paper_sup_files_x1" 
+if (basename(getwd()) != basedir) {
+  stop("Please run from top level directory, ", basedir)
+}
+
+
 library(data.table)
 library(tibble)
 library(magrittr)
@@ -111,11 +117,6 @@ downsample_SBS_fig <- function(tt) {
 }
 
 
-main_text_indel_fig(tt)
-main_text_SBS_fig(tt)
-downsample_indel_fig(tt)
-downsample_SBS_fig(tt)
-
 noise_level_fig <- function(tt, indel.or.sbs, approach) {
 
   # filter by approach and by indel_set1
@@ -141,15 +142,24 @@ noise_level_fig <- function(tt, indel.or.sbs, approach) {
 
 }
 
-noise_level_fig(tt, "indel",approach = c("mSigHdp",
+
+all_figs_this_file <- function(tt) {
+  # tt should be the output of summarize_all_level1_dirs in file summarize_level1_dirs.R
+  
+  noise_level_fig(tt, "indel",approach = c("mSigHdp",
+                                           "SigProfilerExtractor",
+                                           "SignatureAnalyzer",
+                                           "signeR")) # Order of SA and signeR are reversed between indel and SBS
+  
+  
+  noise_level_fig(tt, "SBS",approach = c("mSigHdp_ds_3k",
+                                         "mSigHdp",
                                          "SigProfilerExtractor",
-                                         "SignatureAnalyzer",
-                                         "signeR")) # Order of SA and signeR are reversed between indel and SBS
+                                         "signeR",
+                                         "SignatureAnalyzer"))
+  main_text_indel_fig(tt)
+  main_text_SBS_fig(tt)
+  downsample_indel_fig(tt)
+  downsample_SBS_fig(tt)
+}
 
-
-noise_level_fig(tt, "SBS",approach = c("mSigHdp_ds_3k",
-                                       "mSigHdp",
-                                       "SigProfilerExtractor",
-                                       "signeR",
-                                       "SignatureAnalyzer"
-))

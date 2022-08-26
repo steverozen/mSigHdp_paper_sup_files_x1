@@ -155,7 +155,7 @@ summarize_level1_dirs <- function(a.folder, delete.non.text = TRUE) {
   invisible(level1.results)
 } # function summarize_something
 
-summarize_all <- function()  {
+summarize_all_level1_dirs <- function()  {
   
   level1.dirs <- c("indel_set1",
                    "indel_set1_down_samp",
@@ -186,7 +186,7 @@ summarize_all <- function()  {
 }
 
 
-all.results.fixed <- summarize_all()
+all.results.fixed <- summarize_all_level1_dirs()
 # development code:
 
 foo <- dplyr::filter(

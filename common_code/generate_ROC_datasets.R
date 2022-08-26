@@ -1,3 +1,8 @@
+basedir <- "mSigHdp_paper_sup_files_x1" 
+if (basename(getwd()) != basedir) {
+  stop("Please run from top level directory, ", basedir)
+}
+
 spike.in.sig <- "SBS38"
 
 which.set <- "SBS_set1/input/Realistic"
