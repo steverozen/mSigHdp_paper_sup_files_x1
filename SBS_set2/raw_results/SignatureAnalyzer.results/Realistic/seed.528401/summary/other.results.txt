@@ -8,16 +8,18 @@ Number of extracted signatures
 [1] 62
 
 True positive ground-truth signatures
- [1] "SBS1"   "SBS2"   "SBS4"   "SBS7b"  "SBS7c"  "SBS7d"  "SBS12"  "SBS13"  "SBS17a" "SBS17b" "SBS22"  "SBS28"  "SBS44" 
+ [1] "SBS1"   "SBS2"   "SBS4"   "SBS7b"  "SBS7c"  "SBS7d"  "SBS12"  "SBS13"  "SBS17a" "SBS17b"
+[11] "SBS22"  "SBS28"  "SBS44" 
 
 True positive extracted signatures
  [1] "W.1"  "W.11" "W.13" "W.19" "W.21" "W.36" "W.4"  "W.43" "W.44" "W.48" "W.5"  "W.55" "W.57"
 
 False positive signatures
- [1] "W.10" "W.12" "W.14" "W.15" "W.16" "W.17" "W.18" "W.2"  "W.20" "W.22" "W.23" "W.24" "W.25" "W.26" "W.27" "W.28" "W.29" "W.3"  "W.30"
-[20] "W.31" "W.32" "W.33" "W.34" "W.35" "W.37" "W.38" "W.39" "W.40" "W.41" "W.42" "W.45" "W.46" "W.47" "W.49" "W.50" "W.51" "W.52" "W.53"
-[39] "W.54" "W.56" "W.58" "W.59" "W.6"  "W.60" "W.61" "W.62" "W.7"  "W.8"  "W.9" 
+ [1] "W.10" "W.12" "W.14" "W.15" "W.16" "W.17" "W.18" "W.2"  "W.20" "W.22" "W.23" "W.24" "W.25"
+[14] "W.26" "W.27" "W.28" "W.29" "W.3"  "W.30" "W.31" "W.32" "W.33" "W.34" "W.35" "W.37" "W.38"
+[27] "W.39" "W.40" "W.41" "W.42" "W.45" "W.46" "W.47" "W.49" "W.50" "W.51" "W.52" "W.53" "W.54"
+[40] "W.56" "W.58" "W.59" "W.6"  "W.60" "W.61" "W.62" "W.7"  "W.8"  "W.9" 
 
 False negative signatures
- [1] "SBS3"  "SBS5"  "SBS6"  "SBS7a" "SBS8"  "SBS9"  "SBS16" "SBS18" "SBS26" "SBS29" "SBS30" "SBS34" "SBS35" "SBS36" "SBS37" "SBS38" "SBS39"
-[18] "SBS40" "SBS41"
+ [1] "SBS3"  "SBS5"  "SBS6"  "SBS7a" "SBS8"  "SBS9"  "SBS16" "SBS18" "SBS26" "SBS29" "SBS30"
+[12] "SBS34" "SBS35" "SBS36" "SBS37" "SBS38" "SBS39" "SBS40" "SBS41"

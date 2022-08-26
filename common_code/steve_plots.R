@@ -20,11 +20,12 @@ split_by_approach_and_pull <- function(vv, approach.to.use) {
   return(list(split = xxs2, comp = comp, tpr = tpr, ppv = ppv, sim =sim))
 }
 
-four_beeswarms <- function(ww, main, col, pch, filename) {
+four_beeswarms <- function(ww, main, col, pch, filename, mfrow = c(2,2)) {
   grDevices::cairo_pdf(
     filename = filename,
-    height = 9)
-  par(mfrow = c(2,2), mar = c(9, 4, 4, 2) + 0.1)
+    height = 9, 
+    onefile = TRUE)
+  par(mfrow = mfrow, mar = c(9, 4, 4, 2) + 0.1)
   
   beeswarm(x = ww$comp, las = 2, ylab = "Composite measure", 
            pwpch = pch, pwcol = col,
@@ -138,7 +139,8 @@ noise_level_fig <- function(tt, indel.or.sbs, approach) {
     main = paste0(indel.or.sbs, "\nred = Realistic, violet = Moderate, blue = Noiseless"),
     col,
     pch,
-    filename = paste0(indel.or.sbs, "_noise.pdf"))
+    filename = paste0(indel.or.sbs, "_noise.pdf"),
+    mfrow = c(2, 1))
 
 }
 
@@ -163,3 +165,4 @@ all_figs_this_file <- function(tt) {
   downsample_SBS_fig(tt)
 }
 
+all_figs_this_file(all.results.fixed) # computed in summarize_level1_dirs.R
