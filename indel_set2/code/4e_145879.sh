@@ -3,9 +3,9 @@
 #PBS -l walltime=360:00:00
 #PBS -l select=1:ncpus=20:mem=200gb
 #PBS -N 4e_145879
-#PBS -o /data/rozen/home/e0240162/practice/6_Mo_mSigHdp/mSigHdp_paper_sup_files_x1/indel_set2/raw_results/4e_145879_out.txt
-#PBS -e /data/rozen/home/e0240162/practice/6_Mo_mSigHdp/mSigHdp_paper_sup_files_x1/indel_set2/raw_results/4e_145879_err.txt
-HOME_LOC=/data/rozen/home/e0240162
+#PBS -o /data/rozen/home/wuyang/practice/6_Mo_mSigHdp/mSigHdp_paper_sup_files_x1/indel_set2/raw_results/4e_145879_out.txt
+#PBS -e /data/rozen/home/wuyang/practice/6_Mo_mSigHdp/mSigHdp_paper_sup_files_x1/indel_set2/raw_results/4e_145879_err.txt
+HOME_LOC=/data/rozen/home/wuyang
 PROJ_LOC=$HOME_LOC/practice/6_Mo_mSigHdp/mSigHdp_paper_sup_files_x1
 CONDA_BIN_DIR=$HOME_LOC/opt/anaconda3/bin
 CONDA_BIN=$CONDA_BIN_DIR/conda
