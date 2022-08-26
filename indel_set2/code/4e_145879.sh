@@ -3,8 +3,8 @@
 #PBS -l walltime=360:00:00
 #PBS -l select=1:ncpus=20:mem=200gb
 #PBS -N 4e_145879
-#PBS -o /data/rozen/home/e0240162/practice/6_Mo_mSigHdp/mSigHdp_paper_sup_files_x1/indel_2/raw_results/4e_145879_out.txt
-#PBS -e /data/rozen/home/e0240162/practice/6_Mo_mSigHdp/mSigHdp_paper_sup_files_x1/indel_2/raw_results/4e_145879_err.txt
+#PBS -o /data/rozen/home/e0240162/practice/6_Mo_mSigHdp/mSigHdp_paper_sup_files_x1/indel_set2/raw_results/4e_145879_out.txt
+#PBS -e /data/rozen/home/e0240162/practice/6_Mo_mSigHdp/mSigHdp_paper_sup_files_x1/indel_set2/raw_results/4e_145879_err.txt
 HOME_LOC=/data/rozen/home/e0240162
 PROJ_LOC=$HOME_LOC/practice/6_Mo_mSigHdp/mSigHdp_paper_sup_files_x1
 CONDA_BIN_DIR=$HOME_LOC/opt/anaconda3/bin
@@ -18,7 +18,7 @@ $CONDA_BIN init bash
 
 cd $PROJ_LOC
 echo "Start running the wrapper script ......"
-mkdir -p indel_2/raw_results/NR_hdp_gb_50.results
-nice $CONDA_RSCRIPT indel_2/code/4e_run_NR_hdp_gamma_beta_50.R $SEED &>> indel_2/raw_results/NR_hdp_gb_50.results/${SEED}.log
+mkdir -p indel_set2/raw_results/NR_hdp_gb_50.results
+nice $CONDA_RSCRIPT indel_set2/code/4e_run_NR_hdp_gamma_beta_50.R $SEED &>> indel_set2/raw_results/NR_hdp_gb_50.results/${SEED}.log
 
 exit 0
