@@ -5,7 +5,7 @@
 #PBS -N 2a_145879__SBS_set2_ds
 #PBS -o /data/rozen/home/wuyang/practice/6_Mo_mSigHdp/mSigHdp_paper_sup_files_x1/SBS_set2_down_samp/raw_results/2a_145879_out.txt
 #PBS -e /data/rozen/home/wuyang/practice/6_Mo_mSigHdp/mSigHdp_paper_sup_files_x1/SBS_set2_down_samp/raw_results/2a_145879_err.txt
-OME_LOC=/data/rozen/home/wuyang
+HOME_LOC=/data/rozen/home/wuyang
 PROJ_LOC=$HOME_LOC/practice/6_Mo_mSigHdp/mSigHdp_paper_sup_files_x1
 CONDA_BIN_DIR=$HOME_LOC/opt/anaconda3/bin
 CONDA_BIN=$CONDA_BIN_DIR/conda
@@ -18,8 +18,11 @@ $CONDA_BIN init bash
 
 cd $PROJ_LOC
 echo "Start running the wrapper script ......"
-mkdir -p $PROJ_LOC/SBS_set2_down_samp/raw_results/mSigHdp.results/
-$CONDA_RSCRIPT $PROJ_LOC/SBS_set2_down_samp/code/2a_run_mSigHdp.R $SEED &>> $PROJ_LOC/SBS_set2_down_samp/raw_results/mSigHdp.results/2a_${SEED}.out
+mkdir -p $PROJ_LOC/SBS_set2_down_samp/raw_results/mSigHdp_ds_1k.results/
+mkdir -p $PROJ_LOC/SBS_set2_down_samp/raw_results/mSigHdp_ds_3k.results/
+mkdir -p $PROJ_LOC/SBS_set2_down_samp/raw_results/mSigHdp_ds_5k.results/
+mkdir -p $PROJ_LOC/SBS_set2_down_samp/raw_results/mSigHdp_ds_10k.results/
+$CONDA_RSCRIPT $PROJ_LOC/SBS_set2_down_samp/code/2a_run_mSigHdp.R $SEED &>> $PROJ_LOC/SBS_set2_down_samp/raw_results/2a_${SEED}.out
 
 exit 0
 
