@@ -1,15 +1,15 @@
 #!/bin/bash
 #PBS -q super
 #PBS -l walltime=360:00:00
-#PBS -l select=1:ncpus=20:mem=100gb
-#PBS -N 2a_145879__SBS_set2_down_samp
-#PBS -o /data/rozen/home/e0240162/practice/6_Mo_mSigHdp/mSigHdp_paper_sup_files_x1/SBS_set2_down_samp/raw_results/2a_145879_out.txt
-#PBS -e /data/rozen/home/e0240162/practice/6_Mo_mSigHdp/mSigHdp_paper_sup_files_x1/SBS_set2_down_samp/raw_results/2a_145879_err.txt
-HOME_LOC=/data/rozen/home/e0240162
+#PBS -l select=1:ncpus=100:mem=200gb
+#PBS -N 2a_145879__SBS_set2_ds
+#PBS -o /data/rozen/home/wuyang/practice/6_Mo_mSigHdp/mSigHdp_paper_sup_files_x1/SBS_set2_down_samp/raw_results/2a_145879_out.txt
+#PBS -e /data/rozen/home/wuyang/practice/6_Mo_mSigHdp/mSigHdp_paper_sup_files_x1/SBS_set2_down_samp/raw_results/2a_145879_err.txt
+OME_LOC=/data/rozen/home/wuyang
 PROJ_LOC=$HOME_LOC/practice/6_Mo_mSigHdp/mSigHdp_paper_sup_files_x1
 CONDA_BIN_DIR=$HOME_LOC/opt/anaconda3/bin
 CONDA_BIN=$CONDA_BIN_DIR/conda
-CONDA_RSCRIPT=$HOME_LOC/opt/anaconda3/envs/R-4.1.3/bin/Rscript
+CONDA_RSCRIPT=$HOME_LOC/opt/anaconda3/envs/R-4.2/bin/Rscript
 
 SEED=145879
 
