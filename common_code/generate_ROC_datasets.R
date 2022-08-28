@@ -21,17 +21,21 @@ generate_spiked_data_sets <- function(
     rand.seed    = 1066)
   {
   
-  signatures = ICAMS::ReadCatalog(
-    file.path(which.set, "ground.truth.syn.sigs.csv"))
+  signatures <- ICAMS::ReadCatalog(
+    file.path(which.set, "ground.truth.syn.sigs.csv"), 
+    catalog.type = "counts.signature")
   
   spectra <- ICAMS::ReadCatalog(
     file.path(which.set, "ground.truth.syn.catalog.csv"))
   
-  spectra.no.target.sig <- spectra[ , -(which(exposures[spike.in.sig, ] > 0))]
+  spectra.with.target.sig <- 
+    spectra[ , which(exposures[spike.in.sig, ] > 0), drop = FALSE]
+  spectra.no.target.sig <- 
+    spectra[ , -(which(exposures[spike.in.sig, ] > 0)), drop = FALSE]
   
   p7.exp <- PCAWG7::exposure$PCAWG$SBS96[spike.in.sig,  , drop = FALSE]
   ot.exp <- PCAWG7::exposure$other.genome$SBS96[spike.in.sig,  , drop = FALSE]
-  with.sig.exp <- c(p7.exp[p7.exp > 0], ot.exp[ot.exp > 9])
+  with.sig.exp <- c(p7.exp[p7.exp > 0], ot.exp[ot.exp > 0])
   
   # Get maximum likelihood estimates of parameters from negative binomial
   # distribution
@@ -74,6 +78,8 @@ generate_spiked_data_sets <- function(
              size = num.spiked, 
              replace = FALSE)
     message("Spiking ", length(indices.to.spike), " spectra")
+    samples.with.target.sig.added <- 
+      colnames(spectra.no.target.sig)[indices.to.spike]
     
     new.spectra <- spectra.no.target.sig
     
@@ -86,6 +92,16 @@ generate_spiked_data_sets <- function(
       new.spectra[ , indices.to.spike] + 
       noisy.spike.partial.spectra[, partial.spectra.indices.to.use]
     
+    # Add back the original spectra with target signature and reorder it
+    final.spectra <- cbind(new.spectra, spectra.with.target.sig)
+    final.spectra <- final.spectra[, colnames(spectra)]
+    
+    new.exposures <- exposures
+    new.exposures[spike.in.sig, samples.with.target.sig.added] <-
+      new.exposures[spike.in.sig, samples.with.target.sig.added] +
+      colSums(noisy.spike.partial.spectra[, partial.spectra.indices.to.use])
+    
+    stopifnot(all(colnames(final.spectra) == colnames(new.exposures)))
     
     out.dir.name <- paste0("ROC_", spike.in.sig, "_", num.spiked, "_", rand.seed)
     new.dir <- file.path(out.dir.name, "input", "Realistic")
@@ -93,19 +109,51 @@ generate_spiked_data_sets <- function(
       dir.create(new.dir, recursive = TRUE)
     }
     
-    ICAMS::WriteCatalog(new.spectra,
+    ICAMS::WriteCatalog(final.spectra,
                         file.path(new.dir, "ground.truth.syn.catalog.csv"))
+    mSigTools::write_exposure(new.exposures,
+                              file.path(new.dir, "ground.truth.syn.exposures.csv"))
     # Wu Yang, please add code to create sigpro input
-    ICAMS::WriteCatalog(signatures, "ground.truth.syn.sigs.csv")
+    ICAMS::WriteCatalog(signatures, 
+                        file.path(new.dir, "ground.truth.syn.sigs.csv"))
     
-    cairo_pdf(file.path(new.dir, "spike_in_exposure_dist.pdf"))
-    par(mfrow = c(2, 1))
-    br <- seq(0, max(with.sig.exp, sig.counts + 200), by = 200)
-    hist(with.sig.exp, breaks = br, main = "real exposures")
-    hist(sig.counts, breaks = br, main = "synthetic exposures")
+    # Plot the distribution of real and noisy exposures of spike in signature 
+    grDevices::pdf(file.path(new.dir, "spike_in_sig_exposure_dist.pdf"), 
+                   width = 8.2677, 
+                   height = 11.6929, onefile = TRUE)
+    par(mfrow = c(3, 1))
+    noisy.counts <- colSums(noisy.spike.partial.spectra)
+    
+    br <- seq(0, max(with.sig.exp, noisy.counts + 200), by = 200)
+    hist(with.sig.exp, breaks = br, 
+         main = "Spike in signature real exposures", xlab = "counts")
+    hist(noisy.counts, breaks = br, 
+         main = "Spike in signature noisy exposures", xlab = "counts")
+    plot(density(with.sig.exp),
+         col = "red",
+         main = "Spike in signature",
+         xlab = "Two-sample Kolmogorov-Smirnov test"
+    )
+    lines(density(noisy.counts),
+          col = "blue",
+          xlim = c(0, max(with.sig.exp))
+    )
+    retval <-
+      suppressWarnings(ks.test(
+        x = with.sig.exp,
+        y = noisy.counts
+      ))
+    p_value <- round(retval$p.value, 3)
+    legend("topright",
+           title = paste0("p-value = ", p_value),
+           legend = c("real.exposure", "noisy.exposure"),
+           col = c("red", "blue"),
+           fill = c("red", "blue"),
+           border = "white", bty = "n"
+    )
     dev.off()
     
-    return(new.spectra)
+    return(final.spectra)
   }
   
   spiked.counts <- c(100, 50, 30, 20, 10, 5)
