@@ -96,10 +96,6 @@ generate_spiked_data_sets <- function(
       new.spectra[ , indices.to.spike] + 
       noisy.spike.partial.spectra[, partial.spectra.indices.to.use]
     
-    # Add back the original spectra with target signature and reorder it
-    # final.spectra <- cbind(new.spectra, spectra.with.target.sig)
-    # final.spectra <- final.spectra[, colnames(spectra)]
-    
     new.exposures <- exposures.no.target.sig
     new.exposures[spike.in.sig, samples.with.target.sig.added] <-
       new.exposures[spike.in.sig, samples.with.target.sig.added] +
@@ -155,7 +151,7 @@ generate_spiked_data_sets <- function(
     p_value <- round(retval$p.value, 3)
     legend("topright",
            title = paste0("KS-test p = ", p_value),
-           legend = c("real.exposure", "noisy.exposure"),
+           legend = c("real.exposure", "synthetic.exposure"),
            col = c("red", "blue"),
            fill = c("red", "blue"),
            border = "white", bty = "n"
