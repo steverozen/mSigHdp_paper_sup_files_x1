@@ -28,10 +28,14 @@ generate_spiked_data_sets <- function(
   spectra <- ICAMS::ReadCatalog(
     file.path(which.set, "ground.truth.syn.catalog.csv"))
   
+  orig.exp.w.target.sig <- which(exposures[spike.in.sig, ] > 0)
   spectra.with.target.sig <- 
-    spectra[ , which(exposures[spike.in.sig, ] > 0), drop = FALSE]
+    spectra[ , orig.exp.w.target.sig, drop = FALSE]
   spectra.no.target.sig <- 
-    spectra[ , -(which(exposures[spike.in.sig, ] > 0)), drop = FALSE]
+    spectra[ , -orig.exp.w.target.sig, drop = FALSE]
+  exposures.no.target.sig <-
+    exposures[ , -orig.exp.w.target.sig, drop = FALSE]
+  rm(exposures)
   
   p7.exp <- PCAWG7::exposure$PCAWG$SBS96[spike.in.sig,  , drop = FALSE]
   ot.exp <- PCAWG7::exposure$other.genome$SBS96[spike.in.sig,  , drop = FALSE]
@@ -93,15 +97,15 @@ generate_spiked_data_sets <- function(
       noisy.spike.partial.spectra[, partial.spectra.indices.to.use]
     
     # Add back the original spectra with target signature and reorder it
-    final.spectra <- cbind(new.spectra, spectra.with.target.sig)
-    final.spectra <- final.spectra[, colnames(spectra)]
+    # final.spectra <- cbind(new.spectra, spectra.with.target.sig)
+    # final.spectra <- final.spectra[, colnames(spectra)]
     
-    new.exposures <- exposures
+    new.exposures <- exposures.no.target.sig
     new.exposures[spike.in.sig, samples.with.target.sig.added] <-
       new.exposures[spike.in.sig, samples.with.target.sig.added] +
       colSums(noisy.spike.partial.spectra[, partial.spectra.indices.to.use])
     
-    stopifnot(all(colnames(final.spectra) == colnames(new.exposures)))
+    stopifnot(all(colnames(new.spectra) == colnames(new.exposures)))
     
     out.dir.name <- paste0("ROC_", spike.in.sig, "_", num.spiked, "_", rand.seed)
     new.dir <- file.path(out.dir.name, "input", "Realistic")
@@ -109,15 +113,16 @@ generate_spiked_data_sets <- function(
       dir.create(new.dir, recursive = TRUE)
     }
     
-    ICAMS::WriteCatalog(final.spectra,
+    ICAMS::WriteCatalog(new.spectra,
                         file.path(new.dir, "ground.truth.syn.catalog.csv"))
+
     mSigTools::write_exposure(new.exposures,
                               file.path(new.dir, "ground.truth.syn.exposures.csv"))
-    # Wu Yang, please add code to create sigpro input
+
     ICAMS::WriteCatalog(signatures, 
                         file.path(new.dir, "ground.truth.syn.sigs.csv"))
     
-    # Plot the distribution of real and noisy exposures of spike in signature 
+    # Plot the distribution of real and synthetic exposures of spike in signature 
     grDevices::pdf(file.path(new.dir, "spike_in_sig_exposure_dist.pdf"), 
                    width = 8.2677, 
                    height = 11.6929, onefile = TRUE)
@@ -126,13 +131,17 @@ generate_spiked_data_sets <- function(
     
     br <- seq(0, max(with.sig.exp, noisy.counts + 200), by = 200)
     hist(with.sig.exp, breaks = br, 
-         main = "Spike in signature real exposures", xlab = "counts")
+         main = paste0(spike.in.sig, " real exposure"), 
+         xlab = "Count",
+         ylab = "Number of samples")
     hist(noisy.counts, breaks = br, 
-         main = "Spike in signature noisy exposures", xlab = "counts")
+         main = paste0(spike.in.sig, " synthetic exposure"),
+         xlab = "Count",
+         ylab = "Number of samples")
     plot(density(with.sig.exp),
          col = "red",
-         main = "Spike in signature",
-         xlab = "Two-sample Kolmogorov-Smirnov test"
+         main = paste0(spike.in.sig, " real versus synthetic counts"),
+         xlab = "Exposure (mutation count)"
     )
     lines(density(noisy.counts),
           col = "blue",
@@ -145,7 +154,7 @@ generate_spiked_data_sets <- function(
       ))
     p_value <- round(retval$p.value, 3)
     legend("topright",
-           title = paste0("p-value = ", p_value),
+           title = paste0("KS-test p = ", p_value),
            legend = c("real.exposure", "noisy.exposure"),
            col = c("red", "blue"),
            fill = c("red", "blue"),
@@ -153,7 +162,7 @@ generate_spiked_data_sets <- function(
     )
     dev.off()
     
-    return(final.spectra)
+    return(new.spectra)
   }
   
   spiked.counts <- c(100, 50, 30, 20, 10, 5)
