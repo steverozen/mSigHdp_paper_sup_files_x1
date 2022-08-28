@@ -73,6 +73,7 @@ generate_spiked_data_sets <- function(
       sample(x = ncol(spectra.no.target.sig),
              size = num.spiked, 
              replace = FALSE)
+    message("Spiking ", length(indices.to.spike), " spectra")
     
     new.spectra <- spectra.no.target.sig
     
@@ -96,6 +97,13 @@ generate_spiked_data_sets <- function(
                         file.path(new.dir, "ground.truth.syn.catalog.csv"))
     # Wu Yang, please add code to create sigpro input
     ICAMS::WriteCatalog(signatures, "ground.truth.syn.sigs.csv")
+    
+    cairo_pdf(file.path(new.dir, "spike_in_exposure_dist.pdf"))
+    par(mfrow = c(2, 1))
+    br <- seq(0, max(with.sig.exp, sig.counts + 200), by = 200)
+    hist(with.sig.exp, breaks = br, main = "real exposures")
+    hist(sig.counts, breaks = br, main = "synthetic exposures")
+    dev.off()
     
     return(new.spectra)
   }
