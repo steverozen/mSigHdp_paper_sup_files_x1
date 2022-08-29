@@ -1,7 +1,7 @@
 #!/bin/bash
 #PBS -q super
 #PBS -l walltime=360:00:00
-#PBS -l select=1:ncpus=100:mem=200gb
+#PBS -l select=1:ncpus=20:mem=200gb
 #PBS -N 3a_145879__ROC_SBS35_100
 #PBS -o /data/rozen/home/wuyang/practice/6_Mo_mSigHdp/mSigHdp_paper_sup_files_x1/ROC_SBS35_100_1066/raw_results/3a_145879_out.txt
 #PBS -e /data/rozen/home/wuyang/practice/6_Mo_mSigHdp/mSigHdp_paper_sup_files_x1/ROC_SBS35_100_1066/raw_results/3a_145879_err.txt
@@ -18,7 +18,7 @@ $CONDA_BIN init bash
 
 cd $PROJ_LOC
 echo "Start running the wrapper script ......"
-mkdir -p $PROJ_LOC/ROC_SBS35_100_1066/raw_results/Realistic/
+mkdir -p $PROJ_LOC/ROC_SBS35_100_1066/raw_results/mSigHdp.results/Realistic/seed.${SEED}/
 $CONDA_RSCRIPT $PROJ_LOC/ROC_SBS35_100_1066/code/3a_run_mSigHdp_ds_3k.R $SEED &>> $PROJ_LOC/ROC_SBS35_100_1066/raw_results/3a_${SEED}.out
 
 exit 0
