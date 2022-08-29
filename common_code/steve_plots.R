@@ -68,6 +68,7 @@ main_text_SBS_fig <- function(tt) {
       "mSigHdp",
       "SigProfilerExtractor",
       "NR_hdp_gb_20",
+      "NR_hdp_gb_1",
       "signeR",
       "SignatureAnalyzer" # "NR_HDP_gb_1 is not present yet
     )
