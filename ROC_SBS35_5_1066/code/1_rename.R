@@ -14,9 +14,15 @@ if (!requireNamespace("ICAMS", quietly = TRUE)) {
 require(magrittr)
 require(ICAMS)
 
-# 2. Export ICAMS-formatted SBS catalog to tsv format -------------------------
-# supported by SigProfilerExtractor -------------------------------------------
+# 2. Specify common variables -------------------------------------------------
+
 SBS_home <- "ROC_SBS35_5_1066/input"
+dir.create(SBS_home, showWarnings = FALSE, recursive = TRUE)
+
+dataset_names <- "Realistic"
+
+# 3. Export ICAMS-formatted SBS catalog to tsv format -------------------------
+# supported by SigProfilerExtractor -------------------------------------------
 
 for (dn in dataset_names) {
   spectra <- ICAMS::ReadCatalog(
