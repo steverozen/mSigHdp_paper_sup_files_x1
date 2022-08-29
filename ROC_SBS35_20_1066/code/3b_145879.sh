@@ -9,7 +9,7 @@ HOME_LOC=/data/rozen/home/wuyang
 PROJ_LOC=$HOME_LOC/practice/6_Mo_mSigHdp/mSigHdp_paper_sup_files_x1
 CONDA_BIN_DIR=$HOME_LOC/opt/anaconda3/bin
 CONDA_BIN=$CONDA_BIN_DIR/conda
-CONDA_PY=$HOME_LOC/opt/anaconda3/envs/SigPro/bin/Rscript
+CONDA_PY=$HOME_LOC/opt/anaconda3/envs/SigPro/bin/python3
 
 SEED=145879
 
