@@ -18,7 +18,7 @@ $CONDA_BIN init bash
 
 cd $PROJ_LOC
 echo "Start running the wrapper script ......"
-mkdir -p $PROJ_LOC/ROC_SBS35_50_1066/raw_results/Realistic/
+mkdir -p $PROJ_LOC/ROC_SBS35_50_1066/raw_results/SigProfilerExtractor.results/Realistic/
 $CONDA_PY $PROJ_LOC/ROC_SBS35_50_1066/code/3b_run_SP_${SEED}.py &>> $PROJ_LOC/ROC_SBS35_50_1066/raw_results/3b_${SEED}.out
 
 exit 0
