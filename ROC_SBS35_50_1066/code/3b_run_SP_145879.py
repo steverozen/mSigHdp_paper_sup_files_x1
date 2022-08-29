@@ -51,7 +51,8 @@ if __name__ == "__main__":
     home_for_data = os.path.abspath("./ROC_SBS35_50_1066/input")
     home_for_run = os.path.abspath("./ROC_SBS35_50_1066/raw_results")
     # Seed numbers
-    seed_numbers = (145879, 200437, 310111, 528401, 1076753)
+    # seed_numbers = (145879, 200437, 310111, 528401, 1076753)
+    seed_numbers = (145879,)
     seed_numbers = [(sn % 10000000) for sn in seed_numbers]
     # Naming the datasets for cycling
     dataset_names = ("Realistic",)
