@@ -18,7 +18,7 @@ $CONDA_BIN init bash
 
 cd $PROJ_LOC
 echo "Start running the wrapper script ......"
-mkdir -p $PROJ_LOC/ROC_SBS35_30_1066/raw_results/mSigHdp.results/Realistic/seed.${SEED}/
+mkdir -p $PROJ_LOC/ROC_SBS35_30_1066/raw_results/mSigHdp_ds_3k.results/Realistic/seed.${SEED}/
 $CONDA_RSCRIPT $PROJ_LOC/ROC_SBS35_30_1066/code/3a_run_mSigHdp_ds_3k.R $SEED &>> $PROJ_LOC/ROC_SBS35_30_1066/raw_results/3a_${SEED}.out
 
 exit 0
