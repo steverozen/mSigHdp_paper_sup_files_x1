@@ -30,13 +30,9 @@ if (FALSE) {
 }
 # Level 1 dirs are also the name of the data sets
 level1_dirs <- c("indel_set1",
-                 "indel_set1_down_samp",
                  "indel_set2",
-                 "indel_set2_down_samp",
                  "SBS_set1",
-                 "SBS_set1_down_samp",
-                 "SBS_set2",
-                 "SBS_set2_down_samp")
+                 "SBS_set2")
 level1_dirs <- c(level1_dirs,
                  paste0("ROC_SBS35_",
                         c(5L, 10L, 20L, 30L, 50L, 100L),
@@ -67,17 +63,25 @@ move_sigpro_files_one_dir <- function(a_dir) {
   }
   
   # Skip a_dir is not a folder with indel or SBS data set.
-  if (flag_SBS || flag_indel == FALSE) {
-    message("Skipping ", a_dir, "as it is not a folder for SBS or indel data sets")
-    invisible(NULL)
+  if ((flag_SBS || flag_indel) == FALSE) {
+    message("Skipping ", a_dir, " as it is not a folder for SBS or indel data sets")
+    invisible(return(NULL))
   }
-  if (flag_SBS && flag_indel == TRUE) {
+  if ((flag_SBS && flag_indel) == TRUE) {
     stop("a_dir cannot be both an SBS and indel data set\n")
   }
   
   # A full directory path, e.g "indel_set1/raw_results/SigProfilerExtractor.results"
   analysis_name <- file.path(a_dir, "raw_results", "SigProfilerExtractor.results")
-  stopifnot(dir.exists(analysis_name))
+  if(!dir.exists(analysis_name)) {
+    message("\n=====================")
+    message("\n=====================")
+    message(analysis_name, " does not exist, skipping...")
+    invisible(return(NULL))
+  }
+
+  message("\n=====================")
+  message("\n=====================")
   message("Looking for analysis_name=", analysis_name)
   tool_name <- sub("\\.results", "", basename(analysis_name), fixed = TRUE)
   # dataset_path, e.g indel_set1/raw_results/SigProfilerExtractor.results/"Moderate"
@@ -117,7 +121,11 @@ move_sigpro_files_one_dir <- function(a_dir) {
       if (flag_indel) cat_type <- "ID83"
       
       # Convert SigPro-TSV-formatted signatures to ICAMS-CSV format -----------------
-      sig.path <- paste0(seed_path, "/", cat_type, "_De-Novo_Signatures.txt")
+      # <seed_path>/SBS96/Suggested_Solution/SBS96_De-Novo_Solution/Signatures
+      sig.path <- 
+        paste0(seed_path, "/", cat_type, "/Suggested_Solution/",
+        cat_type, "_De-Novo_Solution/Signatures/", 
+        cat_type, "_De-Novo_Signatures.txt")
       sig.catalog.sp <- utils::read.table(
         sig.path,
         sep = "\t",
@@ -136,9 +144,10 @@ move_sigpro_files_one_dir <- function(a_dir) {
       message(
         "Finished converting SigProfilerExtractor's ",
         "signature extraction TSV file into ", seed_path, "\n")
+      message("---------------------")
     } # for (seedInUse in seedsInUse)
   } # for (dataset_path in datasetNames)
-  
+  invisible(return(NULL))
 }
 
 
@@ -146,8 +155,7 @@ move_sigpro_files_all_level1_dirs <- function(level1_dirs = level1_dirs) {
   lapply(level1_dirs, move_sigpro_files_one_dir)
   message("\n=====================")
   message("Finished moving SigPro files in all sub-directories.")
-  message("\n=====================")
-  invisible(NULL)
+  invisible(return(NULL))
 }
 
-move_sigpro_files_all_level1_dirs(level1_dirs)
+invisible(move_sigpro_files_all_level1_dirs(level1_dirs))
