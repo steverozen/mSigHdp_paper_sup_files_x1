@@ -1,33 +1,25 @@
+# To include SigProfilerExtractor extracted signatures
+# into the summary, please run 
+# common_code/rename_SP_files_level1_dirs.R
+# Before running this script.
+
+
 # Please run this script from the top directory
 top.dir <- "mSigHdp_paper_sup_files_x1"
 if (basename(getwd()) != top.dir) {
   stop("Please run from top level directory, ", top.dir)
 }
 
-if (FALSE) {
 # Install and load dependencies -----------------------------------------------
-
-if (!requireNamespace("remotes", quietly = TRUE)) {
-  install.packages("remotes")
+if (!requireNamespace("tibble", quietly = TRUE)) {
+  install.packages("tibble")
 }
-
-if (!("ICAMS" %in% rownames(installed.packages())) ||
-    packageVersion("ICAMS") < "3.0.5") {
-  remotes::install_github("steverozen/ICAMS", ref = "v3.0.5-branch")
-}
-}
-
-if (!("SynSigEval" %in% rownames(installed.packages())) ||
-    packageVersion("SynSigEval") < "0.3.2") {
-  remotes::install_github(repo = "WuyangFF95/SynSigEval", ref = "main")
-}
-
 require(ICAMS)
 require(SynSigEval)
+require(tibble)
 
 
-library(tibble)
-
+# Function for summary directory on one seed ----------------------------------
 extract_from_one_seeds_summary <- function(summary.directory.path) {
   gt <- ICAMS::ReadCatalog(file.path(summary.directory.path, "ground.truth.sigs.csv"))
   ex <- ICAMS::ReadCatalog(file.path(summary.directory.path, "extracted.sigs.csv"))
@@ -165,6 +157,10 @@ summarize_all_level1_dirs <- function()  {
                    "SBS_set1_down_samp",
                    "SBS_set2",
                    "SBS_set2_down_samp")
+  level1.dirs <- c(level1.dirs,
+                   paste0("ROC_SBS35_",
+                          c(5L, 10L, 20L, 30L, 50L, 100L),
+                          "_1066"))
   
   all.out.list <- lapply(level1.dirs, summarize_level1_dirs)
   
@@ -185,10 +181,11 @@ summarize_all_level1_dirs <- function()  {
   invisible(all.results.fixed)
 }
 
-
+# Run wrapper function to summarize directories of all levels -----------------
 all.results.fixed <- summarize_all_level1_dirs()
-# development code:
 
+
+# development code: -----------------------------------------------------------
 foo <- dplyr::filter(
   all.results.fixed,
   Data_set == "SBS_set1" & Noise_level == "Realistic" & Approach == "mSigHdp_ds_3k")
