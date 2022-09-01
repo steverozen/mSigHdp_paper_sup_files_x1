@@ -41,14 +41,17 @@ four_beeswarms <- function(ww, main, col, pch, filename, mfrow = c(2,2)) {
 }
 
 generic_beeswarm_fig <-
-  function(tt, approach.to.use, sbs.or.indel, file.name.prefix) {
+  function(tt, 
+           approaches.to.use, # character vector of names of approaches
+           sbs.or.indel, 
+           file.name.prefix) {
 
   set1 <- paste0(sbs.or.indel, "_set1")
   set2 <- paste0(sbs.or.indel, "_set2")
   t1 <- filter(tt, Noise_level == "Realistic")
   xx <- filter(t1, Data_set %in% c(set1, set2))
 
-  ww <- split_by_approach_and_pull(xx, approach.to.use)
+  ww <- split_by_approach_and_pull(xx, approaches.to.use)
   xx.data.set <- unlist(lapply(ww$split, pull, "Data_set"))
 
   col <- ifelse(xx.data.set == set1, "red", "blue")
@@ -72,7 +75,7 @@ main_text_SBS_fig <- function(tt) {
       "signeR",
       "SignatureAnalyzer" # "NR_HDP_gb_1 is not present yet
     )
-  
+
   generic_beeswarm_fig(tt, approach.to.use, "SBS", "draft_main_text_fig_")
 }
 
@@ -143,6 +146,16 @@ noise_level_fig <- function(tt, indel.or.sbs, approach) {
     filename = paste0(indel.or.sbs, "_noise.pdf"),
     mfrow = c(2, 1))
 
+}
+
+ROC_beeswarm <- function(tt) {
+  ROC.data.sets <-paste0("ROC_SBS35_",
+                          c(5L, 10L, 20L, 30L, 50L, 100L),
+                          "_1066")
+  tt1 <- dplyr::filter(tt, Approach %in% c("mSigHdp_ds_3k", "SigProfilerExtractor"))
+  tt2 <- dplyr::filter(tt1, Noise_level == "Realistic")
+  
+  
 }
 
 
