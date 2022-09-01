@@ -9,7 +9,7 @@ library(fitdistrplus)
 library(PCAWG7)
 
 # Create 6 synthetic data set directories with names of the form
-# ROC_<spike_sig_id>_<num_spiked_samples>_seed, along with the
+# sens_<spike_sig_id>_<num_spiked_samples>_seed, along with the
 # the input/Realistic/ground.truth.syn.catalog.csv file with the
 # spiked synthetic signatures.
 
@@ -103,7 +103,7 @@ generate_spiked_data_sets <- function(
     
     stopifnot(all(colnames(new.spectra) == colnames(new.exposures)))
     
-    out.dir.name <- paste0("ROC_", spike.in.sig, "_", num.spiked, "_", rand.seed)
+    out.dir.name <- paste0("sens_", spike.in.sig, "_", num.spiked, "_", rand.seed)
     new.dir <- file.path(out.dir.name, "input", "Realistic")
     if (!dir.exists(new.dir)) {
       dir.create(new.dir, recursive = TRUE)
@@ -166,3 +166,5 @@ generate_spiked_data_sets <- function(
 }
 
 generate_spiked_data_sets()
+generate_spiked_data_sets(rand.seed = 728)
+
