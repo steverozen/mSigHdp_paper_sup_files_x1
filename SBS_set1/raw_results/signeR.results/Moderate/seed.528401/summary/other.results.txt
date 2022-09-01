@@ -16,7 +16,8 @@ True positive extracted signatures
  [9] "signeR.21" "signeR.22" "signeR.23" "signeR.3"  "signeR.4"  "signeR.5"  "signeR.7" 
 
 False positive signatures
-[1] "signeR.13" "signeR.15" "signeR.16" "signeR.18" "signeR.20" "signeR.24" "signeR.6"  "signeR.8"  "signeR.9" 
+[1] "signeR.13" "signeR.15" "signeR.16" "signeR.18" "signeR.20" "signeR.24" "signeR.6"  "signeR.8" 
+[9] "signeR.9" 
 
 False negative signatures
 [1] "SBS12" "SBS16" "SBS22" "SBS28" "SBS29" "SBS35" "SBS38" "SBS41"
