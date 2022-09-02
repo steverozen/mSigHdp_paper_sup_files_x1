@@ -1,0 +1,7 @@
+Data_set,Noise_level,Approach,Run,cpu_time
+ROC_SBS35_10_1066,Realistic,mSigHdp_ds_3k,seed.145879,1303502.9649999999
+ROC_SBS35_10_1066,Realistic,SigProfilerExtractor,seed.1076753,359502.42999999993
+ROC_SBS35_10_1066,Realistic,SigProfilerExtractor,seed.145879,353297.29
+ROC_SBS35_10_1066,Realistic,SigProfilerExtractor,seed.200437,351096.04999999993
+ROC_SBS35_10_1066,Realistic,SigProfilerExtractor,seed.310111,351860.8300000001
+ROC_SBS35_10_1066,Realistic,SigProfilerExtractor,seed.528401,351536.94999999995
