@@ -85,7 +85,6 @@ generic_4_beeswarm_fig <-
 
 downsample_indel_fig <- function(tt) {
   approaches <- c("mSigHdp", 
-                  # "mSigHdp_ds_non_hyper", 
                   "mSigHdp_ds_10k", 
                   "mSigHdp_ds_5k",
                   "mSigHdp_ds_3k", 
