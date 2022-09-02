@@ -183,7 +183,7 @@ main_text_cpu <- function(sbs.or.indel, approaches.to.use) {
   uu <- data.table::fread("cpu_time_by_seed.csv")
   data.sets <- paste0(sbs.or.indel, "_set", c(1, 2))
   uu1 <- filter(uu, Noise_level == "Realistic" & Data_set %in% data.sets & Approach %in% approaches.to.use)
-  uu2 <- mutate(uu1, CPU.days = CPU_time / (60 * 60 * 24))
+  uu2 <- mutate(uu1, CPU.days = cpu_time / (60 * 60 * 24))
   # browser()
   to.plot <- split(uu2, uu2$Approach)
   to.use <- which(approaches.to.use %in% names(to.plot))
