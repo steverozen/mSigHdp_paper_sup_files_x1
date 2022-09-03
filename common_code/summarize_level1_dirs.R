@@ -77,7 +77,9 @@ summarize_level1_dirs <- function(a.folder, delete.non.text = TRUE) {
       }
       message("summarizing datasetpath=", datasetpath)
       ground.truth.exposure.dir <-
-        file.path(a.folder, "input", noise.level)           
+        # file.path(a.folder, "input", noise.level)
+        file.path(dataset.name.to.use, "input", noise.level)
+      message("summarizing ground.truth.exposure.dir=", ground.truth.exposure.dir)
       seedsInUse <- dir(datasetpath, pattern = "seed\\.\\d+", full.names = TRUE)
       
       for(seedInUse in seedsInUse) {
