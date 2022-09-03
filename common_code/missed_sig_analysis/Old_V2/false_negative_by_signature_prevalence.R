@@ -42,7 +42,8 @@ folder_names <-
   paste0(rep(c("indel", "SBS"), 2), 
          "_set", 
          rep(c(1L, 2L), each = 2))
-tool_names_general <- c("mSigHdp", "SigProfilerExtractor")
+tool_names <- c("mSigHdp", "SigProfilerExtractor")
+
 source("common_code/all.seeds.R")
 seeds_in_use <- all.seeds()
 
@@ -79,8 +80,8 @@ for (fn in folder_names) {
 
 # 3. Check whether each tool can extract each signature for all runs ----------
 for(fn in folder_names){
-  for (tn in tool_names_general) {
-    mat <- matrix(data = -1, nrow = nrow(ls_dfs[[fn]]), ncol = 1)
+  for (tn in tool_names) {
+    mat <- matrix(data = 0, nrow = nrow(ls_dfs[[fn]]), ncol = 1)
     colnames(mat) <- tn
     ls_dfs[[fn]] <- data.frame(ls_dfs[[fn]], mat)
   }
@@ -89,46 +90,22 @@ for(fn in folder_names){
 for (fn in folder_names) {
   home_for_data <- paste0(fn, "/input")
   home_for_run <- paste0(fn, "/raw_results")
-  home_for_run_ds <- paste0(fn, "_down_samp/raw_results")
-  
-  # 3a. For SBS data sets, we need to use mSigHdp_ds_3k instead of mSigHdp.
-  flag_SBS <- FALSE
-  if (grepl("SBS", fn) == TRUE) flag_SBS <- TRUE
-  if (flag_SBS) {
-    tool_names <- c("mSigHdp_ds_3k", "SigProfilerExtractor")
-  } else {
-    tool_names <- c("mSigHdp", "SigProfilerExtractor")
-  }
   
   for (tn in tool_names) {
-    flag_mSigHdp_ds_3k <- FALSE
-    if (tn == "mSigHdp_ds_3k") flag_mSigHdp_ds_3k <- TRUE
     for (sig in ls_dfs[[fn]]$sigs) {
       # Count the number of runs which failed to extract the ground-truth sig
       # Expect to be 0~5.
       num_runs_w_fn <- 0
       for (seed_in_use in seeds_in_use) {
-        # The raw results of mSigHdp_ds_3k is stored under 
-        # SBS_set<1,2>_down_samp/, rather than SBS_set<1,2>/.
-        if (flag_mSigHdp_ds_3k == TRUE) {
-          tmp_match <- utils::read.csv(
-            paste0(home_for_run_ds, "/", tn, ".results/Realistic/seed.",
-                   seed_in_use, "/summary/match.ex.to.gt.csv"))
-        } else {
-          tmp_match <- utils::read.csv(
-            paste0(home_for_run, "/", tn, ".results/Realistic/seed.",
-                   seed_in_use, "/summary/match.ex.to.gt.csv"))
-        } 
+        tmp_match <- utils::read.csv(
+          paste0(home_for_run, "/", tn, ".results/Realistic/seed.",
+                 seed_in_use, "/summary/match.ex.to.gt.csv"))
         all_true_pos_sigs <- tmp_match$ref.sig
         if ((sig %in% all_true_pos_sigs) == FALSE) {
           num_runs_w_fn <- num_runs_w_fn + 1
         }
       }
-      if (flag_mSigHdp_ds_3k == FALSE) {
-        ls_dfs[[fn]][sig, tn] <- num_runs_w_fn
-      } else {
-        ls_dfs[[fn]][sig, "mSigHdp"] <- num_runs_w_fn
-      }
+      ls_dfs[[fn]][sig, tn] <- num_runs_w_fn
     }
   }
 }  
@@ -144,17 +121,12 @@ for (fn in folder_names) {
   df <- ls_dfs[[fn]]
   for (sig in rownames(df)) {
     comment <- ""
-    for(tn in tool_names_general) {
+    for(tn in tool_names) {
       num_runs_w_fn <- df[sig, tn]
-      if(num_runs_w_fn > 1 & num_runs_w_fn < 5) {
+      if(num_runs_w_fn > 0 & num_runs_w_fn < 5) {
         comment <- 
           paste0(comment, "Signature missed by ", tn,
                  " in ", num_runs_w_fn," runs; ")
-      } else if (num_runs_w_fn == 1) {
-        # No more "runs"; "run" instead.
-        comment <- 
-          paste0(comment, "Signature missed by ", tn,
-                 " in ", num_runs_w_fn," run; ")
       } else if (num_runs_w_fn == 5) {
         comment <- 
           paste0(comment, "Signature missed by ", tn,
