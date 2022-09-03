@@ -158,7 +158,7 @@ summarize_all_level1_dirs <- function()  {
                    "SBS_set2",
                    "SBS_set2_down_samp")
   level1.dirs <- c(level1.dirs,
-                   paste0("ROC_SBS35_",
+                   paste0("sens_SBS35_",
                           c(5L, 10L, 20L, 30L, 50L, 100L),
                           "_1066"))
   

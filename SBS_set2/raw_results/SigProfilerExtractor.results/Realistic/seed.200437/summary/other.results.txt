@@ -17,5 +17,5 @@ False positive signatures
 [1] "SBS96E" "SBS96K"
 
 False negative signatures
- [1] "SBS5"  "SBS6"  "SBS7a" "SBS7c" "SBS7d" "SBS8"  "SBS9"  "SBS16" "SBS22" "SBS26" "SBS28" "SBS29" "SBS30" "SBS34" "SBS35"
-[16] "SBS36" "SBS37" "SBS38" "SBS39" "SBS40" "SBS41"
+ [1] "SBS5"  "SBS6"  "SBS7a" "SBS7c" "SBS7d" "SBS8"  "SBS9"  "SBS16" "SBS22" "SBS26" "SBS28" "SBS29"
+[13] "SBS30" "SBS34" "SBS35" "SBS36" "SBS37" "SBS38" "SBS39" "SBS40" "SBS41"

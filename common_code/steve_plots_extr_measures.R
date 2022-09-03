@@ -38,20 +38,15 @@ four_beeswarms <- function(ww, main, col, pch, filename,
            pwpch = pch, pwcol = col,
            main = main)
   
-  if (!is.null(legend.fn)) { # Not working, not sure why 2022 09 01
-    # browser()
-    legend.fn()
-    legend(x = "top",
-           legend = paste0("set", 1:2),
-           col    = c("red",  "blue"),
-           pch    = c(16,     17))
-  }
   beeswarm(x = ww$ppv, las = 2,  ylab = "PPV", 
            pwpch = pch, pwcol = col)
   beeswarm(x = ww$tpr, las = 2, ylab = "TPR", 
            pwpch = pch, pwcol = col)
   beeswarm(x = ww$sim, las = 2, ylab = "Cosine similarity", 
            pwpch = pch, pwcol = col)
+  if (!is.null(legend.fn)) { # Not working, not sure why 2022 09 01
+    legend.fn()
+  }
   grDevices::dev.off()
   
 }
@@ -88,10 +83,9 @@ downsample_indel_fig <- function(tt) {
                   "mSigHdp_ds_10k", 
                   "mSigHdp_ds_5k",
                   "mSigHdp_ds_3k", 
-                  "mSigHdp_ds_1k",  
-                  "mSigHdp_ds_500"
-                  )
-  generic_4_beeswarm_fig(tt, approaches, "indel", "draft_downsampling_fig_")
+                  "mSigHdp_ds_1k")
+  generic_4_beeswarm_fig(tt, approaches, "indel", "draft_downsampling_fig_",
+                         legend.fn = function() { set1_set2_legend("indel")})
   
 }
 
@@ -102,7 +96,8 @@ downsample_SBS_fig <- function(tt) {
                   "mSigHdp_ds_3k",
                   "mSigHdp_ds_1k"
   )
-  generic_4_beeswarm_fig(tt, approaches, "SBS", "draft_downsampling_fig_")
+  generic_4_beeswarm_fig(tt, approaches, "SBS", "draft_downsampling_fig_",
+                         legend.fn = function() { set1_set2_legend("SBS")})
   
 }
 
@@ -129,7 +124,16 @@ noise_level_fig <- function(tt, indel.or.sbs, approach) {
     col,
     pch,
     filename = paste0(indel.or.sbs, "_noise.pdf"),
-    mfrow = c(2, 1))
+    mfrow = c(2, 1),
+    legend.fn = function() {
+      legend(x = "bottomleft",
+             title  = "Resampling noise",
+             legend = c("None", "Moderate", "Realistc"),
+             col    = c("blue",  "violet", "red"),
+             pch    = 18:16)
+      
+      
+    })
 
 }
 
@@ -137,7 +141,7 @@ noise_level_fig <- function(tt, indel.or.sbs, approach) {
 # Start here
 SBS35_detect <- function(tt) {
   spike.in.counts <- c(5L, 10L, 20L, 30L, 50L)  # , 100L) # No data for this yet
-  data.sets <-paste0("ROC_SBS35_", spike.in.counts, "_1066")
+  data.sets <-paste0("sens_SBS35_", spike.in.counts, "_1066")
   data.set.2.count <- spike.in.counts
   names(data.set.2.count) <- data.sets
   tt1 <- dplyr::filter(tt, Data_set %in% data.sets)
@@ -211,7 +215,7 @@ main_text_cpu <- function(sbs.or.indel, approaches.to.use) {
 }
 
 set1_set2_legend <- function(sbs.or.indel) {
-  legend(x = "top",
+  legend(x = "bottomleft",
          legend = paste0(sbs.or.indel, "_set", 1:2),
          col    = c("red",  "blue"),
          pch    = c(16,     17))
@@ -242,7 +246,8 @@ all_figs_this_file <- function(tt) {
       "SignatureAnalyzer",
       "signeR")
   
-  generic_4_beeswarm_fig(tt, main.text.indel.approaches, "indel",  "draft_main_text_fig_")
+  generic_4_beeswarm_fig(tt, main.text.indel.approaches, "indel",  "draft_main_text_fig_",
+                         legend.fn = function() { set1_set2_legend("indel")})
   
   noise_level_fig(tt, "indel",approach = c("mSigHdp",
                                            "SigProfilerExtractor",
@@ -255,8 +260,6 @@ all_figs_this_file <- function(tt) {
                                          "SigProfilerExtractor",
                                          "signeR",
                                          "SignatureAnalyzer"))
-  main_text_indel_fig(tt)
-  main_text_SBS_fig(tt)
   downsample_indel_fig(tt)
   downsample_SBS_fig(tt)
   SBS35_detect(tt)
@@ -273,4 +276,5 @@ all_figs_this_file <- function(tt) {
   dev.off()
 }
 
-all_figs_this_file(all.results.fixed) # computed in summarize_level1_dirs.R
+all_figs_this_file(all.results.fixed)
+# computed in summarize_level1_dirs.R
