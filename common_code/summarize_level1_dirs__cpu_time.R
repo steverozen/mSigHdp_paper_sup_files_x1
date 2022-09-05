@@ -33,7 +33,7 @@ level1_dirs <- c("indel_set1",
                  "SBS_set2")
 level1_dirs <- c(level1_dirs, paste0(level1_dirs, "_down_samp"))
 level1_dirs <- c(level1_dirs,
-                 paste0("ROC_SBS35_",
+                 paste0("sens_SBS35_",
                         c(5L, 10L, 20L, 30L, 50L, 100L),
                         "_1066"))
 

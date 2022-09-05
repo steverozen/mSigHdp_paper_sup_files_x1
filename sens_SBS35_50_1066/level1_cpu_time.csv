@@ -1,3 +1,3 @@
 Data_set,Noise_level,Approach,Run,cpu_time
-ROC_SBS35_50_1066,Realistic,mSigHdp_ds_3k,seed.145879,1309067.233
-ROC_SBS35_50_1066,Realistic,SigProfilerExtractor,seed.145879,343446.54000000004
+sens_SBS35_50_1066,Realistic,mSigHdp_ds_3k,seed.145879,1309067.233
+sens_SBS35_50_1066,Realistic,SigProfilerExtractor,seed.145879,343446.54000000004

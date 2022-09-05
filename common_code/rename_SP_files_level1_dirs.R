@@ -18,16 +18,6 @@ require(mSigAct)
 
 
 # Specify global variables ----------------------------------------------------
-if (FALSE) {
-  home_for_data <- "indel_set1/input"
-  home_for_run <- "indel_set1/raw_results"
-  
-  # Import data set names
-  dataset_names <- c("Noiseless", "Moderate", "Realistic")
-  
-  # Specify 5 seeds used in software running
-  seeds_in_use <- c(145879, 200437, 310111, 528401, 1076753)
-}
 # Level 1 dirs are also the name of the data sets
 level1_dirs <- c("indel_set1",
                  "indel_set2",
@@ -37,7 +27,6 @@ level1_dirs <- c(level1_dirs,
                  paste0("ROC_SBS35_",
                         c(5L, 10L, 20L, 30L, 50L, 100L),
                         "_1066"))
-#
 
 
 # Function to convert SigPro signature files-----------------------------------
@@ -158,4 +147,5 @@ move_sigpro_files_all_level1_dirs <- function(level1_dirs = level1_dirs) {
   invisible(return(NULL))
 }
 
+# Run wrapper function --------------------------------------------------------
 invisible(move_sigpro_files_all_level1_dirs(level1_dirs))
