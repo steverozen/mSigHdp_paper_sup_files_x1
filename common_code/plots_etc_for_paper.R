@@ -10,6 +10,12 @@ library(magrittr)
 library(dplyr)
 library(beeswarm)
 
+
+outpath <- function(filename) {
+  file.path("output_for_paper", filename)
+}
+
+
 split_by_approach_and_pull <- function(vv, approaches.to.use) {
   xxs     <- split(vv, vv$Approach)
   
@@ -29,7 +35,7 @@ four_beeswarms <- function(ww, main, col, pch, filename,
                            mfrow = c(2,2),
                            legend.fn = NULL) {
   grDevices::cairo_pdf(
-    filename = filename,
+    filename = outpath(filename),
     height = 9, 
     onefile = TRUE)
   par(mfrow = mfrow, mar = c(9, 4, 4, 2) + 0.1)
@@ -167,7 +173,7 @@ SBS35_detect <- function(tt) {
   pch <- ifelse(to.plot2.app == "mSigHdp_ds_3k", 16, 17)
 
   grDevices::cairo_pdf(
-    filename = "draft_sensitivity.pdf",
+    filename = outpath("draft_sensitivity.pdf"),
     height = 4, 
     onefile = TRUE)
   # Better to change to a groupd box plot
@@ -265,7 +271,7 @@ all_figs_this_file <- function(tt) {
   SBS35_detect(tt)
   
   grDevices::cairo_pdf(
-    filename = "draft_CPU_time.pdf",
+    filename = outpath("draft_CPU_time.pdf"),
     height   = 14,
     width    = 7, 
     onefile = TRUE)
