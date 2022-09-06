@@ -32,25 +32,30 @@ split_by_approach_and_pull <- function(vv, approaches.to.use) {
 }
 
 four_beeswarms <- function(ww, main, col, pch, filename,
-                           mfrow = c(2,2),
-                           legend.fn = NULL) {
+                           mfrow = c(3,1),
+                           legend.fn = NULL,
+                           mar = c(9, 12, 4, 12) + 0.1,
+                           ...) {
   grDevices::cairo_pdf(
     filename = outpath(filename),
     height = 9, 
     onefile = TRUE)
-  par(mfrow = mfrow, mar = c(9, 4, 4, 2) + 0.1)
+  par(mfrow = mfrow, mar = mar)
   
   beeswarm(x = ww$comp, las = 2, ylab = "Composite measure", 
            pwpch = pch, pwcol = col,
-           main = main)
+           main = main, labels = "")
   
   beeswarm(x = ww$ppv, las = 2,  ylab = "PPV", 
-           pwpch = pch, pwcol = col)
+           pwpch = pch, pwcol = col, labels = "")
+  
   beeswarm(x = ww$tpr, las = 2, ylab = "TPR", 
-           pwpch = pch, pwcol = col)
+           pwpch = pch, pwcol = col, labels = "")
+  
   beeswarm(x = ww$sim, las = 2, ylab = "Cosine similarity", 
            pwpch = pch, pwcol = col)
-  if (!is.null(legend.fn)) { # Not working, not sure why 2022 09 01
+  
+  if (!is.null(legend.fn)) {
     legend.fn()
   }
   grDevices::dev.off()
@@ -62,7 +67,8 @@ generic_4_beeswarm_fig <-
            approaches.to.use, # character vector of names of approaches
            sbs.or.indel, 
            file.name.prefix,
-           legend.fn = NULL) {
+           legend.fn = NULL,
+           ...) {
 
   set1 <- paste0(sbs.or.indel, "_set1")
   set2 <- paste0(sbs.or.indel, "_set2")
@@ -80,7 +86,8 @@ generic_4_beeswarm_fig <-
                  col,
                  pch,
                  filename = paste0(file.name.prefix, sbs.or.indel, ".pdf"),
-                 legend.fn = legend.fn)
+                 legend.fn = legend.fn,
+                 ...)
 }
 
 
@@ -91,6 +98,8 @@ downsample_indel_fig <- function(tt) {
                   "mSigHdp_ds_3k", 
                   "mSigHdp_ds_1k")
   generic_4_beeswarm_fig(tt, approaches, "indel", "draft_downsampling_fig_",
+                         mfrow = c(3, 1),
+                         mar = c(8, 14, 4, 14) + 0.1,
                          legend.fn = function() { set1_set2_legend("indel")})
   
 }
@@ -103,6 +112,8 @@ downsample_SBS_fig <- function(tt) {
                   "mSigHdp_ds_1k"
   )
   generic_4_beeswarm_fig(tt, approaches, "SBS", "draft_downsampling_fig_",
+                         mfrow = c(3, 1),
+                         mar = c(8, 14, 4, 14) + 0.1,
                          legend.fn = function() { set1_set2_legend("SBS")})
   
 }
@@ -130,15 +141,12 @@ noise_level_fig <- function(tt, indel.or.sbs, approach) {
     col,
     pch,
     filename = paste0(indel.or.sbs, "_noise.pdf"),
-    mfrow = c(2, 1),
     legend.fn = function() {
       legend(x = "bottomleft",
              title  = "Resampling noise",
              legend = c("None", "Moderate", "Realistc"),
              col    = c("blue",  "violet", "red"),
              pch    = 18:16)
-      
-      
     })
 
 }
@@ -213,10 +221,11 @@ main_text_cpu <- function(sbs.or.indel, approaches.to.use) {
            main   = sbs.or.indel,
            pwpch  = pch, pwcol = col)
   
-  legend(x = "top",
+  legend(x = "topleft",
          legend = paste0(sbs.or.indel, "_set", 1:2),
          col    = c("red",  "blue"),
-         pch    = c(16,     17))
+         pch    = c(16,     17),
+         bty    = "n")
 
 }
 
@@ -241,6 +250,8 @@ all_figs_this_file <- function(tt) {
       "SignatureAnalyzer")
   
   generic_4_beeswarm_fig(tt, main.text.SBS.approaches, "SBS", "draft_main_text_fig_",
+                         mfrow = c(3, 1),
+                         mar = c(8, 14, 4, 14) + 0.1,
                          legend.fn = function() { set1_set2_legend("SBS")})
   
   
@@ -253,6 +264,8 @@ all_figs_this_file <- function(tt) {
       "signeR")
   
   generic_4_beeswarm_fig(tt, main.text.indel.approaches, "indel",  "draft_main_text_fig_",
+                         mfrow = c(3, 1),
+                         mar = c(8, 14, 4, 14) + 0.1,
                          legend.fn = function() { set1_set2_legend("indel")})
   
   noise_level_fig(tt, "indel",approach = c("mSigHdp",
@@ -275,7 +288,7 @@ all_figs_this_file <- function(tt) {
     height   = 14,
     width    = 7, 
     onefile = TRUE)
-  par(mfrow = c(2, 1), mar = c(9, 4, 4, 2) + 0.1)
+  par(mfrow = c(3, 1), mar = c(9, 12, 4, 12) + 0.1)
   main_text_cpu("SBS",   main.text.SBS.approaches)
 
   main_text_cpu("indel", main.text.indel.approaches)
