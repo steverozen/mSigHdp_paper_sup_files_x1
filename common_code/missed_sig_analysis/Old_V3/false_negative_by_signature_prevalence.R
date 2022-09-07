@@ -35,53 +35,49 @@ if (!requireNamespace("mSigTools", quietly = TRUE)) {
 require(dplyr)
 require(ICAMS)
 require(mSigTools)
-require(xlsx)
 
 
 # 2. Specify global variables -------------------------------------------------
-
-indel_or_SBS_es <- c("indel", "SBS")
 folder_names <- 
-  paste0(rep(indel_or_SBS_es, each = 2), 
+  paste0(rep(c("indel", "SBS"), 2), 
          "_set", 
-         rep(c(1L, 2L), 2))
-ID_or_SBS_es <- c("ID", "SBS")
-names(ID_or_SBS_es) <- indel_or_SBS_es
+         rep(c(1L, 2L), each = 2))
 tool_names_general <- c("mSigHdp", "SigProfilerExtractor")
 source("common_code/all.seeds.R")
 seeds_in_use <- all.seeds()
 
 
 # 3. Rank ground-truth signature by rareness ----------------------------------
-
-# Read table which records the proportion of tumors with each signature
-sig_rareness <- xlsx::read.xlsx(
-  "common_code/sig_prop_analysis/syn_data_sig_prop.xlsx",
-  sheetIndex = 1) %>% 
-  select(NA., all_set1, all_set2) %>%
-  mutate(sig_names = NA., .keep = "unused", .before = "all_set1")
-
 ls_dfs <- list()
-for (indel_or_SBS in indel_or_SBS_es) {
-  for (index in 1:2) {
-  name_for_second_col <- paste0("all_set", index)
-  fn <- paste0(indel_or_SBS, "_set", index)
+for (fn in folder_names) {
+  home_for_data <- paste0(fn, "/input")
+  home_for_run <- paste0(fn, "/raw_results")
+  # Import exposure matrix
+  exp <- mSigTools::read_exposure(
+    file = paste0(home_for_data, "/Realistic/ground.truth.syn.exposures.csv")
+  )
   # Fetch signature names
-  sig_rareness_slice <-
-    sig_rareness %>% 
-    select(all_of(c("sig_names", name_for_second_col)))
-  colnames(sig_rareness_slice)[2] <- "sigs_prev_prop"
-  sig_rareness_slice <- sig_rareness_slice %>%
-    filter(grepl(pattern = ID_or_SBS_es[indel_or_SBS], sig_names) == TRUE) %>%
-    na.omit() %>% 
-    arrange(desc(sigs_prev_prop))
-  # Organize results into a data frame.
-  ls_dfs[[fn]] <- data.frame(dataset_name = fn,
-                             sig_rareness_slice)
+  sigs <- rownames(exp)
+  num_tumors <- ncol(exp)
+  # Calculate "rareness" of each ground-truth signature
+  #
+  # Here, rareness of a ground-truth signature is quantified by
+  # the number and the proportion of synthetic tumors
+  # with exposure to the signature.
+  sigs_prev <- rep(-Inf, length(sigs))
+  names(sigs_prev) <- sigs
+  for (sig in sigs) {
+    sigs_prev[sig] <- which(exp[sig,] >= 1) %>% length()
   }
+  sigs_prev <- sort(sigs_prev, decreasing = T)
+  sigs_prev_prop <- sigs_prev / num_tumors
+  # Organize results into a data frame.
+  ls_dfs[[fn]] <- data.frame(sigs = names(sigs_prev), 
+                             sigs_prev = sigs_prev,
+                             sigs_prev_prop = sigs_prev_prop)
 }
 
-# 4. Check whether each tool can extract each signature for all runs ----------
+# 3. Check whether each tool can extract each signature for all runs ----------
 for(fn in folder_names){
   for (tn in tool_names_general) {
     mat <- matrix(data = -1, nrow = nrow(ls_dfs[[fn]]), ncol = 1)
@@ -91,13 +87,11 @@ for(fn in folder_names){
 }
 
 for (fn in folder_names) {
-  message("fn == ", fn)
-  
   home_for_data <- paste0(fn, "/input")
   home_for_run <- paste0(fn, "/raw_results")
   home_for_run_ds <- paste0(fn, "_down_samp/raw_results")
   
-  # 4a. For SBS data sets, we need to use mSigHdp_ds_3k instead of mSigHdp.
+  # 3a. For SBS data sets, we need to use mSigHdp_ds_3k instead of mSigHdp.
   flag_SBS <- FALSE
   if (grepl("SBS", fn) == TRUE) flag_SBS <- TRUE
   if (flag_SBS) {
@@ -107,19 +101,13 @@ for (fn in folder_names) {
   }
   
   for (tn in tool_names) {
-    message("tn == ", tn)
-    
     flag_mSigHdp_ds_3k <- FALSE
     if (tn == "mSigHdp_ds_3k") flag_mSigHdp_ds_3k <- TRUE
-    for (sig_name in ls_dfs[[fn]]$sig_names) {
+    for (sig in ls_dfs[[fn]]$sigs) {
       # Count the number of runs which failed to extract the ground-truth sig
       # Expect to be 0~5.
-      message("sig_name == ", sig_name)
       num_runs_w_fn <- 0
       for (seed_in_use in seeds_in_use) {
-        message("seed_in_use ==", seed_in_use)
-        stopifnot(NA %in% ls_dfs[[fn]]$sig_names == FALSE)
-        message("ls_dfs[[fn]]$sig_names == ", ls_dfs[[fn]]$sig_names)
         # The raw results of mSigHdp_ds_3k is stored under 
         # SBS_set<1,2>_down_samp/, rather than SBS_set<1,2>/.
         if (flag_mSigHdp_ds_3k == TRUE) {
@@ -132,29 +120,57 @@ for (fn in folder_names) {
                    seed_in_use, "/summary/match.ex.to.gt.csv"))
         } 
         all_true_pos_sigs <- tmp_match$ref.sig
-        message("all_true_pos_sigs == ", all_true_pos_sigs)
-        if ((sig_name %in% all_true_pos_sigs) == FALSE) {
+        if ((sig %in% all_true_pos_sigs) == FALSE) {
           num_runs_w_fn <- num_runs_w_fn + 1
         }
       }
-      message("num_runs_w_fn ==", num_runs_w_fn) 
-      row_index <- which(ls_dfs[[fn]]$sig_names == sig_name)
       if (flag_mSigHdp_ds_3k == FALSE) {
-        ls_dfs[[fn]][row_index, tn] <- num_runs_w_fn
+        ls_dfs[[fn]][sig, tn] <- num_runs_w_fn
       } else {
-        ls_dfs[[fn]][row_index, "mSigHdp"] <- num_runs_w_fn
+        ls_dfs[[fn]][sig, "mSigHdp"] <- num_runs_w_fn
       }
     }
   }
 }  
 
 
+# 4. Add comments -------------------------------------------------------------
+for(fn in folder_names){
+    ls_dfs[[fn]] <- data.frame(ls_dfs[[fn]], Remarks = "")
+}
+
+
+for (fn in folder_names) {
+  df <- ls_dfs[[fn]]
+  for (sig in rownames(df)) {
+    comment <- ""
+    for(tn in tool_names_general) {
+      num_runs_w_fn <- df[sig, tn]
+      if(num_runs_w_fn > 1 & num_runs_w_fn < 5) {
+        comment <- 
+          paste0(comment, "Signature missed by ", tn,
+                 " in ", num_runs_w_fn," runs; ")
+      } else if (num_runs_w_fn == 1) {
+        # No more "runs"; "run" instead.
+        comment <- 
+          paste0(comment, "Signature missed by ", tn,
+                 " in ", num_runs_w_fn," run; ")
+      } else if (num_runs_w_fn == 5) {
+        comment <- 
+          paste0(comment, "Signature missed by ", tn,
+                 " in all 5 runs; ")
+      }
+    }
+    df[sig, "Remarks"] <- comment
+  }
+  ls_dfs[[fn]] <- df
+}
+
 # 5. Output tables ------------------------------------------------------------
 combined_df <- do.call(rbind, ls_dfs)
 
 utils::write.csv(combined_df, 
-                 file = paste0("common_code/missed_sig_analysis/missed_sig_analysis.csv"),
-                 row.names = F)
+                 file = paste0("common_code/missed_sig_analysis/missed_sig_analysis.csv"))
 
 
 
