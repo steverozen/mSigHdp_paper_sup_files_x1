@@ -3,7 +3,7 @@ if (basename(getwd()) != basedir) {
   stop("Please run from top level directory, ", basedir)
 }
 
-
+# Loading required packages ---------------------------------------------------
 library(data.table)
 library(tibble)
 library(magrittr)
@@ -11,10 +11,10 @@ library(dplyr)
 library(beeswarm)
 
 
+# Utility functions -----------------------------------------------------------
 outpath <- function(filename) {
   file.path("output_for_paper", filename)
 }
-
 
 split_by_approach_and_pull <- function(vv, approaches.to.use) {
   xxs     <- split(vv, vv$Approach)
@@ -31,6 +31,8 @@ split_by_approach_and_pull <- function(vv, approaches.to.use) {
   return(list(split = xxs2, comp = comp, tpr = tpr, ppv = ppv, sim =sim))
 }
 
+
+# Definition of plotting functions --------------------------------------------
 four_beeswarms <- function(ww, main, col, pch, filename,
                            mfrow = c(3,1),
                            legend.fn = NULL,
@@ -90,7 +92,6 @@ generic_4_beeswarm_fig <-
                  ...)
 }
 
-
 downsample_indel_fig <- function(tt) {
   approaches <- c("mSigHdp", 
                   "mSigHdp_ds_10k", 
@@ -117,7 +118,6 @@ downsample_SBS_fig <- function(tt) {
                          legend.fn = function() { set1_set2_legend("SBS")})
   
 }
-
 
 noise_level_fig <- function(tt, indel.or.sbs, approach) {
 
@@ -151,14 +151,12 @@ noise_level_fig <- function(tt, indel.or.sbs, approach) {
 
 }
 
-
-# Start here
 SBS35_detect <- function(tt) {
   spike.in.counts <- c(5L, 10L, 20L, 30L, 50L, 100L)
-  data.sets.1066 <-paste0("sens_SBS35_", spike.in.counts, "_1066")
-  data.sets.728 <-paste0("sens_SBS35_", spike.in.counts, "_728")
-  set.sets <- c(data.sets.1066, data.sets.728)
-  data.set.2.count <- spike.in.counts
+  data.sets.1066 <- paste0("sens_SBS35_", spike.in.counts, "_1066")
+  data.sets.728 <- paste0("sens_SBS35_", spike.in.counts, "_728")
+  data.sets <- c(data.sets.1066, data.sets.728)
+  data.set.2.count <- rep(spike.in.counts, 2)
   names(data.set.2.count) <- data.sets
   tt1 <- dplyr::filter(tt, Data_set %in% data.sets)
   tt2 <- dplyr::filter(tt1, Noise_level == "Realistic")
@@ -177,9 +175,10 @@ SBS35_detect <- function(tt) {
   to.plot <- to.plot[as.character(spike.in.counts)]
   to.plot2 <- lapply(to.plot, pull, avg.found)
   to.plot2.app <- unlist(lapply(to.plot, pull, Approach))
-    
+  
+  # Blue circle for mSigHdp_ds_3k; 
+  # Red triangle for SigProfilerExtractor
   col <- ifelse(to.plot2.app == "mSigHdp_ds_3k", "blue", "red")
-
   pch <- ifelse(to.plot2.app == "mSigHdp_ds_3k", 16, 17)
 
   grDevices::cairo_pdf(
@@ -196,7 +195,6 @@ SBS35_detect <- function(tt) {
   invisible(to.plot)
   
 }
-
 
 main_text_cpu <- function(sbs.or.indel, approaches.to.use) {
   uu <- data.table::fread("cpu_time_by_seed.csv")
@@ -297,5 +295,8 @@ all_figs_this_file <- function(tt) {
   dev.off()
 }
 
+
+# Calling plotting functions --------------------------------------------------
+load("all_results_fixed_by_seed.Rdata") # Load object `all.results.fixed`
 all_figs_this_file(all.results.fixed)
 # computed in summarize_level1_dirs.R
