@@ -24,7 +24,10 @@ level1_dirs <- c("indel_set1",
                  "SBS_set1",
                  "SBS_set2")
 level1_dirs <- c(level1_dirs,
-                 paste0("ROC_SBS35_",
+                 paste0("sens_SBS35_",
+                        c(5L, 10L, 20L, 30L, 50L, 100L),
+                        "_728"),
+                 paste0("sens_SBS35_",
                         c(5L, 10L, 20L, 30L, 50L, 100L),
                         "_1066"))
 
@@ -47,7 +50,7 @@ move_sigpro_files_one_dir <- function(a_dir) {
   }
   if (grepl("SBS", basename(a_dir))) {
     # SBS_*
-    # ROC_SBS35_*
+    # sens_SBS35_*
     flag_SBS <- TRUE
   }
   

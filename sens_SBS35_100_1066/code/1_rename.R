@@ -16,7 +16,7 @@ require(ICAMS)
 
 # 2. Specify common variables -------------------------------------------------
 
-SBS_home <- "ROC_SBS35_100_1066/input"
+SBS_home <- "sens_SBS35_100_1066/input"
 dir.create(SBS_home, showWarnings = FALSE, recursive = TRUE)
 
 dataset_names <- "Realistic"

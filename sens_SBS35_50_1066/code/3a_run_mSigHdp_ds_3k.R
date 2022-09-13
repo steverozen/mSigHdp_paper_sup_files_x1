@@ -1,22 +1,13 @@
 # Please run this script from the top-level directory
-if (basename(getwd()) != "mSigHdp_paper_sup_files_x1") {
-  stop("Please run from top level directory, mSigHdp_paper_sup_files_x1")
+basedir <- "mSigHdp_paper_sup_files_x1" 
+if (basename(getwd()) != basedir) {
+  stop("Please run from top level directory, ", basedir)
 }
+
+message(Sys.time(), " running ", paste(commandArgs(), collapse = " "))
 
 # Install and load required packages ------------------------------------------
-
-if (!requireNamespace("remotes", quietly = TRUE)) {
-  install.packages("remotes")
-}
-# "@*release" installs the latest release
-if (!("hdpx" %in% rownames(installed.packages())) ||
-    packageVersion("hdpx") < "1.0.3.9") {
-  remotes::install_github("steverozen/hdpx@master")
-}
-if (!("mSigHdp" %in% rownames(installed.packages())) ||
-    packageVersion("mSigHdp") < "2.0.1.10") {
-  remotes::install_github(repo = "steverozen/mSigHdp@master")
-}
+source("common_code/install_mSigHdp.R")
 
 # ICAMS is installed when installing mSigHdp
 require(ICAMS)
@@ -38,8 +29,8 @@ if (length(curr_args)==0) {
 
 # Specify global variables ----------------------------------------------------
 
-home_for_data <- "./ROC_SBS35_50_1066/input"
-home_for_run <- "./ROC_SBS35_50_1066/raw_results"
+home_for_data <- "./sens_SBS35_50_1066/input"
+home_for_run <- "./sens_SBS35_50_1066/raw_results"
 
 # Guessed signatures.
 # We assume mSigHdp does not know the ground-truth K (23),

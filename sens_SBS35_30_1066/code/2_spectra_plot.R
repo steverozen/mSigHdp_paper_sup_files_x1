@@ -12,7 +12,7 @@ if (!requireNamespace("ICAMS", quietly = TRUE)) {
 library(ICAMS)
 source("./common_code/data_gen_utils.R")
 
-sbs96_plot_home <- "./ROC_SBS35_30_1066/input/"
+sbs96_plot_home <- "./sens_SBS35_30_1066/input/"
 dataset_names <- "Realistic"
 file_suffixes <- "realistic_noise"
 identifiers <- gsub(pattern = "_", replacement = " ", x = file_suffixes)

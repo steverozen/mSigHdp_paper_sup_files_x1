@@ -48,8 +48,8 @@ if __name__ == "__main__":
     # Read old working directory
     old_wd = os.getcwd()
     # os.path.abspath extends a relative path to an absolute one.
-    home_for_data = os.path.abspath("./ROC_SBS35_5_1066/input")
-    home_for_run = os.path.abspath("./ROC_SBS35_5_1066/raw_results")
+    home_for_data = os.path.abspath("./sens_SBS35_30_1066/input")
+    home_for_run = os.path.abspath("./sens_SBS35_30_1066/raw_results")
     # Seed numbers
     seed_numbers = (145879, 200437, 310111, 528401, 1076753)
     seed_numbers = [(sn % 10000000) for sn in seed_numbers]
