@@ -162,6 +162,10 @@ summarize_all_level1_dirs <- function()  {
   level1.dirs <- c(level1.dirs,
                    paste0("sens_SBS35_",
                           c(5L, 10L, 20L, 30L, 50L, 100L),
+                          "_728"))
+  level1.dirs <- c(level1.dirs,
+                   paste0("sens_SBS35_",
+                          c(5L, 10L, 20L, 30L, 50L, 100L),
                           "_1066"))
   
   all.out.list <- lapply(level1.dirs, summarize_level1_dirs)
@@ -169,7 +173,9 @@ summarize_all_level1_dirs <- function()  {
   all.results <- do.call(rbind, all.out.list)
   
   NR.approach <- c("NR_hdp_gb_1", "NR_hdp_gb_50", "NR_hdp_gb_20")
-  
+  # Original Nicola Roberts' original hdp ALWAYS 
+  # generates a noise signature hdp.0.
+  # Thus we need to subtract 1 from FP
   all.results.fixed <- 
     dplyr::mutate(all.results, 
                   FP = dplyr::if_else(Approach %in% NR.approach, FP - 1, FP))
@@ -178,7 +184,7 @@ summarize_all_level1_dirs <- function()  {
   foo2x <- dplyr::filter(all.results.fixed, !(Approach %in% NR.approach))
   stopifnot(all.equal(foox, foo2x)) # paranoid checking
                          
-  readr::write_csv(all.results.fixed, "new_all_results_fixed_by_seed.csv")
+  readr::write_csv(all.results.fixed, "all_results_fixed_by_seed.csv")
   save(all.results.fixed, file = "all_results_fixed_by_seed.Rdata")
   invisible(all.results.fixed)
 }
