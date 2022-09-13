@@ -154,8 +154,10 @@ noise_level_fig <- function(tt, indel.or.sbs, approach) {
 
 # Start here
 SBS35_detect <- function(tt) {
-  spike.in.counts <- c(5L, 10L, 20L, 30L, 50L)  # , 100L) # No data for this yet
-  data.sets <-paste0("sens_SBS35_", spike.in.counts, "_1066")
+  spike.in.counts <- c(5L, 10L, 20L, 30L, 50L, 100L)
+  data.sets.1066 <-paste0("sens_SBS35_", spike.in.counts, "_1066")
+  data.sets.728 <-paste0("sens_SBS35_", spike.in.counts, "_728")
+  set.sets <- c(data.sets.1066, data.sets.728)
   data.set.2.count <- spike.in.counts
   names(data.set.2.count) <- data.sets
   tt1 <- dplyr::filter(tt, Data_set %in% data.sets)
