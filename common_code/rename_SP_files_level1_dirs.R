@@ -71,11 +71,12 @@ move_sigpro_files_one_dir <- function(a_dir) {
     message(analysis_name, " does not exist, skipping...")
     invisible(return(NULL))
   }
-
+  
   message("\n=====================")
   message("\n=====================")
   message("Looking for analysis_name=", analysis_name)
-  tool_name <- sub("\\.results", "", basename(analysis_name), fixed = TRUE)
+  # No need to use "\\." for exact match, as fixed = TRUE is set
+  tool_name <- sub(".results", "", basename(analysis_name), fixed = TRUE)
   # dataset_path, e.g indel_set1/raw_results/SigProfilerExtractor.results/"Moderate"
   dataset_paths <- list.files(analysis_name, full.names = TRUE)
   for (dataset_path in dataset_paths) {
@@ -95,19 +96,25 @@ move_sigpro_files_one_dir <- function(a_dir) {
     for(seed_path in seeds_paths) {
       # seedInUse e.g. "indel/raw_results/mSigHdp.results/Moderate/seed.528401"
       message("\nMoving into seed_path=", seed_path)
-      seedInUse <-sub("seed\\.", "", basename(seed_path), fixed = TRUE)
+      seedInUse <- sub("seed.", "", basename(seed_path), fixed = TRUE)
       
       # Pass if SigPro raw result folder is absent
       # These raw results are only locally stored 
       # because their path are too long to be pushed to a GitHub repo.
-      path_to_check_SBS <- file.path(seed_path, "SBS96")
-      path_to_check_ID <- file.path(seed_path, "ID83")
-      if (dir.exists(path_to_check_ID) ||
-          dir.exists(path_to_check_SBS) == FALSE) {
-        message("Skipping seed_path=", seed_path, "\n")
-        next
+      if (flag_SBS) {
+        path_to_check_SBS <- file.path(seed_path, "SBS96")
+        if (dir.exists(path_to_check_SBS) == FALSE) {
+          message("Skipping seed_path=", seed_path, "\n")
+          next
+        }
       }
-      
+      if (flag_indel) {
+        path_to_check_ID <- file.path(seed_path, "ID83")
+        if (dir.exists(path_to_check_ID) == FALSE) {
+          message("Skipping seed_path=", seed_path, "\n")
+          next
+        }
+      }
       # Copy and reformat files
       if (flag_SBS) cat_type <- "SBS96"
       if (flag_indel) cat_type <- "ID83"
@@ -116,8 +123,8 @@ move_sigpro_files_one_dir <- function(a_dir) {
       # <seed_path>/SBS96/Suggested_Solution/SBS96_De-Novo_Solution/Signatures
       sig.path <- 
         paste0(seed_path, "/", cat_type, "/Suggested_Solution/",
-        cat_type, "_De-Novo_Solution/Signatures/", 
-        cat_type, "_De-Novo_Signatures.txt")
+               cat_type, "_De-Novo_Solution/Signatures/", 
+               cat_type, "_De-Novo_Signatures.txt")
       sig.catalog.sp <- utils::read.table(
         sig.path,
         sep = "\t",
