@@ -2,7 +2,7 @@
 # into the summary, please run 
 # common_code/rename_SP_files_level1_dirs.R
 # Before running this script.
-
+# Can we automate this?
 
 # Please run this script from the top directory
 top.dir <- "mSigHdp_paper_sup_files_x1"
@@ -11,12 +11,14 @@ if (basename(getwd()) != top.dir) {
 }
 
 # Install and load dependencies -----------------------------------------------
-if (!requireNamespace("tibble", quietly = TRUE)) {
-  install.packages("tibble")
-}
+# if (!requireNamespace("tibble", quietly = TRUE)) {
+#  install.packages("tibble")
+# }
+# Users should know know to install packages
 require(ICAMS)
 require(SynSigEval)
 require(tibble)
+require(SynSigEval)
 
 
 # Function for summary directory on one seed ----------------------------------
