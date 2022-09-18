@@ -1,3 +1,11 @@
 Data_set,Noise_level,Approach,Run,cpu_time
+sens_SBS35_50_1066,Realistic,mSigHdp_ds_3k,seed.1076753,1323482.9090000005
 sens_SBS35_50_1066,Realistic,mSigHdp_ds_3k,seed.145879,1309067.233
+sens_SBS35_50_1066,Realistic,mSigHdp_ds_3k,seed.200437,1323698.1049999997
+sens_SBS35_50_1066,Realistic,mSigHdp_ds_3k,seed.310111,1322520.5990000002
+sens_SBS35_50_1066,Realistic,mSigHdp_ds_3k,seed.528401,1297092.6160000002
+sens_SBS35_50_1066,Realistic,SigProfilerExtractor,seed.1076753,345687.7299999999
 sens_SBS35_50_1066,Realistic,SigProfilerExtractor,seed.145879,343446.54000000004
+sens_SBS35_50_1066,Realistic,SigProfilerExtractor,seed.200437,345047.51999999996
+sens_SBS35_50_1066,Realistic,SigProfilerExtractor,seed.310111,343039.36
+sens_SBS35_50_1066,Realistic,SigProfilerExtractor,seed.528401,340204.50999999995

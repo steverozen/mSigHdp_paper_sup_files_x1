@@ -169,7 +169,7 @@ noise_level_fig <- function(tt, indel.or.sbs, approach) {
 
 }
 
-SBS35_detect <- function(tt) {
+SBS35_detect_fig <- function(tt) {
 
   sigpro.pch  <- "S"
   msighdp.pch <- "M"
@@ -233,6 +233,7 @@ SBS35_detect <- function(tt) {
 
 
 main_text_cpu <- function(sbs.or.indel, approaches.to.use) {
+  # browser()
   uu <- data.table::fread("cpu_time_by_seed.csv")
   data.sets <- paste0(sbs.or.indel, "_set", c(1, 2))
   uu1 <- filter(uu, Noise_level == "Realistic" & Data_set %in% data.sets & Approach %in% approaches.to.use)
@@ -242,15 +243,17 @@ main_text_cpu <- function(sbs.or.indel, approaches.to.use) {
   to.use <- which(approaches.to.use %in% names(to.plot))
   approaches.to.use <- approaches.to.use[to.use]
   to.plot <- to.plot[approaches.to.use]
+  
+  
+  fwrite(uu2, outpath(paste0(sbs.or.indel, "_cpu.csv")))
+  
   to.plot2 <- lapply(to.plot, pull, CPU.days)
   
   xx.data.set <- unlist(lapply(to.plot, pull, "Data_set"))
   
-  # col <- ifelse(xx.data.set == data.sets[1], "red", "blue")
-  col <- "black"
-  pch <- ifelse(xx.data.set == data.sets[1], 16, 17)
+  col <- ifelse(xx.data.set == data.sets[1], "black", "black")
+  pch <- ifelse(xx.data.set == data.sets[1], set1_pch, set2_pch)
   
-
   beeswarm(x      = to.plot2, 
            las    = 2, 
            ylab   = "CPU days",
@@ -289,12 +292,41 @@ main_text_table <- function(tt, approaches.to.use, sbs.or.indel) {
                      sd_comp   = sd(Composite)) %>%
     arrange(desc(mean_comp), .by_group = TRUE) -> 
     t3
+  t3 %>% filter(Data_set == set1) %>% nrow -> num.set1
+  # browser()
+  colnames(t3) <- c("Data set", "Approach", "Mean PPV", "Mean TPR", "Mean cosine similarity", "Mean", "SD")
   fwrite(t3, outpath(paste0(sbs.or.indel, ".table.csv")))
   
   wb <- createWorkbook()
+  
+  heading.style <- 
+    createStyle(halign = "center", textDecoration = "bold", 
+                wrapText = TRUE, valign = "center", border = "bottom")
+  
+  num.style <- 
+    createStyle(numFmt = "0.00", halign = "center")
+  
+  left.style <- 
+    createStyle(valign = "center", halign = "center", 
+                textDecoration = "bold")
+  
   addWorksheet(wb, sbs.or.indel)
+  writeData(wb, 1, "Composite measure", startCol = 6, startRow = 2)
+  mergeCells(wb, 1, cols = 6:7, rows = 2)
   writeData(wb, 1, t3, startRow = 3, startCol = 1)
-  saveWorkbook(wb, outpath(paste0(sbs.or.indel, ".table.xlsx")))
+  mergeCells(wb, 1, cols = 1, rows = 4:(4 + num.set1 - 1))
+  mergeCells(wb, 1, cols = 1, rows = (4 + num.set1):(nrow(t3) + 3))
+   
+  addStyle(wb, 1, num.style, cols = 3:7, rows = 4:(4 + nrow(t3) - 1), gridExpand = TRUE)
+  
+  addStyle(wb, 1, heading.style, cols = 1:7, rows = 3, gridExpand = TRUE)
+  addStyle(wb, 1, heading.style, cols = 6:7, rows = 2, gridExpand = TRUE)
+  addStyle(wb, 1, heading.style, cols = 1:7, rows = 1, gridExpand = TRUE)
+  
+  addStyle(wb, 1, left.style,    cols = 1, rows = 4:(nrow(t3) + 3))
+  
+  
+  saveWorkbook(wb, outpath(paste0(sbs.or.indel, ".table.xlsx")), overwrite = TRUE)
   
   t3
 }
@@ -327,11 +359,11 @@ all_figs_and_tables_this_file <- function(tt) {
     sbs.or.indel      = "SBS"
   )
   
-  main.text.indel.approaches <- 
+  main.text.indel.approaches <- # Important, this is the order in the main text figure; make sure it is sorted by the average composite measure in indel_set1 and indel_set2
     c("mSigHdp",
-      "SigProfilerExtractor",
       "NR_hdp_gb_50", 
       "NR_hdp_gb_1",
+      "SigProfilerExtractor",
       "SignatureAnalyzer",
       "signeR")
   
@@ -359,9 +391,8 @@ all_figs_and_tables_this_file <- function(tt) {
                                          "SignatureAnalyzer"))
   downsample_indel_fig(tt)
   downsample_SBS_fig(tt)
-  SBS35_detect(tt)
+  SBS35_detect_fig(tt)
   
-  if (FALSE) {
   grDevices::cairo_pdf(
     filename = outpath("draft_CPU_time.pdf"),
     height   = 14,
@@ -372,7 +403,7 @@ all_figs_and_tables_this_file <- function(tt) {
 
   main_text_cpu("indel", main.text.indel.approaches)
   dev.off()
-  }
+
 }
 
 

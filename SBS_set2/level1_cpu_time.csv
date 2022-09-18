@@ -4,6 +4,11 @@ SBS_set2,Realistic,mSigHdp,seed.145879,23800788.824
 SBS_set2,Realistic,mSigHdp,seed.200437,25439862.310000002
 SBS_set2,Realistic,mSigHdp,seed.310111,24911450.045
 SBS_set2,Realistic,mSigHdp,seed.528401,25037565.107
+SBS_set2,Realistic,NR_hdp_gb_20,seed.1076753,31082611.152
+SBS_set2,Realistic,NR_hdp_gb_20,seed.145879,30574178.921
+SBS_set2,Realistic,NR_hdp_gb_20,seed.200437,31421002.22
+SBS_set2,Realistic,NR_hdp_gb_20,seed.310111,30687345.959000003
+SBS_set2,Realistic,NR_hdp_gb_20,seed.528401,31536141.721
 SBS_set2,Realistic,SignatureAnalyzer,seed.1076753,6397205.75
 SBS_set2,Realistic,SignatureAnalyzer,seed.145879,5310002.954
 SBS_set2,Realistic,SignatureAnalyzer,seed.200437,5603919.865
