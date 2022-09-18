@@ -16,25 +16,29 @@ outpath <- function(filename) {
   file.path("output_for_paper", filename)
 }
 
+set1_pch <- 16
+set2_pch <- 17
+
 split_by_approach_and_pull <- function(vv, approaches.to.use) {
   xxs     <- split(vv, vv$Approach)
-  
+
   # This makes sure that the elements of xx2 are in the same order as 
   # the elments of approaches.to.use, which should be in the order 
   # we want for columns of the eventual beeswarm graph.
   xxs2    <- xxs[approaches.to.use] 
   
-  my.pull <- function(my.approach, colname) {
+  my.pull <- function(my.approach, colname) { # only use my.pull for debugging
+                                              # anly apply it to approaches.to.use
     zz <- xxs[[my.approach]]
     if (length(zz) == 0) {
       stop("No results for my.approach = ", my.approach, " colname = ", colname)
       
     }
     pull(zz, colname)}
-  comp <- lapply(approaches.to.use, my.pull, "Composite")
-  tpr  <- lapply(approaches.to.use, my.pull, "TPR")
-  ppv  <- lapply(approaches.to.use, my.pull, "PPV")
-  sim  <- lapply(approaches.to.use, my.pull, "aver_Sim_TP_only")
+  comp <- lapply(xxs2, pull, "Composite")
+  tpr  <- lapply(xxs2, pull, "TPR")
+  ppv  <- lapply(xxs2, pull, "PPV")
+  sim  <- lapply(xxs2, pull, "aver_Sim_TP_only")
   return(list(split = xxs2, comp = comp, tpr = tpr, ppv = ppv, sim =sim))
 }
 
@@ -44,6 +48,7 @@ four_beeswarms <- function(ww, main, col, pch, filename,
                            mfrow = c(3,1),
                            legend.fn = NULL,
                            mar = c(9, 12, 4, 12) + 0.1) {
+
   grDevices::cairo_pdf(
     filename = outpath(filename),
     height = 9, 
@@ -51,8 +56,10 @@ four_beeswarms <- function(ww, main, col, pch, filename,
   par(mfrow = mfrow, mar = mar)
 
   beeswarm(x = ww$comp, las = 2, ylab = "Composite measure", 
-           pwpch = pch, pwcol = col,
-           main = main, labels = "")
+           pwpch = pch, pwcol = col, labels = "")
+  if (!is.null(legend.fn)) {
+    legend.fn()
+  }
   
   beeswarm(x = ww$ppv, las = 2,  ylab = "PPV", 
            pwpch = pch, pwcol = col, labels = "")
@@ -63,9 +70,7 @@ four_beeswarms <- function(ww, main, col, pch, filename,
   beeswarm(x = ww$sim, las = 2, ylab = "Cosine similarity", 
            pwpch = pch, pwcol = col)
   
-  if (!is.null(legend.fn)) {
-    legend.fn()
-  }
+
   grDevices::dev.off()
   
 }
@@ -79,7 +84,7 @@ generic_4_beeswarm_fig <-
            legend.fn = NULL,
            col       = "black",
            mfrow = c(3, 1),
-           mar = c(8, 14, 4, 14) + 0.1) {
+           mar = c(8, 15, 4, 14) + 0.1) {
 
   set1 <- paste0(sbs.or.indel, "_set1")
   set2 <- paste0(sbs.or.indel, "_set2")
@@ -90,16 +95,15 @@ generic_4_beeswarm_fig <-
   xx.data.set <- unlist(lapply(ww$split, pull, "Data_set"))
 
   col <- ifelse(xx.data.set == set1, "black", "black")
-  pch <- ifelse(xx.data.set == set1, 16, 17)
+  pch <- ifelse(xx.data.set == set1, set1_pch, set2_pch)
   
-  four_beeswarms(ww, 
-                 main = paste0(sbs.or.indel, "; red = set1, blue = set2"),
-                 col,
-                 pch,
-                 filename = paste0(file.name.prefix, sbs.or.indel, ".pdf"),
+  four_beeswarms(ww,
+                 col       = col,
+                 pch       = pch,
+                 filename  = paste0(file.name.prefix, sbs.or.indel, ".pdf"),
                  legend.fn = legend.fn,
-                 mfrow,
-                 mar)
+                 mfrow     = mfrow,
+                 mar       = mar)
 }
 
 downsample_indel_fig <- function(tt) {
@@ -108,7 +112,10 @@ downsample_indel_fig <- function(tt) {
                   "mSigHdp_ds_5k",
                   "mSigHdp_ds_3k", 
                   "mSigHdp_ds_1k")
-  generic_4_beeswarm_fig(tt, approaches, "indel", "draft_downsampling_fig_",
+  generic_4_beeswarm_fig(tt                = tt, 
+                         approaches.to.use = approaches, 
+                         sbs.or.indel      = "indel", 
+                         file.name.prefix  = "draft_downsampling_fig_",
                          mfrow = c(3, 1),
                          mar = c(8, 14, 4, 14) + 0.1,
                          legend.fn = function() { set1_set2_legend("indel")})
@@ -142,26 +149,32 @@ noise_level_fig <- function(tt, indel.or.sbs, approach) {
   col <- ifelse(xx.noise.level == "Realistic", "red",
                 ifelse(xx.noise.level == "Moderate", "violet", "blue"))
   
-  pch <- ifelse(xx.noise.level == "Realistic", 16,
-                ifelse(xx.noise.level == "Moderate", 17, 18))
+  pch <- ifelse(xx.noise.level == "Realistic", set1_pch,
+                ifelse(xx.noise.level == "Moderate", set1_pch, set1_pch))
   
   four_beeswarms(
     ww,
-    main = paste0(indel.or.sbs, "\nred = Realistic, violet = Moderate, blue = Noiseless"),
-    col,
-    pch,
+    col      = col,
+    pch      = pch,
     filename = paste0(indel.or.sbs, "_noise.pdf"),
     legend.fn = function() {
       legend(x = "bottomleft",
              title  = "Resampling noise",
              legend = c("None", "Moderate", "Realistc"),
              col    = c("blue",  "violet", "red"),
-             pch    = 18:16)
+             pch    = 18:16,
+             bty    = "n")
     })
 
 }
 
 SBS35_detect <- function(tt) {
+
+  sigpro.pch  <- "S"
+  msighdp.pch <- "M"
+  ds1.col     <- "cornflowerblue"
+  ds2.col     <- "coral"
+  
   spike.in.counts <- c(5L, 10L, 20L, 30L, 50L, 100L)
   data.sets.1066 <- paste0("sens_SBS35_", spike.in.counts, "_1066")
   data.sets.728 <- paste0("sens_SBS35_", spike.in.counts, "_728")
@@ -185,21 +198,32 @@ SBS35_detect <- function(tt) {
   to.plot <- to.plot[as.character(spike.in.counts)]
   to.plot2 <- lapply(to.plot, pull, avg.found)
   to.plot2.app <- unlist(lapply(to.plot, pull, Approach))
+  to.plot2.dset <- unlist(lapply(to.plot, pull, Data_set))
+
+  data.set.1066 <- grepl("_1066$", to.plot2.dset)
   
-  # Blue circle for mSigHdp_ds_3k; 
-  # Red triangle for SigProfilerExtractor
-  col <- ifelse(to.plot2.app == "mSigHdp_ds_3k", "blue", "red")
-  pch <- ifelse(to.plot2.app == "mSigHdp_ds_3k", 16, 17)
+  col <- ifelse(data.set.1066, ds1.col, ds2.col)
+  pch <- ifelse(to.plot2.app == "mSigHdp_ds_3k", msighdp.pch, sigpro.pch)
 
   grDevices::cairo_pdf(
     filename = outpath("draft_sensitivity.pdf"),
     height = 4, 
     onefile = TRUE)
-  # Better to change to a groupd box plot
+  par(mar = c(5.1, 5.1, 4.1, 2.1))
+
   beeswarm(x = to.plot2, las = 2, 
-           ylab = "Proportion with SBS35 detected", 
-           xlab = "Number of samples with SBS35",
-           pwpch = pch, pwcol = col)
+           ylab = "Proportion of 5 runs\nin which SBS35 was detected", 
+           xlab = "Number of synthetic spectra containing SBS35",
+           pwpch = pch, pwcol = col, spacing = 1.6)
+  legend(x        = "bottomright",
+         legend   = c("mSigHdp data set 1",
+                      "mSigHdp data set 2",
+                      "SigProfilerExtractor data set 1",
+                      "SigProfilerExtractor data set 2"),
+         col      = c(ds1.col, ds2.col, ds1.col, ds2.col),
+         text.col = c(ds1.col, ds2.col, ds1.col, ds2.col),
+         pch      = c(msighdp.pch, msighdp.pch, sigpro.pch, sigpro.pch),
+         bty      = "n")
   dev.off()
   
   invisible(to.plot)
@@ -228,9 +252,7 @@ main_text_cpu <- function(sbs.or.indel, approaches.to.use) {
 
   beeswarm(x      = to.plot2, 
            las    = 2, 
-           ylab   = "CPU days", 
-           # xlab = "Approach",
-           main   = sbs.or.indel,
+           ylab   = "CPU days",
            pwpch  = pch,
            pwcol = col)
   
@@ -239,19 +261,18 @@ main_text_cpu <- function(sbs.or.indel, approaches.to.use) {
          col    = "black", # c("red",  "blue"),
          pch    = c(16,     17),
          bty    = "n")
-
 }
 
 set1_set2_legend <- function(sbs.or.indel) {
   legend(x = "bottomleft",
          legend = paste0(sbs.or.indel, "_set", 1:2),
          col    = c("black",  "black"),
-         pch    = c(16,     17))
+         pch    = c(16,     17),
+         bty    = "n")
 }
 
 all_figs_and_tables_this_file <- function(tt) {
   # tt should be the output of summarize_all_level1_dirs in file summarize_level1_dirs.R
-  
   
   main.text.SBS.approaches <- 
     c("mSigHdp_ds_3k",
@@ -261,11 +282,15 @@ all_figs_and_tables_this_file <- function(tt) {
       "NR_hdp_gb_1",
       "signeR",
       "SignatureAnalyzer")
-  
-  generic_4_beeswarm_fig(tt, main.text.SBS.approaches, "SBS", "draft_main_text_fig_",
-                         mfrow = c(3, 1),
-                         mar = c(8, 14, 4, 14) + 0.1,
-                         legend.fn = function() { set1_set2_legend("SBS")})
+
+  generic_4_beeswarm_fig(
+    tt = tt, 
+    approaches.to.use = main.text.SBS.approaches,
+    sbs.or.indel      = "SBS", 
+    file.name.prefix  = "draft_main_text_fig_",
+    mfrow             = c(3, 1),
+    mar               = c(8, 14, 4, 14) + 0.1,
+    legend.fn         = function() { set1_set2_legend("SBS")})
   
   
   main.text.indel.approaches <- 

@@ -3,3 +3,4 @@ SynSigEval -- need Bioconductor? need mSigAct?
 rename_SP_files_level1_dirs: The level1_dirs doesn't have the spike in data? Could we just include this code in summarize_level1_dirs.R?
 SigneR, SBS_set1, indel_set1, signR 1.20.0
 Sigpro resuts for K = what mSigHdp found
+
