@@ -272,6 +272,34 @@ set1_set2_legend <- function(sbs.or.indel) {
          bty    = "n")
 }
 
+
+main_text_table <- function(tt, approaches.to.use, sbs.or.indel) {
+  set1 <- paste0(sbs.or.indel, "_set1")
+  set2 <- paste0(sbs.or.indel, "_set2")
+  t1 <- filter(
+    tt, 
+    Data_set %in% c(set1, set2), 
+    Noise_level == "Realistic",
+    Approach %in% approaches.to.use) %>%
+    dplyr::group_by(Data_set, Approach) %>%
+    dplyr::summarise(mean_PPV  = mean(PPV),
+                     mean_TPR  = mean(TPR),
+                     mean_cos  = mean(aver_Sim_TP_only),
+                     mean_comp = mean(Composite),
+                     sd_comp   = sd(Composite)) %>%
+    arrange(desc(mean_comp), .by_group = TRUE) -> 
+    t3
+  fwrite(t3, outpath(paste0(sbs.or.indel, ".table.csv")))
+  
+  wb <- createWorkbook()
+  addWorksheet(wb, sbs.or.indel)
+  writeData(wb, 1, t3, startRow = 3, startCol = 1)
+  saveWorkbook(wb, outpath(paste0(sbs.or.indel, ".table.xlsx")))
+  
+  t3
+}
+
+
 all_figs_and_tables_this_file <- function(tt) {
   # tt should be the output of summarize_all_level1_dirs in file summarize_level1_dirs.R
   
@@ -293,42 +321,11 @@ all_figs_and_tables_this_file <- function(tt) {
     mar               = c(8, 14, 4, 14) + 0.1,
     legend.fn         = function() { set1_set2_legend("SBS")})
   
-  
-  
-  
-  main_text_table <- function(tt, approaches.to.use, sbs.or.indel) {
-    set1 <- paste0(sbs.or.indel, "_set1")
-    set2 <- paste0(sbs.or.indel, "_set2")
-    t1 <- filter(
-      tt, 
-      Data_set %in% c(set1, set2), 
-      Noise_level == "Realistic",
-      Approach %in% approaches.to.use) %>%
-      dplyr::group_by(Data_set, Approach) %>%
-      dplyr::summarise(mean_PPV  = mean(PPV),
-                       mean_TPR  = mean(TPR),
-                       mean_cos  = mean(aver_Sim_TP_only),
-                       mean_comp = mean(Composite),
-                       sd_comp   = sd(Composite)) %>%
-      arrange(desc(mean_comp), .by_group = TRUE) -> 
-    t3
-    fwrite(t3, outpath(paste0(sbs.or.indel, ".table1.csv")))
-    
-    wb <- createWorkbook()
-    addWorksheet(wb, "Table 1")
-    writeData(wb, 1, t3, startRow = 3, startCol = 1)
-    saveWorkbook(wb, outpath(paste0(sbs.or.indel, ".table1.xlsx")))
-    
-    t3
-  }
-  
-  
   main_text_table(
     tt                = tt,
     approaches.to.use = main.text.SBS.approaches,
     sbs.or.indel      = "SBS"
   )
-  
   
   main.text.indel.approaches <- 
     c("mSigHdp",
@@ -337,6 +334,12 @@ all_figs_and_tables_this_file <- function(tt) {
       "NR_hdp_gb_1",
       "SignatureAnalyzer",
       "signeR")
+  
+  main_text_table(
+    tt                = tt,
+    approaches.to.use = main.text.indel.approaches,
+    sbs.or.indel      = "indel"
+  )
   
   generic_4_beeswarm_fig(tt, main.text.indel.approaches, "indel",  "draft_main_text_fig_",
                          mfrow = c(3, 1),
