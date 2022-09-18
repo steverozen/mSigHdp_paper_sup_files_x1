@@ -8,12 +8,7 @@ if ((!requireNamespace("ICAMS", quietly = TRUE)) ||
     (packageVersion("ICAMS") < "3.0.6")) {
   remotes::install_github("steverozen/ICAMS", ref = "v3.0.6-branch")
 }
-if (!(requireNamespace("mSigAct", quietly = TRUE)) ||
-    (packageVersion("mSigAct") < "2.3.2")) {
-  remotes::install_github(repo = "steverozen/mSigAct", ref = "v2.3.2-branch")
-}
 require(ICAMS)
-require(mSigAct)
 
 
 
