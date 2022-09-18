@@ -86,7 +86,6 @@ generic_4_beeswarm_fig <-
   t1 <- filter(tt, Noise_level == "Realistic")
   xx <- filter(t1, Data_set %in% c(set1, set2))
 
-  message("calling split... on ", sbs.or.indel)
   ww <- split_by_approach_and_pull(xx, approaches.to.use)
   xx.data.set <- unlist(lapply(ww$split, pull, "Data_set"))
 
@@ -136,7 +135,6 @@ noise_level_fig <- function(tt, indel.or.sbs, approach) {
   # split by approach, color by noise level
   data.set = paste0(indel.or.sbs, "_set1")
   tt1 <- dplyr::filter(tt, Data_set == data.set)
-  message("calling split... for noise_level... on ", data.set)
   ww <- split_by_approach_and_pull(tt1, approach)
   xx.noise.level <- unlist(lapply(ww$split, pull, "Noise_level"))
   
@@ -251,7 +249,7 @@ set1_set2_legend <- function(sbs.or.indel) {
          pch    = c(16,     17))
 }
 
-all_figs_this_file <- function(tt) {
+all_figs_and_tables_this_file <- function(tt) {
   # tt should be the output of summarize_all_level1_dirs in file summarize_level1_dirs.R
   
   
@@ -298,6 +296,7 @@ all_figs_this_file <- function(tt) {
   downsample_SBS_fig(tt)
   SBS35_detect(tt)
   
+  if (FALSE) {
   grDevices::cairo_pdf(
     filename = outpath("draft_CPU_time.pdf"),
     height   = 14,
@@ -308,10 +307,11 @@ all_figs_this_file <- function(tt) {
 
   main_text_cpu("indel", main.text.indel.approaches)
   dev.off()
+  }
 }
 
 
 # Calling plotting functions --------------------------------------------------
 load("all_results_fixed_by_seed.Rdata") # Load object `all.results.fixed`
-all_figs_this_file(all.results.fixed)
+all_figs_and_tables_this_file(all.results.fixed)
 # computed in summarize_level1_dirs.R
