@@ -10,7 +10,7 @@ if ((!requireNamespace("ICAMS", quietly = TRUE)) ||
 }
 require(ICAMS)
 
-
+# We don't need to deal with downsampling for SigProfilerExtractor
 
 # Specify global variables ----------------------------------------------------
 # Level 1 dirs are also the name of the data sets

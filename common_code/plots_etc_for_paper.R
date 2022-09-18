@@ -24,10 +24,17 @@ split_by_approach_and_pull <- function(vv, approaches.to.use) {
   # we want for columns of the eventual beeswarm graph.
   xxs2    <- xxs[approaches.to.use] 
   
-  comp <- lapply(xxs2, pull, "Composite")
-  tpr  <- lapply(xxs2, pull, "TPR")
-  ppv  <- lapply(xxs2, pull, "PPV")
-  sim  <- lapply(xxs2, pull, "aver_Sim_TP_only")
+  my.pull <- function(my.approach, colname) {
+    zz <- xxs[[my.approach]]
+    if (length(zz) == 0) {
+      stop("No results for my.approach = ", my.approach, " colname = ", colname)
+      
+    }
+    pull(zz, colname)}
+  comp <- lapply(approaches.to.use, my.pull, "Composite")
+  tpr  <- lapply(approaches.to.use, my.pull, "TPR")
+  ppv  <- lapply(approaches.to.use, my.pull, "PPV")
+  sim  <- lapply(approaches.to.use, my.pull, "aver_Sim_TP_only")
   return(list(split = xxs2, comp = comp, tpr = tpr, ppv = ppv, sim =sim))
 }
 
@@ -36,14 +43,13 @@ split_by_approach_and_pull <- function(vv, approaches.to.use) {
 four_beeswarms <- function(ww, main, col, pch, filename,
                            mfrow = c(3,1),
                            legend.fn = NULL,
-                           mar = c(9, 12, 4, 12) + 0.1,
-                           ...) {
+                           mar = c(9, 12, 4, 12) + 0.1) {
   grDevices::cairo_pdf(
     filename = outpath(filename),
     height = 9, 
     onefile = TRUE)
   par(mfrow = mfrow, mar = mar)
-  
+
   beeswarm(x = ww$comp, las = 2, ylab = "Composite measure", 
            pwpch = pch, pwcol = col,
            main = main, labels = "")
@@ -64,23 +70,27 @@ four_beeswarms <- function(ww, main, col, pch, filename,
   
 }
 
+
 generic_4_beeswarm_fig <-
   function(tt, 
            approaches.to.use, # character vector of names of approaches
            sbs.or.indel, 
            file.name.prefix,
            legend.fn = NULL,
-           ...) {
+           col       = "black",
+           mfrow = c(3, 1),
+           mar = c(8, 14, 4, 14) + 0.1) {
 
   set1 <- paste0(sbs.or.indel, "_set1")
   set2 <- paste0(sbs.or.indel, "_set2")
   t1 <- filter(tt, Noise_level == "Realistic")
   xx <- filter(t1, Data_set %in% c(set1, set2))
 
+  message("calling split... on ", sbs.or.indel)
   ww <- split_by_approach_and_pull(xx, approaches.to.use)
   xx.data.set <- unlist(lapply(ww$split, pull, "Data_set"))
 
-  col <- ifelse(xx.data.set == set1, "red", "blue")
+  col <- ifelse(xx.data.set == set1, "black", "black")
   pch <- ifelse(xx.data.set == set1, 16, 17)
   
   four_beeswarms(ww, 
@@ -89,7 +99,8 @@ generic_4_beeswarm_fig <-
                  pch,
                  filename = paste0(file.name.prefix, sbs.or.indel, ".pdf"),
                  legend.fn = legend.fn,
-                 ...)
+                 mfrow,
+                 mar)
 }
 
 downsample_indel_fig <- function(tt) {
@@ -125,6 +136,7 @@ noise_level_fig <- function(tt, indel.or.sbs, approach) {
   # split by approach, color by noise level
   data.set = paste0(indel.or.sbs, "_set1")
   tt1 <- dplyr::filter(tt, Data_set == data.set)
+  message("calling split... for noise_level... on ", data.set)
   ww <- split_by_approach_and_pull(tt1, approach)
   xx.noise.level <- unlist(lapply(ww$split, pull, "Noise_level"))
   
@@ -196,6 +208,7 @@ SBS35_detect <- function(tt) {
   
 }
 
+
 main_text_cpu <- function(sbs.or.indel, approaches.to.use) {
   uu <- data.table::fread("cpu_time_by_seed.csv")
   data.sets <- paste0(sbs.or.indel, "_set", c(1, 2))
@@ -210,7 +223,8 @@ main_text_cpu <- function(sbs.or.indel, approaches.to.use) {
   
   xx.data.set <- unlist(lapply(to.plot, pull, "Data_set"))
   
-  col <- ifelse(xx.data.set == data.sets[1], "red", "blue")
+  # col <- ifelse(xx.data.set == data.sets[1], "red", "blue")
+  col <- "black"
   pch <- ifelse(xx.data.set == data.sets[1], 16, 17)
   
 
@@ -219,11 +233,12 @@ main_text_cpu <- function(sbs.or.indel, approaches.to.use) {
            ylab   = "CPU days", 
            # xlab = "Approach",
            main   = sbs.or.indel,
-           pwpch  = pch, pwcol = col)
+           pwpch  = pch,
+           pwcol = col)
   
   legend(x = "topleft",
          legend = paste0(sbs.or.indel, "_set", 1:2),
-         col    = c("red",  "blue"),
+         col    = "black", # c("red",  "blue"),
          pch    = c(16,     17),
          bty    = "n")
 
@@ -232,7 +247,7 @@ main_text_cpu <- function(sbs.or.indel, approaches.to.use) {
 set1_set2_legend <- function(sbs.or.indel) {
   legend(x = "bottomleft",
          legend = paste0(sbs.or.indel, "_set", 1:2),
-         col    = c("red",  "blue"),
+         col    = c("black",  "black"),
          pch    = c(16,     17))
 }
 
