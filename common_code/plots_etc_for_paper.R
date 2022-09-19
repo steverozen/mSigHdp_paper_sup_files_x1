@@ -284,23 +284,44 @@ main_text_table <- function(tt, approaches.to.use, sbs.or.indel) {
     tt, 
     Data_set %in% c(set1, set2), 
     Noise_level == "Realistic",
-    Approach %in% approaches.to.use) %>%
-    dplyr::group_by(Data_set, Approach) %>%
+    Approach %in% approaches.to.use) -> t2
+  
+  if (sbs.or.indel == "SBS") {
+    best <- "mSigHdp_ds_3k"
+  } else {
+    best <- "mSigHdp"
+  }
+  browser()
+  wt <- wilcox.test(Composite ~ Approach, 
+                    data = t2, 
+                    subset = Approach %in% c(best, "SigProfilerExtractor"))
+  print(wt)
+  dplyr::group_by(t2, Approach) %>%
+    dplyr::summarise(mean_comp = mean(Composite),
+                     sd_comp   = sd(Composite),
+                     mean_PPV  = mean(PPV),
+                     mean_TPR  = mean(TPR),
+                     mean_cos  = mean(aver_Sim_TP_only)) -> grand.means
+  fwrite(grand.means,
+         outpath(paste0(sbs.or.indel, "_grand_means.csv")))
+  
+  dplyr::group_by(t2, Data_set, Approach) %>%
     dplyr::summarise(mean_comp = mean(Composite),
                      sd_comp   = sd(Composite),
                      mean_PPV  = mean(PPV),
                      mean_TPR  = mean(TPR),
                      mean_cos  = mean(aver_Sim_TP_only)
     ) %>%
-    arrange(desc(mean_comp), .by_group = TRUE) -> 
-    t3
+    arrange(desc(mean_comp), .by_group = TRUE) -> t3
+  
+  
   t3 %>% filter(Data_set == set1) %>% nrow -> num.set1
   # browser()
   colnames(t3) <- c("Data\nset", "Approach",
                     "Mean", "SD", # For composite measure
                     "Mean\nPPV", "Mean\nTPR",
                     "Mean cosine\nsimilarity")
-
+  
   wb <- createWorkbook()
   
   heading.style <- 
