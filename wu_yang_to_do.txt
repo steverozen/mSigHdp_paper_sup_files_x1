@@ -9,4 +9,4 @@
 8.1 What machine did you do the CPU time profiling on?
 8.2 It is very strange that for MR_hdp_gp_50 and SignatureAnalyzer, indel_set1 took much longer than indel_set2. Is there any chance you ran these on a slower machine, maybe monster?
 9. There is no CPU timing result for signeR on indel_set1
-
+10. We need to explain why there is no result for NR_hdp_gb_1 for SBS_set2 (what is reason?)

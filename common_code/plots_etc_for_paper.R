@@ -279,29 +279,35 @@ set1_set2_legend <- function(sbs.or.indel) {
 main_text_table <- function(tt, approaches.to.use, sbs.or.indel) {
   set1 <- paste0(sbs.or.indel, "_set1")
   set2 <- paste0(sbs.or.indel, "_set2")
+
   t1 <- filter(
     tt, 
     Data_set %in% c(set1, set2), 
     Noise_level == "Realistic",
     Approach %in% approaches.to.use) %>%
     dplyr::group_by(Data_set, Approach) %>%
-    dplyr::summarise(mean_PPV  = mean(PPV),
+    dplyr::summarise(mean_comp = mean(Composite),
+                     sd_comp   = sd(Composite),
+                     mean_PPV  = mean(PPV),
                      mean_TPR  = mean(TPR),
-                     mean_cos  = mean(aver_Sim_TP_only),
-                     mean_comp = mean(Composite),
-                     sd_comp   = sd(Composite)) %>%
+                     mean_cos  = mean(aver_Sim_TP_only)
+    ) %>%
     arrange(desc(mean_comp), .by_group = TRUE) -> 
     t3
   t3 %>% filter(Data_set == set1) %>% nrow -> num.set1
   # browser()
-  colnames(t3) <- c("Data set", "Approach", "Mean PPV", "Mean TPR", "Mean cosine similarity", "Mean", "SD")
+  colnames(t3) <- c("Data\nset", "Approach",
+                    "Mean", "SD", # For composite measure
+                    "Mean\nPPV", "Mean\nTPR",
+                    "Mean cosine\nsimilarity")
   fwrite(t3, outpath(paste0(sbs.or.indel, ".table.csv")))
   
   wb <- createWorkbook()
   
   heading.style <- 
     createStyle(halign = "center", textDecoration = "bold", 
-                wrapText = TRUE, valign = "center", border = "bottom")
+                wrapText = TRUE, valign = "center",
+                borderStyle = "medium", border = "bottom")
   
   num.style <- 
     createStyle(numFmt = "0.00", halign = "center")
@@ -310,22 +316,34 @@ main_text_table <- function(tt, approaches.to.use, sbs.or.indel) {
     createStyle(valign = "center", halign = "center", 
                 textDecoration = "bold")
   
+  top.border.style <- createStyle(border = "top", borderStyle = "medium")
+  
   addWorksheet(wb, sbs.or.indel)
-  writeData(wb, 1, "Composite measure", startCol = 6, startRow = 2)
-  mergeCells(wb, 1, cols = 6:7, rows = 2)
-  writeData(wb, 1, t3, startRow = 3, startCol = 1)
-  mergeCells(wb, 1, cols = 1, rows = 4:(4 + num.set1 - 1))
-  mergeCells(wb, 1, cols = 1, rows = (4 + num.set1):(nrow(t3) + 3))
+  
+  startrow <- 1
+  writeData(wb, 1, "Composite measure", startCol = 3, startRow = startrow)
+  mergeCells(wb, 1, cols = 3:4, rows = startrow) # Merge "Composite measure"
+  
+  datarow1 <- startrow + 2
+  writeData(wb, 1, t3, startRow = datarow1 - 1, startCol = 1)
+  set2.datarow1 <- datarow1 + num.set1
+  
+  mergeCells(wb, 1, cols = 1, rows = datarow1:(set2.datarow1 - 1))
+  mergeCells(wb, 1, cols = 1, rows = set2.datarow1:(datarow1 + nrow(t3) - 1))
    
-  addStyle(wb, 1, num.style, cols = 3:7, rows = 4:(4 + nrow(t3) - 1), gridExpand = TRUE)
+  addStyle(wb, 1, num.style, cols = 3:7, 
+           rows = datarow1:(datarow1 + nrow(t3) - 1),
+           gridExpand = TRUE)
   
-  addStyle(wb, 1, heading.style, cols = 1:7, rows = 3, gridExpand = TRUE)
-  addStyle(wb, 1, heading.style, cols = 6:7, rows = 2, gridExpand = TRUE)
-  addStyle(wb, 1, heading.style, cols = 1:7, rows = 1, gridExpand = TRUE)
+  addStyle(wb, 1, heading.style, 
+           cols = 1:7, rows = startrow + 1, gridExpand = TRUE)
+  addStyle(wb, 1, 
+           heading.style, cols = 3:4, rows = startrow, gridExpand = TRUE)
+ 
+  addStyle(wb, 1, left.style, cols = 1, rows = datarow1:(datarow1 + nrow(t3) - 1))
   
-  addStyle(wb, 1, left.style,    cols = 1, rows = 4:(nrow(t3) + 3))
-  
-  
+  addStyle(wb, 1, top.border.style, cols = 1:7, rows = datarow1 + nrow(t3))
+
   saveWorkbook(wb, outpath(paste0(sbs.or.indel, ".table.xlsx")), overwrite = TRUE)
   
   t3
