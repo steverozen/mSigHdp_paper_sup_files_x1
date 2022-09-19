@@ -1,7 +1,17 @@
 1. Run mSigHdp_ds_10k on SBS_set2 (running, very slow)
 2. SynSigEval -- need Bioconductor? need mSigAct?
-3. Rename_SP_files_level1_dirs: The level1_dirs doesn't have the spike in data? 
-4. Could we just include this code in summarize_level1_dirs.R?
+3. Rename_SP_files_level1_dirs: The level1_dirs doesn't have the spike in data? [Addressed]
+It does. See line 21:
+```
+level1_dirs <- c(level1_dirs,
+                 paste0("sens_SBS35_",
+                        c(5L, 10L, 20L, 30L, 50L, 100L),
+                        "_728"),
+                 paste0("sens_SBS35_",
+                        c(5L, 10L, 20L, 30L, 50L, 100L),
+                        "_1066"))
+```
+4. Could we just include this code in summarize_level1_dirs.R? [Done]
 5. SigneR, SBS_set1, indel_set1, signeR 1.20.0 (Started)
 6. Re-run mSigHdp_ds_*k, seed 145879 on SBS_set1/Realistic (Started)
 7. Sigpro results for K = what mSigHdp found (Started, some results needs 6.)
