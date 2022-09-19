@@ -141,7 +141,7 @@ move_sigpro_files_all_level1_dirs <- function(level1_dirs = level1_dirs) {
 
 
 # Conversion from SigPro signatures to ICAMS signatures -----------------------
-# Required step because function extract_from_one_seeds_summary()
+# Required step because function extract_from_one_seed_summary()
 # only accepts ICAMS signature files
 
 # SBS or indel data sets, without down-sampling
@@ -161,7 +161,7 @@ invisible(move_sigpro_files_all_level1_dirs(level1_dirs))
 
 
 # Function for summaizing directory on one seed -------------------------------
-extract_from_one_seeds_summary <- function(summary.directory.path) {
+extract_from_one_seed_summary <- function(summary.directory.path) {
   gt <- ICAMS::ReadCatalog(file.path(summary.directory.path, "ground.truth.sigs.csv"))
   ex <- ICAMS::ReadCatalog(file.path(summary.directory.path, "extracted.sigs.csv"))
   tff <- mSigTools::TP_FP_FN_avg_sim(ex, gt)
@@ -262,7 +262,7 @@ summarize_level1_dirs <- function(a.folder, delete.non.text = TRUE) {
           unlink(also.delete)
         }
         
-        tff <- extract_from_one_seeds_summary(file.path(seedInUse, "summary"))
+        tff <- extract_from_one_seed_summary(file.path(seedInUse, "summary"))
         a.row <- tibble_row(Data_set         = dataset.name.to.use,
                             Noise_level      = noise.level,
                             Approach         = toolName,
