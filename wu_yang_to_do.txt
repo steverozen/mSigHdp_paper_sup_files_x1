@@ -1,5 +1,7 @@
 1. Run mSigHdp_ds_10k on SBS_set2 (running, very slow)
-2. SynSigEval -- need Bioconductor? need mSigAct?
+2. SynSigEval -- need Bioconductor? need mSigAct? [Addressed]
+- Requires Bioconductor, as the its dependency "ICAMS" does
+- Does not require mSigAct
 3. Rename_SP_files_level1_dirs: The level1_dirs doesn't have the spike in data? [Addressed]
 It does. See line 21:
 ```
