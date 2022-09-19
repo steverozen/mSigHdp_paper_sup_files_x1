@@ -300,8 +300,7 @@ main_text_table <- function(tt, approaches.to.use, sbs.or.indel) {
                     "Mean", "SD", # For composite measure
                     "Mean\nPPV", "Mean\nTPR",
                     "Mean cosine\nsimilarity")
-  fwrite(t3, outpath(paste0(sbs.or.indel, ".table.csv")))
-  
+
   wb <- createWorkbook()
   
   heading.style <- 
