@@ -291,7 +291,6 @@ main_text_table <- function(tt, approaches.to.use, sbs.or.indel) {
   } else {
     best <- "mSigHdp"
   }
-  browser()
   wt <- wilcox.test(Composite ~ Approach, 
                     data = t2, 
                     subset = Approach %in% c(best, "SigProfilerExtractor"))
