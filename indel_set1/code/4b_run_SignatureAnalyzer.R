@@ -57,8 +57,8 @@ if (length(curr_args)==0) {
 
 # Specify global variables ----------------------------------------------------
 
-home_for_data <- "./SBS_set1/input"
-home_for_run <- "./SBS_set1/raw_results"
+home_for_data <- "./indel_set1/input"
+home_for_run <- "./indel_set1/raw_results"
 
 # Guessed signatures.
 # We assume SignatureAnalyzer does not know the ground-truth K (11),

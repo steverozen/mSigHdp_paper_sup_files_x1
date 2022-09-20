@@ -62,7 +62,7 @@ home_for_run <- "./indel_set1/raw_results"
 K_range <- c(2, 20)
 
 # Names of data sets
-dataset_names <- c("Noiseless", "Moderate", "Realistic")
+dataset_names <- c("Realistic", "Moderate", "Noiseless")
 
 # If seeds_in_use is not specified, 
 # specify 5 seeds used in software running

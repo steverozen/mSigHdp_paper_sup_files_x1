@@ -38,7 +38,8 @@ home_for_run <- "./indel_set2/raw_results"
 start_K <- 26
 
 # Names of data sets to run
-dataset_names <- c("Realistic", "Noiseless")
+#dataset_names <- c("Realistic", "Noiseless")
+dataset_names <- "Realistic"
 
 # If seeds_in_use is not specified, 
 # specify 5 seeds used in software running
