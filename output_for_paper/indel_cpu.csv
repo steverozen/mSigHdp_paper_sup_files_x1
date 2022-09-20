@@ -19,6 +19,11 @@ indel_set1,Realistic,SignatureAnalyzer,seed.145879,784410.168,9.07882138888889
 indel_set1,Realistic,SignatureAnalyzer,seed.200437,645603.253,7.47225987268519
 indel_set1,Realistic,SignatureAnalyzer,seed.310111,714643.859,8.27134096064815
 indel_set1,Realistic,SignatureAnalyzer,seed.528401,697518.985,8.07313640046296
+indel_set1,Realistic,signeR,seed.1076753,177144.868,2.05028782407407
+indel_set1,Realistic,signeR,seed.145879,181433.406,2.09992368055556
+indel_set1,Realistic,signeR,seed.200437,185361.546,2.14538826388889
+indel_set1,Realistic,signeR,seed.310111,179265.619,2.07483355324074
+indel_set1,Realistic,signeR,seed.528401,177817.998,2.05807868055556
 indel_set1,Realistic,SigProfilerExtractor,seed.1076753,56258.58,0.651140972222222
 indel_set1,Realistic,SigProfilerExtractor,seed.145879,55978.5899999999,0.647900347222221
 indel_set1,Realistic,SigProfilerExtractor,seed.200437,56084.74,0.649128935185185
