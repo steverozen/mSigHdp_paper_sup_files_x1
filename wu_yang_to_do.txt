@@ -26,4 +26,8 @@ Q: Does Wu Yang need to re-run both programs on indel_set1?
 - Actually, it has been running on minimonster for 22 days (since Aug 30th). 
   We will get the results soon (within one week).
   
-6. Simplify mSigHdp_paper_tracking.xlsx to one sheet - only record "Realistic" runs for CPU profiling. 
+6. Simplify mSigHdp_paper_tracking.xlsx to one sheet - only record "Realistic" runs for CPU profiling. [done]
+
+7. Send CPU clock MHz and cache size information for minimonster, HPC-cluster, monster2: [done]
+- Clock frequency: Minimonster > HPC-cluster > monster2
+
