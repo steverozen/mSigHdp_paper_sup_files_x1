@@ -14,8 +14,10 @@
 # cat_type: "SBS96" or "ID83"
 sigpro_sig_to_icams_one_run <- function(
     input_path, 
-    output_path = paste0(dirname(input_path), "/../../../../"),
+    output_path = paste0(dirname(input_path), 
+                         "/../../../../"),
     cat_type) {
+  #browser() # debug
   stopifnot(cat_type %in% c("SBS96", "ID83"))
   sig_catalog_sp <- utils::read.table(
     input_path,
@@ -30,7 +32,8 @@ sigpro_sig_to_icams_one_run <- function(
   sig_catalog <- ICAMS::as.catalog(sig_catalog,
                                    catalog.type = "counts.signature")
   if(!is.null(output_path) && !is.na(output_path)) {
-    ICAMS::WriteCatalog(sig_catalog, output_path)
+    ICAMS::WriteCatalog(sig_catalog, 
+                        file.path(output_path, "extracted.signatures.csv"))
   }
   invisible(return(sig_catalog))
 }
