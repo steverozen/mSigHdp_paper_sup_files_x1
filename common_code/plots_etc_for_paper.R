@@ -294,6 +294,7 @@ main_text_table <- function(tt, approaches.to.use, sbs.or.indel) {
   wt <- wilcox.test(Composite ~ Approach, 
                     data = t2, 
                     subset = Approach %in% c(best, "SigProfilerExtractor"))
+  message(sbs.or.indel, " Wilcoxn test")
   print(wt)
   dplyr::group_by(t2, Approach) %>%
     dplyr::summarise(mean_comp = mean(Composite),
@@ -348,20 +349,27 @@ main_text_table <- function(tt, approaches.to.use, sbs.or.indel) {
   set2.datarow1 <- datarow1 + num.set1
   
   mergeCells(wb, 1, cols = 1, rows = datarow1:(set2.datarow1 - 1))
-  mergeCells(wb, 1, cols = 1, rows = set2.datarow1:(datarow1 + nrow(t3) - 1))
+
+  last.datarow <- datarow1 + nrow(t3) - 1
+  
+  mergeCells(wb, 1, cols = 1, rows = set2.datarow1:last.datarow)
    
-  addStyle(wb, 1, num.style, cols = 3:7, 
-           rows = datarow1:(datarow1 + nrow(t3) - 1),
+  addStyle(wb, 1, num.style, cols = 3:7,  
+           rows = datarow1:last.datarow,
            gridExpand = TRUE)
   
   addStyle(wb, 1, heading.style, 
            cols = 1:7, rows = startrow + 1, gridExpand = TRUE)
   addStyle(wb, 1, 
            heading.style, cols = 3:4, rows = startrow, gridExpand = TRUE)
- 
-  addStyle(wb, 1, left.style, cols = 1, rows = datarow1:(datarow1 + nrow(t3) - 1))
+
+  addStyle(wb, 1, left.style, cols = 1, rows = datarow1:last.datarow)
   
-  addStyle(wb, 1, top.border.style, cols = 1:7, rows = datarow1 + nrow(t3))
+  addStyle(wb, 1, top.border.style, cols = 1:7, rows = last.datarow + 1)
+  
+  writeData(wb, 1, startCol = 1, startRow = last.datarow + 2,
+            paste0("Wilcoxon rank sum test ", best, " vs ", "SigProfilerExtractor p = ",
+            format(wt$p.value, scientific = TRUE, digits = 4)))
 
   saveWorkbook(wb, outpath(paste0(sbs.or.indel, ".table.xlsx")), overwrite = TRUE)
   
