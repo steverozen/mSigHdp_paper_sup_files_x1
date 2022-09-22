@@ -21,7 +21,7 @@ require(tibble)
 require(reticulate)
 
 # Need to have pandas installed in your python environment
-reticulate::py_install("pandas")
+reticulate::py_install("pandas", ignore_installed = FALSE)
 pd <- reticulate::import("pandas")
 
 
