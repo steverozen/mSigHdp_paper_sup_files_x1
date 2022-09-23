@@ -20,7 +20,7 @@ ddive <-
   fplist <- list()
   for (se in all.seeds()) {
     dx <- paste0(ddd, "/seed.", se)
-    fplist <- c(fplist, dd_one_seed(dir = dx, my.seed = se, outdir = outdir))
+    fplist <- c(fplist, dd_one_seed(dir = dx, my.seed = se, data.set = data.set, outdir = outdir))
   }
   fplist.catalog <- do.call(cbind, fplist)
   if (ncol(fplist.catalog) > 0 ) {
@@ -42,15 +42,21 @@ reconstruct1 <- function(target.sig, sig.universe, max.set.size = 3, cat.fn) {
   cat.fn("Cosine similarity = ", round(cossim, digits = 3), "\n\n")
 }
 
-dd_one_seed <- function(dir, my.seed, outdir) {
+dd_one_seed <- function(dir, my.seed, data.set, outdir) {
 
   outfile <- file.path(outdir, "md.md") 
   mycat <- function(...) cat(..., "\n\n", file = outfile, append = TRUE, sep = "") 
 
   sdir <- file.path(dir, "summary")
   
+  gt <- file.path(data.set, "input", "Realistic", "ground.truth.syn.sigs.csv")
+  if (!file.exists(gt)) browser()
+  if (TRUE) {
+    gt <- ICAMS::ReadCatalog(gt, catalog.type = "counts.signature")
+  } else {
   gt <- ICAMS::ReadCatalog(file.path(sdir, "ground.truth.sigs.csv"),
                            catalog.type = "counts.signature")
+  }
   ex <- ICAMS::ReadCatalog(file.path(sdir, "extracted.sigs.csv"),
                            catalog.type = "counts.signature")
   xx <- mSigTools::TP_FP_FN_avg_sim(ex, gt)
@@ -67,24 +73,33 @@ dd_one_seed <- function(dir, my.seed, outdir) {
   
   fnsigs <- gt[ , xx$unmatched.ref.sigs, drop = FALSE]
   
-  mycat("\nReconstructed with false negative signatures:")
-  can.we.reconstruct <- 
-    apply(X = fpsigs, MARGIN = 2, reconstruct1, 
-          sig.universe = fnsigs,
-          cat.fn = mycat)
-
+  if (length(xx$unmatched.ref.sigs) > 0) {
+    mycat("\nReconstructed with false negative signatures:")
+    can.we.reconstruct <- 
+      lapply(X = colnames(fpsigs),
+            function(x) reconstruct1(fpsigs[ , x, drop = FALSE], 
+            sig.universe = fnsigs,
+            cat.fn = mycat))
+  }
+  
   mycat("\nReconstructed with all signatures:")
   can.we.reconstruct2 <-
-    apply(X = fpsigs, MARGIN = 2, reconstruct1, 
+    lapply(X = colnames(fpsigs), 
+           function(x) reconstruct1(fpsigs[ , x, drop = FALSE], 
           sig.universe = gt,
-          cat.fn = mycat)
+          cat.fn = mycat))
   
   colnames(fpsigs) <- paste(dir, "-", colnames(fpsigs), sep = "")
-  return(list(fp = fpsigs))  
+  # cat(colnames(fpsigs), "\n")
+  return(list(fpsigs))  
 }
 
-ddive("SBS_set1", "SigProfilerExtractor")
-ddive("SBS_set2", "SigProfilerExtractor")
+# ddive("SBS_set1", "SigProfilerExtractor")
+# ddive("SBS_set2", "SigProfilerExtractor")
 ddive("indel_set1", "SigProfilerExtractor")
-ddive("indel_set2", "SigProfilerExtractor")
+# ddive("indel_set2", "SigProfilerExtractor")
+ddive("SBS_set1", "mSigHdp_ds_3k")
+ddive("SBS_set2", "mSigHdp_ds_3k")
+ddive("indel_set1", "mSigHdp")
+ddive("indel_set2", "mSigHdp")
   
