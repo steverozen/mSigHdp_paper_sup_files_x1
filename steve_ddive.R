@@ -94,7 +94,7 @@ dd_one_seed <- function(dir, my.seed, data.set, outdir) {
   return(list(fpsigs))  
 }
 
-# ddive("SBS_set1", "SigProfilerExtractor")
+ddive("SBS_set1", "SigProfilerExtractor")
 # ddive("SBS_set2", "SigProfilerExtractor")
 ddive("indel_set1", "SigProfilerExtractor")
 # ddive("indel_set2", "SigProfilerExtractor")
