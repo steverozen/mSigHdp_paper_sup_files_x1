@@ -14,6 +14,9 @@ ddive <-
     ddd <- paste0(data.set,
                   "/raw_results/", approach, ".results/Realistic/")
   }
+  if (!dir.exists(ddd)) {
+    stop("Directory ", ddd, " does not exist")
+  }
 
   unlink(outdir, recursive = TRUE)
   dir.create(outdir)
@@ -109,5 +112,6 @@ ddive("sens_SBS35_10_1066", "SigProfilerExtractor")
 ddive("sens_SBS35_10_728", "SigProfilerExtractor")
 ddive("sens_SBS35_20_1066", "SigProfilerExtractor")
 ddive("sens_SBS35_20_728", "SigProfilerExtractor")
+ddive("SBS_set1", "SP_KmSigHdp")
 }
   
