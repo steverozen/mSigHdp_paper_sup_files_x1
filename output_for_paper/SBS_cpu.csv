@@ -24,11 +24,11 @@ SBS_set1,Realistic,signeR,seed.145879,3063782.962,35.4604509490741
 SBS_set1,Realistic,signeR,seed.200437,3407795.45,39.4420769675926
 SBS_set1,Realistic,signeR,seed.310111,3161017.217,36.5858474189815
 SBS_set1,Realistic,signeR,seed.528401,4219074.275,48.8318781828704
-SBS_set1,Realistic,SigProfilerExtractor,seed.1076753,731491.74,8.46633958333333
-SBS_set1,Realistic,SigProfilerExtractor,seed.145879,720775.19,8.34230543981481
-SBS_set1,Realistic,SigProfilerExtractor,seed.200437,773246.7,8.94961458333333
-SBS_set1,Realistic,SigProfilerExtractor,seed.310111,791179.96,9.15717546296296
-SBS_set1,Realistic,SigProfilerExtractor,seed.528401,782587.6,9.05772685185185
+SBS_set1,Realistic,SigProfilerExtractor,seed.1076753,357324.52,4.13570046296296
+SBS_set1,Realistic,SigProfilerExtractor,seed.145879,393020.23,4.54884525462963
+SBS_set1,Realistic,SigProfilerExtractor,seed.200437,361345.89,4.18224409722222
+SBS_set1,Realistic,SigProfilerExtractor,seed.310111,360435.51,4.17170729166667
+SBS_set1,Realistic,SigProfilerExtractor,seed.528401,359717.25,4.16339409722222
 SBS_set2,Realistic,mSigHdp,seed.1076753,24462112.846,283.126306087963
 SBS_set2,Realistic,mSigHdp,seed.145879,23800788.824,275.47209287037
 SBS_set2,Realistic,mSigHdp,seed.200437,25439862.31,294.442850810185
@@ -56,7 +56,6 @@ SBS_set2,Realistic,SigProfilerExtractor,seed.310111,3846206.98,44.5162844907407
 SBS_set2,Realistic,SigProfilerExtractor,seed.528401,3974440.67,46.0004707175926
 SBS_set1,Realistic,mSigHdp_ds_3k,seed.1076753,1694469.415,19.611914525463
 SBS_set1,Realistic,mSigHdp_ds_3k,seed.145879,1319799.728,15.2754598148148
-SBS_set1,Realistic,mSigHdp_ds_3k,seed.145879_old,1378118.505,15.9504456597222
 SBS_set1,Realistic,mSigHdp_ds_3k,seed.200437,1459552.914,16.8929735416667
 SBS_set1,Realistic,mSigHdp_ds_3k,seed.310111,1414006.838,16.3658198842593
 SBS_set1,Realistic,mSigHdp_ds_3k,seed.528401,1616929.555,18.7144624421296
