@@ -294,7 +294,7 @@ main_text_table <- function(tt, approaches.to.use, sbs.or.indel) {
   wt <- wilcox.test(Composite ~ Approach, 
                     data = t2, 
                     subset = Approach %in% c(best, "SigProfilerExtractor"))
-  message(sbs.or.indel, " Wilcoxn test")
+  message(sbs.or.indel, " Wilcoxon rank-sum test")
   print(wt)
   dplyr::group_by(t2, Approach) %>%
     dplyr::summarise(mean_comp = mean(Composite),
@@ -368,7 +368,7 @@ main_text_table <- function(tt, approaches.to.use, sbs.or.indel) {
   addStyle(wb, 1, top.border.style, cols = 1:7, rows = last.datarow + 1)
   
   writeData(wb, 1, startCol = 1, startRow = last.datarow + 2,
-            paste0("Wilcoxon rank sum test ", best, " vs ", "SigProfilerExtractor p = ",
+            paste0("Wilcoxon rank-sum test ", best, " vs ", "SigProfilerExtractor p = ",
             format(wt$p.value, scientific = TRUE, digits = 4)))
 
   saveWorkbook(wb, outpath(paste0(sbs.or.indel, ".table.xlsx")), overwrite = TRUE)
