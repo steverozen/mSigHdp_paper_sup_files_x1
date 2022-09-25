@@ -24,7 +24,7 @@ split_by_approach_and_pull <- function(vv, approaches.to.use) {
   xxs     <- split(vv, vv$Approach)
 
   # This makes sure that the elements of xx2 are in the same order as 
-  # the elments of approaches.to.use, which should be in the order 
+  # the elements of approaches.to.use, which should be in the order 
   # we want for columns of the eventual beeswarm graph.
   xxs2    <- xxs[approaches.to.use] 
   
