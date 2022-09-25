@@ -19,7 +19,6 @@ if (!requireNamespace("reticulate", quietly = TRUE)) {
 }
 require(tibble)
 require(reticulate)
-reticulate::install_python("pandas")
 
 # Need to have pandas installed in your python environment
 #reticulate::py_install("pandas", ignore_installed = FALSE)
