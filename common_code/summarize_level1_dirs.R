@@ -10,6 +10,7 @@ if (basename(getwd()) != top.dir) {
 # }
 # Users should know to install packages
 require(ICAMS) # v3.0.6
+# remotes::install_github("WuyangFF95/SynSigEval", ref = "v0.4.0-branch")
 require(SynSigEval) # v0.4.0
 require(tibble)
 
