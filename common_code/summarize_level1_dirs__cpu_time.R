@@ -21,7 +21,7 @@ require(tibble)
 require(reticulate)
 
 # Need to have pandas installed in your python environment
-reticulate::py_install("pandas", ignore_installed = FALSE)
+#reticulate::py_install("pandas", ignore_installed = FALSE)
 pd <- reticulate::import("pandas")
 
 
@@ -79,6 +79,10 @@ cpu_time_level1_dirs <- function(a_folder) {
   tool_paths <- list.files(start_here, 
                            pattern = "\\.results",
                            full.names = TRUE)
+  # Remove "SP_KmSigHdp.results" and "SP_Kplus2.results"
+  tool_paths <- 
+    tool_paths[!(basename(tool_paths) %in% 
+               c("SP_KmSigHdp.results", "SP_Kplus2.results"))]
   
   for (tool_path in tool_paths) {
     # tool_path - a full directory path, 

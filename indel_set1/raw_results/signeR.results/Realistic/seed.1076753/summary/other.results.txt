@@ -11,11 +11,12 @@ True positive ground-truth signatures
 [1] "ID1"  "ID2"  "ID3"  "ID4"  "ID5"  "ID9"  "ID14"
 
 True positive extracted signatures
-[1] "signeR.1"  "signeR.10" "signeR.11" "signeR.12" "signeR.2"  "signeR.5" 
-[7] "signeR.9" 
+[1] "signeR.1"  "signeR.10" "signeR.11" "signeR.12"
+[5] "signeR.2"  "signeR.5"  "signeR.9" 
 
 False positive signatures
-[1] "signeR.3" "signeR.4" "signeR.6" "signeR.7" "signeR.8"
+[1] "signeR.3" "signeR.4" "signeR.6" "signeR.7"
+[5] "signeR.8"
 
 False negative signatures
 [1] "ID6"  "ID8"  "ID11" "ID13"

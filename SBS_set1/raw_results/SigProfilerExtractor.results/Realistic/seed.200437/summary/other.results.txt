@@ -1,0 +1,26 @@
+Average cosine similarity, only best matches are considered
+[1] 0.9725059
+
+Number of ground-truth signatures
+[1] 23
+
+Number of extracted signatures
+[1] 18
+
+True positive ground-truth signatures
+ [1] "SBS1"   "SBS2"   "SBS3"   "SBS4"   "SBS7a" 
+ [6] "SBS7b"  "SBS7c"  "SBS7d"  "SBS12"  "SBS13" 
+[11] "SBS17a" "SBS17b" "SBS18"  "SBS22"  "SBS28" 
+[16] "SBS40"  "SBS44" 
+
+True positive extracted signatures
+ [1] "SBS96A" "SBS96B" "SBS96C" "SBS96D" "SBS96F"
+ [6] "SBS96G" "SBS96H" "SBS96I" "SBS96J" "SBS96K"
+[11] "SBS96L" "SBS96M" "SBS96N" "SBS96O" "SBS96P"
+[16] "SBS96Q" "SBS96R"
+
+False positive signatures
+[1] "SBS96E"
+
+False negative signatures
+[1] "SBS5"  "SBS16" "SBS29" "SBS35" "SBS38" "SBS41"
