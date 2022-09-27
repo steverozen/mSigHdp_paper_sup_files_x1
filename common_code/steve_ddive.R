@@ -77,9 +77,18 @@ dd_one_seed <- function(dir,
     mycat("\n#### Reconstructed with false negative signatures:")
     can.we.reconstruct <- 
       lapply(X = colnames(fpsigs),
-            function(x) reconstruct1(fpsigs[ , x, drop = FALSE], 
-            sig.universe = fnsigs,
-            cat.fn = mycat))
+             function(x) {
+               to.plot <- reconstruct1(fpsigs[ , x, drop = FALSE], 
+                                       sig.universe = fnsigs,
+                                       cat.fn = mycat)
+               recon.file <- 
+                 file.path(outdir, 
+                           paste0(my.seed, "_", gsub(" .*", "", x), ".pdf"))
+               ICAMS::PlotCatalogToPdf(to.plot, 
+                                       recon.file, 
+                                       ylim = c(0, max(to.plot[ , 1])))
+             }
+      )
   }
   
   if (reconstruct.with.all) {
@@ -98,16 +107,36 @@ dd_one_seed <- function(dir,
 
 reconstruct1 <- function(target.sig, sig.universe, max.set.size = 3, cat.fn) {
   cat.fn("\nReconstructing ", colnames(target.sig))
-  exposures <- mSigAct:::OptimizeExposureQP(target.sig, sig.universe)
+  exposures <- mSigTools::optimize_exposure_QP(target.sig, sig.universe)
   okexp <- which(exposures > 0.01)
   exposures <- exposures[okexp]
-  # browser()
+  exposures <- 
+    mSigTools::optimize_exposure_QP(
+      target.sig, sig.universe[ , names(exposures), drop = FALSE])
   for (nn in names(exposures)) {
     cat.fn(nn, " ", exposures[nn])
   }
   reconstructed <- mSigAct::ReconstructSpectrum(sig.universe, exposures, use.sig.names = TRUE)
   cossim <- philentropy::dist_one_one(target.sig, reconstructed, method = "cosine")
   cat.fn("Cosine similarity = ", round(cossim, digits = 3), "\n\n")
+  
+  # Experimental
+  ctype <-attr(target.sig, "catalog.type")
+  reconstructed <- ICAMS::as.catalog(reconstructed, catalog.type = ctype )
+  roundd <- 3
+  colnames(reconstructed) <- 
+    paste0("Reconstruction, cosine similarity = ", 
+           round(cossim, digits = roundd))
+  exposures <- sort(exposures, decreasing = TRUE)
+  partial.catalog <- 
+    do.call(
+      cbind,
+      lapply(names(exposures), function(nn) exposures[nn] * sig.universe[ , nn]))
+  partial.catalog <- ICAMS::as.catalog(partial.catalog, catalog.type = ctype)
+  colnames(partial.catalog) <- 
+    paste(names(exposures), round(exposures, digits = roundd), sep = ": ")
+  to.plot <- cbind(target.sig, reconstructed, partial.catalog)
+  return(to.plot)
 }
 
 if (FALSE) {
