@@ -1,14 +1,33 @@
+## mSigHdp_ds_3k SBS_set2
 
-### SBS_set2_down_samp/raw_results/mSigHdp_ds_3k.results/Realistic//seed.145879
 
-False pos sigs:
+
+### 145879
+
+#### False pos sigs:
+
 hdp.24 (False Positive) (SBS6 0.835)
+
 hdp.25 (False Positive) (SBS1 0.235)
 
-False neg sigs: SBS6 SBS7a SBS16 SBS26 SBS35 SBS38 SBS39
+#### False neg sigs:
+
+SBS6
+
+SBS7a
+
+SBS16
+
+SBS26
+
+SBS35
+
+SBS38
+
+SBS39
 
 
-Reconstructed with false negative signatures:
+#### Reconstructed with false negative signatures:
 
 
 Reconstructing hdp.24 (False Positive) (SBS6 0.835)
@@ -49,53 +68,36 @@ Cosine similarity = 0.271
 
 
 
-Reconstructed with all signatures:
+### 200437
 
+#### False pos sigs:
 
-Reconstructing hdp.24 (False Positive) (SBS6 0.835)
-
-SBS6 0.3970352
-
-SBS16 0.02276288
-
-SBS30 0.1299262
-
-SBS44 0.4502756
-
-Cosine similarity = 0.926
-
-
-
-
-Reconstructing hdp.25 (False Positive) (SBS1 0.235)
-
-SBS1 0.2593477
-
-SBS5 0.3799495
-
-SBS7a 0.1449063
-
-SBS7b 0.1248283
-
-SBS29 0.08076688
-
-Cosine similarity = 0.317
-
-
-
-
-### SBS_set2_down_samp/raw_results/mSigHdp_ds_3k.results/Realistic//seed.200437
-
-False pos sigs:
 hdp.11 (False Positive) (SBS1 0.235)
+
 hdp.25 (False Positive) (SBS6 0.837)
+
 hdp.28 (False Positive) (SBS5 0.834)
+
 hdp.29 (False Positive) (SBS7a 0.825)
 
-False neg sigs: SBS6 SBS7a SBS16 SBS26 SBS35 SBS38 SBS39
+#### False neg sigs:
+
+SBS6
+
+SBS7a
+
+SBS16
+
+SBS26
+
+SBS35
+
+SBS38
+
+SBS39
 
 
-Reconstructed with false negative signatures:
+#### Reconstructed with false negative signatures:
 
 
 Reconstructing hdp.11 (False Positive) (SBS1 0.235)
@@ -164,75 +166,34 @@ Cosine similarity = 0.825
 
 
 
-Reconstructed with all signatures:
+### 310111
 
+#### False pos sigs:
 
-Reconstructing hdp.11 (False Positive) (SBS1 0.235)
-
-SBS1 0.2593407
-
-SBS5 0.3822395
-
-SBS7a 0.1457861
-
-SBS7b 0.1233857
-
-SBS29 0.07934344
-
-Cosine similarity = 0.316
-
-
-
-
-Reconstructing hdp.25 (False Positive) (SBS6 0.837)
-
-SBS6 0.3996284
-
-SBS16 0.02341226
-
-SBS30 0.1266061
-
-SBS44 0.4503532
-
-Cosine similarity = 0.927
-
-
-
-
-Reconstructing hdp.28 (False Positive) (SBS5 0.834)
-
-SBS1 0.1772132
-
-SBS5 0.7906872
-
-SBS16 0.01074701
-
-Cosine similarity = 0.999
-
-
-
-
-Reconstructing hdp.29 (False Positive) (SBS7a 0.825)
-
-SBS7a 0.6810939
-
-SBS7b 0.3189061
-
-Cosine similarity = 0.86
-
-
-
-
-### SBS_set2_down_samp/raw_results/mSigHdp_ds_3k.results/Realistic//seed.310111
-
-False pos sigs:
 hdp.23 (False Positive) (SBS6 0.844)
+
 hdp.26 (False Positive) (SBS1 0.235)
 
-False neg sigs: SBS6 SBS7a SBS7b SBS16 SBS26 SBS35 SBS38 SBS39
+#### False neg sigs:
+
+SBS6
+
+SBS7a
+
+SBS7b
+
+SBS16
+
+SBS26
+
+SBS35
+
+SBS38
+
+SBS39
 
 
-Reconstructed with false negative signatures:
+#### Reconstructed with false negative signatures:
 
 
 Reconstructing hdp.23 (False Positive) (SBS6 0.844)
@@ -275,52 +236,34 @@ Cosine similarity = 0.279
 
 
 
-Reconstructed with all signatures:
+### 528401
 
+#### False pos sigs:
 
-Reconstructing hdp.23 (False Positive) (SBS6 0.844)
-
-SBS6 0.4135499
-
-SBS16 0.02482627
-
-SBS30 0.1252567
-
-SBS44 0.4363671
-
-Cosine similarity = 0.928
-
-
-
-
-Reconstructing hdp.26 (False Positive) (SBS1 0.235)
-
-SBS1 0.2558016
-
-SBS5 0.3880134
-
-SBS7a 0.1424404
-
-SBS7b 0.124846
-
-SBS29 0.07899636
-
-Cosine similarity = 0.318
-
-
-
-
-### SBS_set2_down_samp/raw_results/mSigHdp_ds_3k.results/Realistic//seed.528401
-
-False pos sigs:
 hdp.19 (False Positive) (SBS1 0.235)
+
 hdp.26 (False Positive) (SBS6 0.85)
+
 hdp.28 (False Positive) (SBS5 0.855)
 
-False neg sigs: SBS6 SBS7a SBS16 SBS26 SBS35 SBS38 SBS39
+#### False neg sigs:
+
+SBS6
+
+SBS7a
+
+SBS16
+
+SBS26
+
+SBS35
+
+SBS38
+
+SBS39
 
 
-Reconstructed with false negative signatures:
+#### Reconstructed with false negative signatures:
 
 
 Reconstructing hdp.19 (False Positive) (SBS1 0.235)
@@ -380,65 +323,34 @@ Cosine similarity = 0.935
 
 
 
-Reconstructed with all signatures:
+### 1076753
 
+#### False pos sigs:
 
-Reconstructing hdp.19 (False Positive) (SBS1 0.235)
-
-SBS1 0.2577789
-
-SBS5 0.3845156
-
-SBS7a 0.1448301
-
-SBS7b 0.1241553
-
-SBS29 0.07909012
-
-Cosine similarity = 0.318
-
-
-
-
-Reconstructing hdp.26 (False Positive) (SBS6 0.85)
-
-SBS6 0.4268384
-
-SBS16 0.02264157
-
-SBS30 0.1196058
-
-SBS44 0.4309142
-
-Cosine similarity = 0.929
-
-
-
-
-Reconstructing hdp.28 (False Positive) (SBS5 0.855)
-
-SBS1 0.1621025
-
-SBS5 0.8003643
-
-SBS16 0.01397931
-
-Cosine similarity = 0.999
-
-
-
-
-### SBS_set2_down_samp/raw_results/mSigHdp_ds_3k.results/Realistic//seed.1076753
-
-False pos sigs:
 hdp.24 (False Positive) (SBS6 0.843)
+
 hdp.26 (False Positive) (SBS1 0.235)
+
 hdp.27 (False Positive) (SBS7a 0.831)
 
-False neg sigs: SBS6 SBS7a SBS16 SBS26 SBS35 SBS38 SBS39
+#### False neg sigs:
+
+SBS6
+
+SBS7a
+
+SBS16
+
+SBS26
+
+SBS35
+
+SBS38
+
+SBS39
 
 
-Reconstructed with false negative signatures:
+#### Reconstructed with false negative signatures:
 
 
 Reconstructing hdp.24 (False Positive) (SBS6 0.843)
@@ -484,52 +396,6 @@ Reconstructing hdp.27 (False Positive) (SBS7a 0.831)
 SBS7a 1
 
 Cosine similarity = 0.831
-
-
-
-
-Reconstructed with all signatures:
-
-
-Reconstructing hdp.24 (False Positive) (SBS6 0.843)
-
-SBS6 0.4123378
-
-SBS16 0.0215411
-
-SBS30 0.1252569
-
-SBS44 0.4408642
-
-Cosine similarity = 0.927
-
-
-
-
-Reconstructing hdp.26 (False Positive) (SBS1 0.235)
-
-SBS1 0.2577085
-
-SBS5 0.3826627
-
-SBS7a 0.1442381
-
-SBS7b 0.1250537
-
-SBS29 0.07977282
-
-Cosine similarity = 0.318
-
-
-
-
-Reconstructing hdp.27 (False Positive) (SBS7a 0.831)
-
-SBS7a 0.6894144
-
-SBS7b 0.3105856
-
-Cosine similarity = 0.865
 
 
 
