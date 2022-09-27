@@ -29,7 +29,7 @@ if (length(curr_args)==0) {
 
 # Specify global variables ----------------------------------------------------
 
-home_for_data <- "./SBS_set2_down_samp/input"
+home_for_data <- "./SBS_set2/input"
 home_for_run <- "./SBS_set2_down_samp/raw_results"
 
 # Guessed signatures.
