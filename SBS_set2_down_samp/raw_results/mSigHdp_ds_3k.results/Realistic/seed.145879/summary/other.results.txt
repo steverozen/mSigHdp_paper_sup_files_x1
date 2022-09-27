@@ -8,17 +8,26 @@ Number of extracted signatures
 [1] 27
 
 True positive reference signatures
- [1] "SBS1"   "SBS2"   "SBS3"   "SBS4"   "SBS5"   "SBS7b"  "SBS7c"  "SBS7d"  "SBS8"   "SBS9"   "SBS12"  "SBS13" 
-[13] "SBS17a" "SBS17b" "SBS18"  "SBS22"  "SBS28"  "SBS29"  "SBS30"  "SBS34"  "SBS36"  "SBS37"  "SBS40"  "SBS41" 
+ [1] "SBS1"   "SBS2"   "SBS3"   "SBS4"  
+ [5] "SBS5"   "SBS7b"  "SBS7c"  "SBS7d" 
+ [9] "SBS8"   "SBS9"   "SBS12"  "SBS13" 
+[13] "SBS17a" "SBS17b" "SBS18"  "SBS22" 
+[17] "SBS28"  "SBS29"  "SBS30"  "SBS34" 
+[21] "SBS36"  "SBS37"  "SBS40"  "SBS41" 
 [25] "SBS44" 
 
 True positive extracted signatures
- [1] "hdp.1"  "hdp.10" "hdp.11" "hdp.12" "hdp.13" "hdp.14" "hdp.15" "hdp.16" "hdp.17" "hdp.18" "hdp.19" "hdp.2" 
-[13] "hdp.20" "hdp.21" "hdp.22" "hdp.23" "hdp.26" "hdp.27" "hdp.3"  "hdp.4"  "hdp.5"  "hdp.6"  "hdp.7"  "hdp.8" 
+ [1] "hdp.1"  "hdp.10" "hdp.11" "hdp.12"
+ [5] "hdp.13" "hdp.14" "hdp.15" "hdp.16"
+ [9] "hdp.17" "hdp.18" "hdp.19" "hdp.2" 
+[13] "hdp.20" "hdp.21" "hdp.22" "hdp.23"
+[17] "hdp.26" "hdp.27" "hdp.3"  "hdp.4" 
+[21] "hdp.5"  "hdp.6"  "hdp.7"  "hdp.8" 
 [25] "hdp.9" 
 
 False positive signatures
 [1] "hdp.24" "hdp.25"
 
 False negative signatures
-[1] "SBS6"  "SBS7a" "SBS16" "SBS26" "SBS35" "SBS38" "SBS39"
+[1] "SBS6"  "SBS7a" "SBS16" "SBS26" "SBS35"
+[6] "SBS38" "SBS39"

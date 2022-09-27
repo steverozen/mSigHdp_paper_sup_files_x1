@@ -8,15 +8,20 @@ Number of extracted signatures
 [1] 16
 
 True positive reference signatures
- [1] "SBS1"   "SBS2"   "SBS4"   "SBS7a"  "SBS7b"  "SBS7c"  "SBS7d"  "SBS13"  "SBS17a" "SBS17b" "SBS18"  "SBS28" 
+ [1] "SBS1"   "SBS2"   "SBS4"   "SBS7a" 
+ [5] "SBS7b"  "SBS7c"  "SBS7d"  "SBS13" 
+ [9] "SBS17a" "SBS17b" "SBS18"  "SBS28" 
 [13] "SBS40"  "SBS44" 
 
 True positive extracted signatures
- [1] "SBS96A" "SBS96B" "SBS96C" "SBS96D" "SBS96E" "SBS96G" "SBS96H" "SBS96I" "SBS96J" "SBS96L" "SBS96M" "SBS96N"
+ [1] "SBS96A" "SBS96B" "SBS96C" "SBS96D"
+ [5] "SBS96E" "SBS96G" "SBS96H" "SBS96I"
+ [9] "SBS96J" "SBS96L" "SBS96M" "SBS96N"
 [13] "SBS96O" "SBS96P"
 
 False positive signatures
 [1] "SBS96F" "SBS96K"
 
 False negative signatures
-[1] "SBS3"  "SBS5"  "SBS12" "SBS16" "SBS22" "SBS29" "SBS35" "SBS38" "SBS41"
+[1] "SBS3"  "SBS5"  "SBS12" "SBS16" "SBS22"
+[6] "SBS29" "SBS35" "SBS38" "SBS41"
