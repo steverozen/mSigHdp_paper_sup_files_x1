@@ -116,7 +116,7 @@ downsample_indel_fig <- function(tt) {
   generic_4_beeswarm_fig(tt                = tt, 
                          approaches.to.use = approaches, 
                          sbs.or.indel      = "indel", 
-                         file.name.prefix  = "draft_downsampling_fig_",
+                         file.name.prefix  = "downsampling_",
                          mfrow = c(3, 1),
                          mar = c(8, 14, 4, 14) + 0.1,
                          legend.fn = function() { set1_set2_legend("indel")})
@@ -130,7 +130,7 @@ downsample_SBS_fig <- function(tt) {
                   "mSigHdp_ds_3k",
                   "mSigHdp_ds_1k"
   )
-  generic_4_beeswarm_fig(tt, approaches, "SBS", "draft_downsampling_fig_",
+  generic_4_beeswarm_fig(tt, approaches, "SBS", "downsampling_",
                          mfrow = c(3, 1),
                          mar = c(8, 14, 4, 14) + 0.1,
                          legend.fn = function() { set1_set2_legend("SBS")})
@@ -207,7 +207,7 @@ SBS35_detect_fig <- function(tt) {
   pch <- ifelse(to.plot2.app == "mSigHdp_ds_3k", msighdp.pch, sigpro.pch)
 
   grDevices::cairo_pdf(
-    filename = outpath("draft_sensitivity.pdf"),
+    filename = outpath("sensitivity.pdf"),
     height = 4, 
     onefile = TRUE)
   par(mar = c(5.1, 5.1, 4.1, 2.1))
@@ -301,7 +301,9 @@ main_text_table <- function(tt, approaches.to.use, sbs.or.indel) {
                      sd_comp   = sd(Composite),
                      mean_PPV  = mean(PPV),
                      mean_TPR  = mean(TPR),
-                     mean_cos  = mean(aver_Sim_TP_only)) -> grand.means
+                     mean_cos  = mean(aver_Sim_TP_only)) %>%
+    dplyr::arrange(desc(mean_comp)) -> grand.means
+  
   fwrite(grand.means,
          outpath(paste0(sbs.or.indel, "_grand_means.csv")))
   
@@ -393,7 +395,7 @@ all_figs_and_tables_this_file <- function(tt) {
     tt = tt, 
     approaches.to.use = main.text.SBS.approaches,
     sbs.or.indel      = "SBS", 
-    file.name.prefix  = "draft_main_text_fig_",
+    file.name.prefix  = "main_text_",
     mfrow             = c(3, 1),
     mar               = c(8, 14, 4, 14) + 0.1,
     legend.fn         = function() { set1_set2_legend("SBS")})
@@ -418,7 +420,7 @@ all_figs_and_tables_this_file <- function(tt) {
     sbs.or.indel      = "indel"
   )
   
-  generic_4_beeswarm_fig(tt, main.text.indel.approaches, "indel",  "draft_main_text_fig_",
+  generic_4_beeswarm_fig(tt, main.text.indel.approaches, "indel",  "main_text_",
                          mfrow = c(3, 1),
                          mar = c(8, 14, 4, 14) + 0.1,
                          legend.fn = function() { set1_set2_legend("indel")})
@@ -439,7 +441,7 @@ all_figs_and_tables_this_file <- function(tt) {
   SBS35_detect_fig(tt)
   
   grDevices::cairo_pdf(
-    filename = outpath("draft_CPU_time.pdf"),
+    filename = outpath("CPU_time.pdf"),
     height   = 14,
     width    = 7, 
     onefile = TRUE)
