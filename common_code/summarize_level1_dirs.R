@@ -148,8 +148,9 @@ move_sigpro_files_all_level1_dirs <- function(level1_dirs = level1_dirs) {
 
 
 # Function for summaizing directory on one seed -------------------------------
-extract_from_one_seed_summary <- function(summary.directory.path) {
-  gt <- ICAMS::ReadCatalog(file.path(summary.directory.path, "ground.truth.sigs.csv"))
+extract_from_one_seed_summary <- function(summary.directory.path, 
+                                          ground.truth.exposure.dir) {
+  gt <- ICAMS::ReadCatalog(file.path(ground.truth.exposure.dir, "ground.truth.syn.sigs.csv"))
   ex <- ICAMS::ReadCatalog(file.path(summary.directory.path, "extracted.sigs.csv"))
   tff <- mSigTools::TP_FP_FN_avg_sim(ex, gt)
   tff$PPV <- tff$TP / (tff$TP + tff$FP)
@@ -205,7 +206,6 @@ summarize_level1_dirs <- function(a.folder, delete.non.text = TRUE) {
       }
       message("summarizing datasetpath=", datasetpath)
       ground.truth.exposure.dir <-
-        # file.path(a.folder, "input", noise.level)
         file.path(dataset.name.to.use, "input", noise.level)
       message("summarizing ground.truth.exposure.dir=", ground.truth.exposure.dir)
       seedsInUse <- dir(datasetpath, pattern = "seed\\.\\d+", full.names = TRUE)
@@ -249,7 +249,9 @@ summarize_level1_dirs <- function(a.folder, delete.non.text = TRUE) {
           unlink(also.delete)
         }
         
-        tff <- extract_from_one_seed_summary(file.path(seedInUse, "summary"))
+        tff <- extract_from_one_seed_summary(
+          summary.directory.path    = file.path(seedInUse, "summary"),
+          ground.truth.exposure.dir = ground.truth.exposure.dir)
         a.row <- tibble_row(Data_set         = dataset.name.to.use,
                             Noise_level      = noise.level,
                             Approach         = toolName,
