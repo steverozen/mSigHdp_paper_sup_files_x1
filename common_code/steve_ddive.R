@@ -21,8 +21,10 @@ ddive <-
   unlink(outdir, recursive = TRUE)
   dir.create(outdir)
   fplist <- list()
-  outfile <- file.path(outdir, "md.md") 
-  mycat <- function(...) cat(..., "\n\n", file = outfile, append = TRUE, sep = "") 
+  outfile <- file.path(outdir, paste0(data.set, "-", approach, ".md"))
+  mycat <- function(...) {
+    cat(..., "\n\n", file = outfile, append = TRUE, sep = "") 
+  }
   mycat("## ", approach, " ", data.set, "\n")
   for (se in all.seeds()) {
     dx <- paste0(ddd, "/seed.", se)
@@ -34,9 +36,11 @@ ddive <-
   }
   fplist.catalog <- do.call(cbind, fplist)
   if (ncol(fplist.catalog) > 0 ) {
-    ICAMS::PlotCatalogToPdf(fplist.catalog, file.path(outdir, "all_FP.pdf"))
+    ICAMS::PlotCatalogToPdf(
+      fplist.catalog, 
+      file.path(outdir, paste0(data.set, "-", approach, ".pdf")))
   }
-}
+  }
 
 
 dd_one_seed <- function(dir,
@@ -142,7 +146,7 @@ reconstruct1 <- function(target.sig, sig.universe, max.set.size = 3, cat.fn) {
 if (FALSE) {
 
 ddive("SBS_set1", "SigProfilerExtractor")
-ddive("SBS_set2", "SigProfilerExtractor")
+# ddive("SBS_set2", "SigProfilerExtractor")
 ddive("SBS_set1", "mSigHdp_ds_3k")
 ddive("SBS_set2", "mSigHdp_ds_3k")
 
@@ -158,5 +162,13 @@ ddive("sens_SBS35_10_728", "SigProfilerExtractor")
 ddive("sens_SBS35_20_1066", "SigProfilerExtractor")
 ddive("sens_SBS35_20_728", "SigProfilerExtractor")
 ddive("SBS_set1", "SP_KmSigHdp")
+
+ddive("SBS_set1", "NR_hdp_gb_1")
+ddive("SBS_set2", "NR_hdp_gb_1")
+
+ddive("SBS_set1", "NR_hdp_gb_20")
+ddive("SBS_set2", "NR_hdp_gb_20")
+
+
 }
   
