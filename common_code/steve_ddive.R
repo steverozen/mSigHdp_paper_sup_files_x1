@@ -108,7 +108,7 @@ dd_one_seed <- function(dir,
 reconstruct1 <- function(target.sig, sig.universe, max.set.size = 3, cat.fn) {
   cat.fn("\nReconstructing ", colnames(target.sig))
   exposures <- mSigTools::optimize_exposure_QP(target.sig, sig.universe)
-  okexp <- which(exposures > 0.01)
+  okexp <- which(exposures > 0.05)
   exposures <- exposures[okexp]
   exposures <- 
     mSigTools::optimize_exposure_QP(
