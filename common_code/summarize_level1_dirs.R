@@ -305,9 +305,10 @@ summarize_all_level1_dirs <- function()  {
   all.results <- do.call(rbind, all.out.list)
   
   NR.approach <- c("NR_hdp_gb_1", "NR_hdp_gb_50", "NR_hdp_gb_20")
-  # Original Nicola Roberts' original hdp ALWAYS 
-  # generates a noise signature hdp.0.
-  # Thus we need to subtract 1 from FP
+  
+  # Nicola Roberts' original hdp ALWAYS generates a noise signature hdp.0. Thus
+  # we need to subtract 1 from FP. The suffix "fixed" in the variable names
+  # indicates that this has been done.
   all.results.fixed <- 
     dplyr::mutate(all.results, 
                   FP = dplyr::if_else(Approach %in% NR.approach, FP - 1, FP))
@@ -317,9 +318,10 @@ summarize_all_level1_dirs <- function()  {
   stopifnot(all.equal(foox, foo2x)) # paranoid checking
                          
   readr::write_csv(all.results.fixed, 
-                   "output_for_paper/all_results_fixed_by_seed.csv")
+                   "output_for_paper/supplementary_table_s4.csv")
+  # Create Excel file
   save(all.results.fixed, 
-       file = "output_for_paper/all_results_fixed_by_seed.Rdata")
+       file = "output_for_paper/supplementary_table_s4.Rdata")
   invisible(all.results.fixed)
 }
 
