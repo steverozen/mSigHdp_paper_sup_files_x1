@@ -274,8 +274,8 @@ summarize_level1_dirs <- function(a.folder, delete.non.text = TRUE) {
   } # for (analysis.name in tools)
   
   level1.results <- level1.results[-1, ]
-  readr::write_csv(data.table::as.data.table(level1.results), file.path(a.folder, "new_all_sub_results.csv"))
-  save(level1.results, file=file.path(a.folder, "level1_results.Rdata"))
+  # readr::write_csv(data.table::as.data.table(level1.results), file.path(a.folder, "new_all_sub_results.csv"))
+  # save(level1.results, file=file.path(a.folder, "level1_results.Rdata"))
   invisible(level1.results)
 } # function summarize_level1_dirs
 
@@ -316,23 +316,12 @@ summarize_all_level1_dirs <- function()  {
   foo2x <- dplyr::filter(all.results.fixed, !(Approach %in% NR.approach))
   stopifnot(all.equal(foox, foo2x)) # paranoid checking
                          
-  readr::write_csv(all.results.fixed, "all_results_fixed_by_seed.csv")
-  save(all.results.fixed, file = "all_results_fixed_by_seed.Rdata")
+  readr::write_csv(all.results.fixed, 
+                   "output_for_paper/all_results_fixed_by_seed.csv")
+  save(all.results.fixed, 
+       file = "output_for_paper/all_results_fixed_by_seed.Rdata")
   invisible(all.results.fixed)
 }
 
-# Run wrapper function to summarize directories of all levels -----------------
+# The only top level code except for checks, etc at the start of the file -----
 all.results.fixed <- summarize_all_level1_dirs()
-
-
-# development code: -----------------------------------------------------------
-foo <- dplyr::filter(
-  all.results.fixed,
-  Data_set == "SBS_set1" & Noise_level == "Realistic" & Approach == "mSigHdp_ds_3k")
-bar <- dplyr::filter(
-  all.results.fixed,
-  Data_set == "SBS_set1" & Noise_level == "Realistic" & Approach == "SigProfilerExtractor")
-bar2 <- dplyr::filter(
-  all.results.fixed, 
-  Data_set == "SBS_set2" & Noise_level == "Realistic" & Approach == "SigProfilerExtractor")
-bar2$FN.sigs
