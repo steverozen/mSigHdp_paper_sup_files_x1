@@ -8,12 +8,11 @@ Number of extracted signatures
 [1] 12
 
 True positive reference signatures
- [1] "ID1"  "ID2"  "ID3"  "ID4"  "ID6"  "ID8"  "ID9"  "ID11" "ID13"
-[10] "ID14"
+ [1] "ID1"  "ID2"  "ID3"  "ID4"  "ID6"  "ID8"  "ID9"  "ID11" "ID13" "ID14"
 
 True positive extracted signatures
- [1] "ID83A" "ID83B" "ID83E" "ID83F" "ID83G" "ID83H" "ID83I"
- [8] "ID83J" "ID83K" "ID83L"
+ [1] "ID83A" "ID83B" "ID83E" "ID83F" "ID83G" "ID83H" "ID83I" "ID83J" "ID83K"
+[10] "ID83L"
 
 False positive signatures
 [1] "ID83C" "ID83D"

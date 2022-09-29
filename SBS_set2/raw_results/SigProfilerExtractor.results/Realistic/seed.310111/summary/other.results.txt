@@ -1,13 +1,13 @@
 Average cosine similarity, only best matches are considered
 [1] 0.9728356
 
-Number of ground-truth signatures
+Number of reference signatures
 [1] 32
 
 Number of extracted signatures
 [1] 18
 
-True positive ground-truth signatures
+True positive reference signatures
  [1] "SBS1"   "SBS2"   "SBS3"   "SBS4"   "SBS7a"  "SBS7b"  "SBS7c"  "SBS7d" 
  [9] "SBS9"   "SBS12"  "SBS13"  "SBS17a" "SBS17b" "SBS22"  "SBS36"  "SBS40" 
 [17] "SBS44" 

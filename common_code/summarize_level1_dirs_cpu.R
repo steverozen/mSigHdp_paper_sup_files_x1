@@ -124,10 +124,10 @@ cpu_time_level1_dirs <- function(a_folder) {
   
   # Remove the first dummy row
   cpu_time_table <- cpu_time_table[-1, ]
-  readr::write_csv(
-    data.table::as.data.table(cpu_time_table), 
-    file.path(a_folder, "level1_cpu_time.csv"))
-  save(cpu_time_table, file=file.path(a_folder, "level1_cpu_time.Rdata"))
+  # readr::write_csv(
+  #   data.table::as.data.table(cpu_time_table), 
+  #   file.path(a_folder, "level1_cpu_time.csv"))
+  # save(cpu_time_table, file=file.path(a_folder, "level1_cpu_time.Rdata"))
   invisible(return(cpu_time_table))
 } # function cpu_time_something
 
@@ -139,10 +139,10 @@ cpu_time_all_level1_dirs <- function(level1_dirs = level1_dirs) {
   
   all_cpu_time <- do.call(rbind, all_out_list)
   
-  utils::write.csv(all_cpu_time, "cpu_time_by_seed.csv", 
+  utils::write.csv(all_cpu_time, "output_for_paper/cpu_time_by_seed.csv", 
                    row.names = F,
                    quote = F)
-  save(all_cpu_time, file = "cpu_time_by_seed.Rdata")
+  save(all_cpu_time, file = "output_for_paper/cpu_time_by_seed.Rdata")
   invisible(all_cpu_time)
 }
 
