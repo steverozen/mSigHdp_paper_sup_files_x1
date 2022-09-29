@@ -38,7 +38,7 @@ ddive <-
   if (ncol(fplist.catalog) > 0 ) {
     ICAMS::PlotCatalogToPdf(
       fplist.catalog, 
-      file.path(outdir, paste0(data.set, "-", approach, ".pdf")))
+      file.path(outdir, paste0("FP-", data.set, "-", approach, ".pdf")))
   }
   }
 
