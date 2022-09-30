@@ -1,9 +1,0 @@
-Data_set,Approach,mean_CPU_days
-indel_set1,mSigHdp,3.22527194907407
-indel_set1,SignatureAnalyzer,0.452690016203704
-indel_set1,signeR,2.08570240046296
-indel_set1,SigProfilerExtractor,0.651660509259259
-indel_set2,mSigHdp,6.17506443518519
-indel_set2,SignatureAnalyzer,1.61930183796296
-indel_set2,signeR,3.27955544212963
-indel_set2,SigProfilerExtractor,1.48755900462963
