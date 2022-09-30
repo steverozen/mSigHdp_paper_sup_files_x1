@@ -383,6 +383,40 @@ main_text_table <- function(tt, approaches.to.use, sbs.or.indel) {
   t3
 }
 
+cpu_fig_and_table <- function() {
+  
+  grDevices::cairo_pdf(
+    filename = outpath("CPU_time.pdf"),
+    height   = 14,
+    width    = 7, 
+    onefile = TRUE)
+  par(mfrow = c(3, 1), mar = c(9, 12, 4, 12) + 0.1)
+  
+  sbs.cpu   <- main_text_cpu("SBS",   c("mSigHdp_ds_3k",
+                                        "mSigHdp",
+                                        "SigProfilerExtractor",
+                                        "signeR",
+                                        "SignatureAnalyzer"))
+  
+  indel.cpu <- main_text_cpu("indel", c("mSigHdp",
+                                        "SigProfilerExtractor",
+                                        "signeR",
+                                        "SignatureAnalyzer"))
+  
+  dev.off()
+  
+  cpu.summary <- rbind(sbs.cpu, indel.cpu)
+  tidyr::pivot_wider(cpu.summary, 
+                     names_from = Data_set, 
+                     values_from = mean_CPU_days) %>%
+    mutate(`Average SBS` = (SBS_set1 + SBS_set2) / 2, 
+           .keep = "all", 
+           .before = "indel_set1") %>%
+    mutate(`Average indel` = (indel_set1 + indel_set1) / 2, .keep = "all") -> tmp.table
+    tmp.table <- tmp.table[c(2, 1, 5, 4, 3)  , ]
+    openxlsx::write.xlsx(outpath("table_3.xlsx"))
+}
+
 
 all_figs_and_tables_this_file <- function(tt) {
   # tt should be the output of summarize_all_level1_dirs in file summarize_level1_dirs.R
@@ -445,29 +479,8 @@ all_figs_and_tables_this_file <- function(tt) {
   downsample_SBS_fig(tt)
   SBS35_detect_fig(tt)
   
-  grDevices::cairo_pdf(
-    filename = outpath("CPU_time.pdf"),
-    height   = 14,
-    width    = 7, 
-    onefile = TRUE)
-  par(mfrow = c(3, 1), mar = c(9, 12, 4, 12) + 0.1)
-  
-  sbs.cpu   <- main_text_cpu("SBS",   main.text.SBS.approaches)
-
-  indel.cpu <- main_text_cpu("indel", main.text.indel.approaches)
-  
-  dev.off()
-  
-  cpu.summary <- rbind(sbs.cpu, indel.cpu)
-  tidyr::pivot_wider(cpu.summary, 
-                     names_from = Data_set, 
-                     values_from = mean_CPU_days) %>%
-    mutate(`Average SBS` = (SBS_set1 + SBS_set2) / 2, 
-           .keep = "all", 
-           .before = "indel_set1") %>%
-    mutate(`Average indel` = (indel_set1 + indel_set1) / 2, .keep = "all") %>%
-    openxlsx::write.xlsx(outpath("table_3.xlsx"))
-}
+  cpu_fig_and_table()
+}  
 
 
 # Calling plotting functions --------------------------------------------------
