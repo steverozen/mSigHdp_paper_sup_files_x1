@@ -234,7 +234,7 @@ SBS35_detect_fig <- function(tt) {
 
 main_text_cpu <- function(sbs.or.indel, approaches.to.use) {
   # browser()
-  uu <- data.table::fread(outpath("cpu_time_by_seed.csv"))
+  uu <- data.table::fread(outpath("supplementary_table_s5.csv"))
   data.sets <- paste0(sbs.or.indel, "_set", c(1, 2))
   filter(uu, 
          Noise_level == "Realistic" &
@@ -462,6 +462,6 @@ all_figs_and_tables_this_file <- function(tt) {
 
 
 # Calling plotting functions --------------------------------------------------
-load(outpath("all_results_fixed_by_seed.Rdata")) # Load object `all.results.fixed`
+load(outpath("supplementary_table_s4.Rdata")) # Load object `all.results.fixed`
 all_figs_and_tables_this_file(all.results.fixed)
 # computed in summarize_level1_dirs.R
