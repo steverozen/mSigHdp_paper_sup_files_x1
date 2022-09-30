@@ -234,7 +234,7 @@ SBS35_detect_fig <- function(tt) {
 
 main_text_cpu <- function(sbs.or.indel, approaches.to.use) {
   # browser()
-  uu <- data.table::fread("cpu_time_by_seed.csv")
+  uu <- data.table::fread("output_for_paper/cpu_time_by_seed.csv")
   data.sets <- paste0(sbs.or.indel, "_set", c(1, 2))
   uu1 <- filter(uu, Noise_level == "Realistic" & Data_set %in% data.sets & Approach %in% approaches.to.use)
   uu2 <- mutate(uu1, CPU.days = cpu_time / (60 * 60 * 24))
@@ -260,7 +260,7 @@ main_text_cpu <- function(sbs.or.indel, approaches.to.use) {
            pwpch  = pch,
            pwcol = col)
   
-  legend(x = "topleft",
+  legend(x = "topright",
          legend = paste0(sbs.or.indel, "_set", 1:2),
          col    = "black", # c("red",  "blue"),
          pch    = c(16,     17),
