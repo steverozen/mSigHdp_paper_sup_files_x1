@@ -234,11 +234,12 @@ SBS35_detect_fig <- function(tt) {
 
 main_text_cpu <- function(sbs.or.indel, approaches.to.use) {
   # browser()
-  uu <- data.table::fread(outpath("cpu_time_by_seed.csv"))
+  uu <- data.table::fread(outpath("supplementary_table_s5.csv"))
   data.sets <- paste0(sbs.or.indel, "_set", c(1, 2))
   filter(uu, 
          Noise_level == "Realistic" &
-           Data_set %in% data.sets & Approach %in% approaches.to.use) %>%
+           Data_set %in% data.sets &
+           Approach %in% approaches.to.use) %>%
     mutate(CPU.days = cpu_time / (60 * 60 * 24)) %>%
     mutate(Noise_level = NULL, cpu.time = NULL) -> uu3
   # browser()
@@ -246,13 +247,9 @@ main_text_cpu <- function(sbs.or.indel, approaches.to.use) {
   to.use <- which(approaches.to.use %in% names(to.plot))
   approaches.to.use <- approaches.to.use[to.use]
   to.plot <- to.plot[approaches.to.use]
-  
-  
-  # fwrite(uu3, outpath(paste0(sbs.or.indel, "_cpu.csv")))
-  
+
   dplyr::group_by(uu3, Data_set, Approach) %>%
-    dplyr::summarise(mean_CPU_days = mean(CPU.days)) %>%
-    fwrite(outpath(paste0(sbs.or.indel, "_cpu_summary.csv")))
+    dplyr::summarise(mean_CPU_days = mean(CPU.days)) -> return.value
   
   to.plot2 <- lapply(to.plot, pull, CPU.days)
   
@@ -272,6 +269,8 @@ main_text_cpu <- function(sbs.or.indel, approaches.to.use) {
          col    = "black", # c("red",  "blue"),
          pch    = c(16,     17),
          bty    = "n")
+  
+  invisible(return.value)
 }
 
 set1_set2_legend <- function(sbs.or.indel) {
@@ -453,11 +452,22 @@ all_figs_and_tables_this_file <- function(tt) {
     width    = 7, 
     onefile = TRUE)
   par(mfrow = c(3, 1), mar = c(9, 12, 4, 12) + 0.1)
-  main_text_cpu("SBS",   main.text.SBS.approaches)
+  
+  sbs.cpu   <- main_text_cpu("SBS",   main.text.SBS.approaches)
 
-  main_text_cpu("indel", main.text.indel.approaches)
+  indel.cpu <- main_text_cpu("indel", main.text.indel.approaches)
+  
   dev.off()
-
+  
+  cpu.summary <- rbind(sbs.cpu, indel.cpu)
+  tidyr::pivot_wider(cpu.summary, 
+                     names_from = Data_set, 
+                     values_from = mean_CPU_days) %>%
+    mutate(`Average SBS` = (SBS_set1 + SBS_set2) / 2, 
+           .keep = "all", 
+           .before = "indel_set1") %>%
+    mutate(`Average indel` = (indel_set1 + indel_set1) / 2, .keep = "all") %>%
+    openxlsx::write.xlsx(outpath("table_3.xlsx"))
 }
 
 
