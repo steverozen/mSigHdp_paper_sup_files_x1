@@ -73,7 +73,6 @@ cpu_time_level1_dirs <- function(a_folder) {
   message("using dataset name ", dataset_name)
 
   cpu_time_table <- tibble_row(Data_set         = "",
-                               Noise_level      = "",
                                Approach         = "",
                                Run              = "",
                                cpu_time         = -1)
@@ -120,7 +119,6 @@ cpu_time_level1_dirs <- function(a_folder) {
         message("Checking CPU time for seed_path=", seed_path)
         cpu_time <- cpu_time_from_one_seed(seed_path)
         a_row <- tibble_row(Data_set         = dataset_name,
-                            Noise_level      = noise_level,
                             Approach         = tool_name,
                             Run              = basename(seed_path),
                             cpu_time         = cpu_time)
@@ -150,6 +148,7 @@ cpu_time_all_level1_dirs <- function(level1_dirs = level1_dirs) {
   utils::write.csv(all_cpu_time, "output_for_paper/supplementary_table_s5.csv", 
                    row.names = F,
                    quote = F)
+  
   save(all_cpu_time, file = "output_for_paper/supplementary_table_s5.Rdata")
   invisible(all_cpu_time)
 }
