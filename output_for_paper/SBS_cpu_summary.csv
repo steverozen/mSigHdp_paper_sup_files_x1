@@ -1,0 +1,11 @@
+Data_set,Approach,mean_CPU_days
+SBS_set1,mSigHdp,205.953724476852
+SBS_set1,mSigHdp_ds_3k,17.3721260416667
+SBS_set1,SignatureAnalyzer,48.2644204675926
+SBS_set1,signeR,39.7090664976852
+SBS_set1,SigProfilerExtractor,4.24037824074074
+SBS_set2,mSigHdp,286.230970212963
+SBS_set2,mSigHdp_ds_3k,34.8207898981482
+SBS_set2,SignatureAnalyzer,68.7737221666667
+SBS_set2,signeR,17.5881779074074
+SBS_set2,SigProfilerExtractor,44.833447037037
