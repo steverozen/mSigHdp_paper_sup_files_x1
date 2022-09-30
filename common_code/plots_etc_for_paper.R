@@ -237,8 +237,7 @@ main_text_cpu <- function(sbs.or.indel, approaches.to.use) {
   uu <- data.table::fread(outpath("supplementary_table_s5.csv"))
   data.sets <- paste0(sbs.or.indel, "_set", c(1, 2))
   filter(uu, 
-         Noise_level == "Realistic" &
-           Data_set %in% data.sets &
+         Data_set %in% data.sets &
            Approach %in% approaches.to.use) %>%
     mutate(CPU.days = cpu_time / (60 * 60 * 24)) %>%
     mutate(Noise_level = NULL, cpu.time = NULL) -> uu3
