@@ -11,14 +11,19 @@ if (basename(getwd()) != top.dir) {
 }
 
 # Install and load required packages ------------------------------------------
+if (!requireNamespace("openxlsx", quietly = TRUE)) {
+  install.packages("openxlsx")
+}
 if (!requireNamespace("tibble", quietly = TRUE)) {
   install.packages("tibble")
 }
 if (!requireNamespace("reticulate", quietly = TRUE)) {
   install.packages("reticulate")
 }
-require(tibble)
+require(openxlsx)
 require(reticulate)
+require(tibble)
+
 
 # Need to have pandas installed in your python environment
 #reticulate::py_install("pandas", ignore_installed = FALSE)
@@ -73,7 +78,6 @@ cpu_time_level1_dirs <- function(a_folder) {
   message("using dataset name ", dataset_name)
 
   cpu_time_table <- tibble_row(Data_set         = "",
-                               Noise_level      = "",
                                Approach         = "",
                                Run              = "",
                                cpu_time         = -1)
@@ -120,7 +124,6 @@ cpu_time_level1_dirs <- function(a_folder) {
         message("Checking CPU time for seed_path=", seed_path)
         cpu_time <- cpu_time_from_one_seed(seed_path)
         a_row <- tibble_row(Data_set         = dataset_name,
-                            Noise_level      = noise_level,
                             Approach         = tool_name,
                             Run              = basename(seed_path),
                             cpu_time         = cpu_time)
@@ -150,6 +153,8 @@ cpu_time_all_level1_dirs <- function(level1_dirs = level1_dirs) {
   utils::write.csv(all_cpu_time, "output_for_paper/supplementary_table_s5.csv", 
                    row.names = F,
                    quote = F)
+  openxlsx::write.xlsx(all_cpu_time, 
+                       "output_for_paper/supplementary_table_s5.xlsx")
   save(all_cpu_time, file = "output_for_paper/supplementary_table_s5.Rdata")
   invisible(all_cpu_time)
 }

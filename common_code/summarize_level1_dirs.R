@@ -10,6 +10,7 @@ if (basename(getwd()) != top.dir) {
 # }
 # Users should know to install packages
 require(ICAMS) # v3.0.6
+require(openxlsx)
 # remotes::install_github("WuyangFF95/SynSigEval", ref = "v0.4.0-branch")
 require(SynSigEval) # v0.4.0
 require(tibble)
@@ -323,6 +324,8 @@ summarize_all_level1_dirs <- function()  {
                          
   readr::write_csv(all.results.fixed, 
                    "output_for_paper/supplementary_table_s4.csv")
+  openxlsx::write.xlsx(all.results.fixed, 
+                       "output_for_paper/supplementary_table_s4.xlsx")
   # Create Excel file
   save(all.results.fixed, 
        file = "output_for_paper/supplementary_table_s4.Rdata")
