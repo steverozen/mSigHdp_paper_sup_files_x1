@@ -4,7 +4,8 @@ source("common_code/all.seeds.R")
 ddive <- 
   function(data.set, approach, 
            outdir = 
-             paste0( "./output_for_paper/ddive_", data.set, "_", approach)) {
+             paste0( "./output_for_paper/ddive_", data.set, "_", approach),
+           reconstuction.pdfs = TRUE) {
     if (approach == "mSigHdp_ds_3k" 
         && data.set %in% c("SBS_set1", "SBS_set2")) {
       ddd <- paste0(data.set, 
@@ -28,11 +29,12 @@ ddive <-
   mycat("## ", approach, " ", data.set, "\n")
   for (se in all.seeds()) {
     dx <- paste0(ddd, "/seed.", se)
-    fplist <- c(fplist, dd_one_seed(dir      = dx, 
-                                    my.seed  = se, 
-                                    data.set = data.set, 
-                                    outdir   = outdir,
-                                    mycat    = mycat))
+    fplist <- c(fplist, dd_one_seed(dir                 = dx, 
+                                    my.seed             = se, 
+                                    data.set            = data.set, 
+                                    outdir              = outdir,
+                                    mycat               = mycat,
+                                    reconstruction.pdfs = reconstuction.pdfs))
   }
   fplist.catalog <- do.call(cbind, fplist)
   if (ncol(fplist.catalog) > 0 ) {
@@ -48,7 +50,8 @@ dd_one_seed <- function(dir,
                         data.set, 
                         outdir, 
                         reconstruct.with.all = FALSE,
-                        mycat) {
+                        mycat,
+                        reconstruction.pdfs) {
 
 
   sdir <- file.path(dir, "summary")
@@ -85,12 +88,14 @@ dd_one_seed <- function(dir,
                to.plot <- reconstruct1(fpsigs[ , x, drop = FALSE], 
                                        sig.universe = fnsigs,
                                        cat.fn = mycat)
-               recon.file <- 
-                 file.path(outdir, 
-                           paste0(my.seed, "_", gsub(" .*", "", x), ".pdf"))
-               ICAMS::PlotCatalogToPdf(to.plot, 
-                                       recon.file, 
-                                       ylim = c(0, max(to.plot[ , 1])))
+               if (reconstruction.pdfs) {
+                 recon.file <- 
+                   file.path(outdir, 
+                             paste0(my.seed, "_", gsub(" .*", "", x), ".pdf"))
+                 ICAMS::PlotCatalogToPdf(to.plot, 
+                                         recon.file, 
+                                         ylim = c(0, max(to.plot[ , 1])))
+               }
              }
       )
   }
@@ -146,7 +151,7 @@ reconstruct1 <- function(target.sig, sig.universe, max.set.size = 3, cat.fn) {
 if (FALSE) {
 
 ddive("SBS_set1", "SigProfilerExtractor")
-# ddive("SBS_set2", "SigProfilerExtractor")
+ddive("SBS_set2", "SigProfilerExtractor")
 ddive("SBS_set1", "mSigHdp_ds_3k")
 ddive("SBS_set2", "mSigHdp_ds_3k")
 
@@ -154,6 +159,9 @@ ddive("indel_set1", "mSigHdp")
 ddive("indel_set2", "mSigHdp")
 ddive("indel_set1", "SigProfilerExtractor")
 ddive("indel_set2", "SigProfilerExtractor")
+
+ddive("SBS_set1", "mSigHdp", reconstuction.pdfs = FALSE) # Too many!!!
+ddive("SBS_set2", "mSigHdp", reconstuction.pdfs = FALSE)
 
 ddive("sens_SBS35_5_1066", "SigProfilerExtractor")
 ddive("sens_SBS35_5_728", "SigProfilerExtractor")
@@ -163,11 +171,17 @@ ddive("sens_SBS35_20_1066", "SigProfilerExtractor")
 ddive("sens_SBS35_20_728", "SigProfilerExtractor")
 ddive("SBS_set1", "SP_KmSigHdp")
 
-ddive("SBS_set1", "NR_hdp_gb_1")
-ddive("SBS_set2", "NR_hdp_gb_1")
+ddive("SBS_set1", "NR_hdp_gb_1", reconstuction.pdfs = FALSE) # Too many!!!
+ddive("SBS_set2", "NR_hdp_gb_1", reconstuction.pdfs = FALSE)
 
-ddive("SBS_set1", "NR_hdp_gb_20")
-ddive("SBS_set2", "NR_hdp_gb_20")
+ddive("SBS_set1", "NR_hdp_gb_20", reconstuction.pdfs = FALSE)
+ddive("SBS_set2", "NR_hdp_gb_20", reconstuction.pdfs = FALSE)
+
+ddive("indel_set1", "NR_hdp_gb_1", reconstuction.pdfs = FALSE) # Too many!!!
+ddive("indel_set2", "NR_hdp_gb_1", reconstuction.pdfs = FALSE)
+
+ddive("indel_set1", "NR_hdp_gb_50", reconstuction.pdfs = FALSE)
+ddive("indel_set2", "NR_hdp_gb_50", reconstuction.pdfs = FALSE)
 
 
 }
