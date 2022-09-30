@@ -414,7 +414,7 @@ cpu_fig_and_table <- function() {
            .before = "indel_set1") %>%
     mutate(`Average indel` = (indel_set1 + indel_set1) / 2, .keep = "all") -> tmp.table
     tmp.table <- tmp.table[c(2, 1, 5, 4, 3)  , ]
-    openxlsx::write.xlsx(outpath("table_3.xlsx"))
+    openxlsx::write.xlsx(tmp.table, outpath("table_3.xlsx"))
 }
 
 
