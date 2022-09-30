@@ -234,18 +234,25 @@ SBS35_detect_fig <- function(tt) {
 
 main_text_cpu <- function(sbs.or.indel, approaches.to.use) {
   # browser()
-  uu <- data.table::fread("output_for_paper/cpu_time_by_seed.csv")
+  uu <- data.table::fread(outpath("cpu_time_by_seed.csv"))
   data.sets <- paste0(sbs.or.indel, "_set", c(1, 2))
-  uu1 <- filter(uu, Noise_level == "Realistic" & Data_set %in% data.sets & Approach %in% approaches.to.use)
-  uu2 <- mutate(uu1, CPU.days = cpu_time / (60 * 60 * 24))
+  filter(uu, 
+         Noise_level == "Realistic" &
+           Data_set %in% data.sets & Approach %in% approaches.to.use) %>%
+    mutate(CPU.days = cpu_time / (60 * 60 * 24)) %>%
+    mutate(Noise_level = NULL, cpu.time = NULL) -> uu3
   # browser()
-  to.plot <- split(uu2, uu2$Approach)
+  to.plot <- split(uu3, uu3$Approach)
   to.use <- which(approaches.to.use %in% names(to.plot))
   approaches.to.use <- approaches.to.use[to.use]
   to.plot <- to.plot[approaches.to.use]
   
   
-  fwrite(uu2, outpath(paste0(sbs.or.indel, "_cpu.csv")))
+  # fwrite(uu3, outpath(paste0(sbs.or.indel, "_cpu.csv")))
+  
+  dplyr::group_by(uu3, Data_set, Approach) %>%
+    dplyr::summarise(mean_CPU_days = mean(CPU.days)) %>%
+    fwrite(outpath(paste0(sbs.or.indel, "_cpu_summary.csv")))
   
   to.plot2 <- lapply(to.plot, pull, CPU.days)
   
