@@ -147,10 +147,10 @@ cpu_time_all_level1_dirs <- function(level1_dirs = level1_dirs) {
   
   all_cpu_time <- do.call(rbind, all_out_list)
   
-  utils::write.csv(all_cpu_time, "output_for_paper/cpu_time_by_seed.csv", 
+  utils::write.csv(all_cpu_time, "output_for_paper/supplementary_table_s5.csv", 
                    row.names = F,
                    quote = F)
-  save(all_cpu_time, file = "output_for_paper/cpu_time_by_seed.Rdata")
+  save(all_cpu_time, file = "output_for_paper/supplementary_table_s5.Rdata")
   invisible(all_cpu_time)
 }
 

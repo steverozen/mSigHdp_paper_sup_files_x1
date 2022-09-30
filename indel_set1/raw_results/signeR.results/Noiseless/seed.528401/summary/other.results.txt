@@ -11,8 +11,8 @@ True positive reference signatures
 [1] "ID1"  "ID2"  "ID3"  "ID4"  "ID5"  "ID6"  "ID8"  "ID9"  "ID14"
 
 True positive extracted signatures
-[1] "signeR.1"  "signeR.10" "signeR.11" "signeR.2"  "signeR.3"  "signeR.6" 
-[7] "signeR.7"  "signeR.8"  "signeR.9" 
+[1] "signeR.1"  "signeR.10" "signeR.11" "signeR.2"  "signeR.3"  "signeR.6"  "signeR.7" 
+[8] "signeR.8"  "signeR.9" 
 
 False positive signatures
 [1] "signeR.4" "signeR.5"
