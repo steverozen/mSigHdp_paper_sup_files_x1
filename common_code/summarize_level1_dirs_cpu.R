@@ -95,6 +95,12 @@ cpu_time_level1_dirs <- function(a_folder) {
     message("Checking CPU times of tool_path=", tool_path)
     tool_name <- sub(".results", "", basename(tool_path), fixed = TRUE)
     
+    if (!tool_name %in% c("mSigHdp",
+                          "mSigHdp_ds_3k",
+                          "SigProfilerExtractor",
+                          "SignatureAnalyzer",
+                          "signeR")) next
+    
     dataset_paths <- list.files(tool_path, full.names = TRUE)
     for(dataset_path in dataset_paths){
       noise_level <- basename(dataset_path)
