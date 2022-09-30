@@ -11,14 +11,19 @@ if (basename(getwd()) != top.dir) {
 }
 
 # Install and load required packages ------------------------------------------
+if (!requireNamespace("openxlsx", quietly = TRUE)) {
+  install.packages("openxlsx")
+}
 if (!requireNamespace("tibble", quietly = TRUE)) {
   install.packages("tibble")
 }
 if (!requireNamespace("reticulate", quietly = TRUE)) {
   install.packages("reticulate")
 }
-require(tibble)
+require(openxlsx)
 require(reticulate)
+require(tibble)
+
 
 # Need to have pandas installed in your python environment
 #reticulate::py_install("pandas", ignore_installed = FALSE)
@@ -148,7 +153,8 @@ cpu_time_all_level1_dirs <- function(level1_dirs = level1_dirs) {
   utils::write.csv(all_cpu_time, "output_for_paper/supplementary_table_s5.csv", 
                    row.names = F,
                    quote = F)
-  
+  openxlsx::write.xlsx(all_cpu_time, 
+                       "output_for_paper/supplementary_table_s5.xlsx")
   save(all_cpu_time, file = "output_for_paper/supplementary_table_s5.Rdata")
   invisible(all_cpu_time)
 }
