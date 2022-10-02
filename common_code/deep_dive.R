@@ -34,13 +34,14 @@ ddive <-
                                     data.set            = data.set, 
                                     outdir              = outdir,
                                     mycat               = mycat,
-                                    reconstruction.pdfs = reconstuction.pdfs))
+                                    reconstruction.pdfs = reconstuction.pdfs,
+                                    approach            = approach))
   }
   fplist.catalog <- do.call(cbind, fplist)
   if (ncol(fplist.catalog) > 0 ) {
     ICAMS::PlotCatalogToPdf(
       fplist.catalog, 
-      file.path(outdir, paste0("FP-", data.set, "-", approach, ".pdf")))
+      file.path(outdir, paste0(data.set, "_", approach, "_all_FP.pdf")))
   }
   }
 
@@ -51,7 +52,8 @@ dd_one_seed <- function(dir,
                         outdir, 
                         reconstruct.with.all = FALSE,
                         mycat,
-                        reconstruction.pdfs) {
+                        reconstruction.pdfs,
+                        approach) {
 
 
   sdir <- file.path(dir, "summary")
@@ -91,7 +93,10 @@ dd_one_seed <- function(dir,
                if (reconstruction.pdfs) {
                  recon.file <- 
                    file.path(outdir, 
-                             paste0(my.seed, "_", gsub(" .*", "", x), ".pdf"))
+                             paste0(
+                               data.set, "_",
+                               approach, "_",
+                               my.seed, "_", gsub(" .*", "", x), ".pdf"))
                  ICAMS::PlotCatalogToPdf(to.plot, 
                                          recon.file, 
                                          ylim = c(0, max(to.plot[ , 1])))
