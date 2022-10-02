@@ -41,7 +41,11 @@ ddive <-
   if (ncol(fplist.catalog) > 0 ) {
     ICAMS::PlotCatalogToPdf(
       fplist.catalog, 
-      file.path(outdir, paste0(data.set, "_", approach, "_all_FP.pdf")))
+      file.path(outdir, paste0(data.set, "_", approach, "_all_FP.pdf")),
+      grid = FALSE,
+      xlabels = TRUE, 
+      upper = TRUE
+    )
   }
   }
 
@@ -99,7 +103,11 @@ dd_one_seed <- function(dir,
                                my.seed, "_", gsub(" .*", "", x), ".pdf"))
                  ICAMS::PlotCatalogToPdf(to.plot, 
                                          recon.file, 
-                                         ylim = c(0, max(to.plot[ , 1])))
+                                         ylim = c(0, max(to.plot[ , 1])),
+                                         grid = FALSE,
+                                         xlabels = FALSE,
+                                         upper = FALSE
+                 )
                }
              }
       )
