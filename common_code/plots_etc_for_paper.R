@@ -48,7 +48,8 @@ split_by_approach_and_pull <- function(vv, approaches.to.use) {
 four_beeswarms <- function(ww, main, col, pch, filename,
                            mfrow = c(3,1),
                            legend.fn = NULL,
-                           mar = c(9, 12, 4, 12) + 0.1) {
+                           mar = c(9, 12, 4, 12) + 0.1,
+                           override.labels = NULL) {
 
   grDevices::cairo_pdf(
     filename = outpath(filename),
@@ -56,7 +57,7 @@ four_beeswarms <- function(ww, main, col, pch, filename,
     onefile = TRUE)
   par(mfrow = mfrow, mar = mar)
 
-  beeswarm(x = ww$comp, las = 2, ylab = "Composite measure", 
+  beeswarm(x = ww$comp, las = 2, ylab = "Composite Measure", 
            pwpch = pch, pwcol = col, labels = "")
   if (!is.null(legend.fn)) {
     legend.fn()
@@ -68,8 +69,13 @@ four_beeswarms <- function(ww, main, col, pch, filename,
   beeswarm(x = ww$tpr, las = 2, ylab = "TPR", 
            pwpch = pch, pwcol = col, labels = "")
   
+  if (!is.null(override.labels)) {
   beeswarm(x = ww$sim, las = 2, ylab = "Cosine similarity", 
-           pwpch = pch, pwcol = col)
+           pwpch = pch, pwcol = col, labels = override.labels)
+  } else {
+    beeswarm(x = ww$sim, las = 2, ylab = "Cosine similarity", 
+             pwpch = pch, pwcol = col)
+  }
   
 
   grDevices::dev.off()
@@ -85,7 +91,8 @@ generic_4_beeswarm_fig <-
            legend.fn = NULL,
            col       = "black",
            mfrow = c(3, 1),
-           mar = c(8, 15, 4, 14) + 0.1) {
+           mar = c(8, 15, 4, 14) + 0.1,
+           override.labels = NULL) {
 
   set1 <- paste0(sbs.or.indel, "_set1")
   set2 <- paste0(sbs.or.indel, "_set2")
@@ -99,43 +106,51 @@ generic_4_beeswarm_fig <-
   pch <- ifelse(xx.data.set == set1, set1_pch, set2_pch)
   
   four_beeswarms(ww,
-                 col       = col,
-                 pch       = pch,
-                 filename  = paste0(file.name.prefix, sbs.or.indel, ".pdf"),
-                 legend.fn = legend.fn,
-                 mfrow     = mfrow,
-                 mar       = mar)
+                 col             = col,
+                 pch             = pch,
+                 filename        = paste0(file.name.prefix, sbs.or.indel, ".pdf"),
+                 legend.fn       = legend.fn,
+                 mfrow           = mfrow,
+                 mar             = mar,
+                 override.labels = override.labels)
 }
 
+
+downsample.approaches <- c("mSigHdp", 
+                           "mSigHdp_ds_10k", 
+                           "mSigHdp_ds_5k",
+                           "mSigHdp_ds_3k", 
+                           "mSigHdp_ds_1k")
+
+downsample.override <- c(
+  "None", "10,000", "5,000", "3,000", "1,000"
+)
+
+
 downsample_indel_fig <- function(tt) {
-  approaches <- c("mSigHdp", 
-                  "mSigHdp_ds_10k", 
-                  "mSigHdp_ds_5k",
-                  "mSigHdp_ds_3k", 
-                  "mSigHdp_ds_1k")
+  approaches <- downsample.approaches
   generic_4_beeswarm_fig(tt                = tt, 
                          approaches.to.use = approaches, 
                          sbs.or.indel      = "indel", 
                          file.name.prefix  = "downsampling_",
                          mfrow = c(3, 1),
                          mar = c(8, 14, 4, 14) + 0.1,
-                         legend.fn = function() { set1_set2_legend("indel")})
+                         legend.fn = function() { set1_set2_legend("indel")},
+                         override.labels = downsample.override)
   
 }
 
+
 downsample_SBS_fig <- function(tt) {
-  approaches <- c("mSigHdp",
-                  "mSigHdp_ds_10k",
-                  "mSigHdp_ds_5k",
-                  "mSigHdp_ds_3k",
-                  "mSigHdp_ds_1k"
-  )
+  approaches <- downsample.approaches
   generic_4_beeswarm_fig(tt, approaches, "SBS", "downsampling_",
                          mfrow = c(3, 1),
                          mar = c(8, 14, 4, 14) + 0.1,
-                         legend.fn = function() { set1_set2_legend("SBS")})
+                         legend.fn = function() { set1_set2_legend("SBS")},
+                         override.labels = downsample.override)
   
 }
+
 
 noise_level_fig <- function(tt, indel.or.sbs, approach) {
 
@@ -348,7 +363,7 @@ main_text_table <- function(tt, approaches.to.use, sbs.or.indel) {
   addWorksheet(wb, sbs.or.indel)
   
   startrow <- 1
-  writeData(wb, 1, "Composite measure", startCol = 3, startRow = startrow)
+  writeData(wb, 1, "Composite Measure", startCol = 3, startRow = startrow)
   mergeCells(wb, 1, cols = 3:4, rows = startrow) # Merge "Composite measure"
   
   datarow1 <- startrow + 2
@@ -445,7 +460,10 @@ all_figs_and_tables_this_file <- function(tt) {
     sbs.or.indel      = "SBS"
   )
   
-  main.text.indel.approaches <- # Important, this is the order in the main text figure; make sure it is sorted by the average composite measure in indel_set1 and indel_set2
+  main.text.indel.approaches <- # Important, this is the order in the 
+                                # main text figure; make sure it is 
+                                # sorted by the average composite measure
+                                # in indel_set1 and indel_set2
     c("mSigHdp",
       "NR_hdp_gb_50", 
       "NR_hdp_gb_1",
