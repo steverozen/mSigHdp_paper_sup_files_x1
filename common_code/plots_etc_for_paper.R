@@ -207,18 +207,15 @@ SBS35_detect_fig <- function(tt) {
   tt4 <- mutate(tt3, SBS35.found = SBS35.found)
   tt5 <- tt4[ , c("Data_set", "Approach", "Run", "SBS35.found", "FN.sigs")]
   group_by(tt5, Data_set, Approach) %>% 
-    summarise(avg.found = mean(SBS35.found), .groups = "drop") -> tt6
+    summarise(num.found = sum(SBS35.found), .groups = "drop") -> tt6
 
   tt7 <- mutate(tt6, spike.in.count = data.set.2.count[Data_set])
   to.plot <- split(tt7, tt7$spike.in.count)
   to.plot <- to.plot[as.character(spike.in.counts)]
-  to.plot2 <- lapply(to.plot, pull, avg.found)
+  to.plot2 <- lapply(to.plot, pull, num.found)
   to.plot2.app <- unlist(lapply(to.plot, pull, Approach))
   to.plot2.dset <- unlist(lapply(to.plot, pull, Data_set))
 
-  data.set.1066 <- grepl("_1066$", to.plot2.dset)
-  
-  col <- ifelse(data.set.1066, ds1.col, ds2.col)
   pch <- ifelse(to.plot2.app == "mSigHdp_ds_3k", msighdp.pch, sigpro.pch)
 
   grDevices::cairo_pdf(
@@ -228,17 +225,13 @@ SBS35_detect_fig <- function(tt) {
   par(mar = c(5.1, 5.1, 4.1, 2.1))
 
   beeswarm(x = to.plot2, las = 2, 
-           ylab = "Proportion of 5 runs\nin which SBS35 was detected", 
+           ylab = "Number of runs in each data\nset in which SBS35 was detected", 
            xlab = "Number of synthetic spectra containing SBS35",
-           pwpch = pch, pwcol = col, spacing = 1.6)
+           pwpch = pch, spacing = 1.6)
   legend(x        = "bottomright",
-         legend   = c("mSigHdp data set 1",
-                      "mSigHdp data set 2",
-                      "SigProfilerExtractor data set 1",
-                      "SigProfilerExtractor data set 2"),
-         col      = c(ds1.col, ds2.col, ds1.col, ds2.col),
-         text.col = c(ds1.col, ds2.col, ds1.col, ds2.col),
-         pch      = c(msighdp.pch, msighdp.pch, sigpro.pch, sigpro.pch),
+         legend   = c("mSigHdp",
+                      "SigProfilerExtractor"),
+         pch      = c(msighdp.pch, sigpro.pch),
          bty      = "n")
   dev.off()
   
