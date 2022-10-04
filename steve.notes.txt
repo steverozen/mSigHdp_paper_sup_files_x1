@@ -1,2 +1,5 @@
 rm */raw_results/*/*/seed.*/summary/sigAnalysis.RDa
 rm */raw_results/*/*/seed.*/summary/other.results.txt
+ls sens_SBS36_*_*/
+rm sens_SBS35_*_*/*.Rdata
+rm sens_SBS35_*_*/*.csv
