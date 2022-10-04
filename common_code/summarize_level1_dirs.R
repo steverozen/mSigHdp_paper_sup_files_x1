@@ -242,16 +242,23 @@ summarize_level1_dirs <- function(a.folder, delete.non.text = TRUE) {
           summary.path <- file.path(seedInUse,"summary")
           pdfs.to.delete <- 
             dir(summary.path, pattern = "\\.pdf", full.names = TRUE)
+          pdfs.to.delete <- c(pdfs.to.delete, 
+                              dir(summary.path, pattern = "\\.RDa", full.names = TRUE))
+          
+          pdfs.to.delete <- c(pdfs.to.delete, 
+                              dir(summary.path, pattern = "\\.txt", full.names = TRUE))
+          
+          
           if (0 != unlink(pdfs.to.delete)) {
             message("unlink of ", 
                     paste(pdfs.to.delete, collapse = " "),
                     " failed")
           }
-          also.delete <- 
-            dir(summary.path, 
-                pattern = "assessment.sessionInfo\\.txt", 
-                full.names= TRUE)
-          unlink(also.delete)
+          # also.delete <- 
+          #  dir(summary.path, 
+          #      pattern = "assessment.sessionInfo\\.txt", 
+          #      full.names= TRUE)
+          # unlink(also.delete)
         }
         
         tff <- extract_from_one_seed_summary(

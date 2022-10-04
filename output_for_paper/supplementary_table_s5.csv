@@ -49,11 +49,11 @@ SBS_set1,SignatureAnalyzer,seed.145879,4245677.486
 SBS_set1,SignatureAnalyzer,seed.200437,4232091.226
 SBS_set1,SignatureAnalyzer,seed.310111,4122607.682
 SBS_set1,SignatureAnalyzer,seed.528401,4233571.47
-SBS_set1,signeR,seed.1076753,3302646.823
-SBS_set1,signeR,seed.145879,3063782.962
-SBS_set1,signeR,seed.200437,3407795.45
-SBS_set1,signeR,seed.310111,3161017.217
-SBS_set1,signeR,seed.528401,4219074.275
+SBS_set1,signeR,seed.1076753,2470313.891
+SBS_set1,signeR,seed.145879,2256001.79
+SBS_set1,signeR,seed.200437,1989436.843
+SBS_set1,signeR,seed.310111,2404490.336
+SBS_set1,signeR,seed.528401,2387742.679
 SBS_set1,SigProfilerExtractor,seed.1076753,357324.52
 SBS_set1,SigProfilerExtractor,seed.145879,393020.23
 SBS_set1,SigProfilerExtractor,seed.200437,361345.89
@@ -77,7 +77,7 @@ SBS_set2,signeR,seed.528401,1442116.337
 SBS_set2,SigProfilerExtractor,seed.1076753,2102332.48
 SBS_set2,SigProfilerExtractor,seed.145879,2102739.36
 SBS_set2,SigProfilerExtractor,seed.200437,2107598.81
-SBS_set2,SigProfilerExtractor,seed.310111,2086986.95
+SBS_set2,SigProfilerExtractor,seed.310111,3846206.98
 SBS_set2,SigProfilerExtractor,seed.528401,2113732.91
 SBS_set1,mSigHdp_ds_3k,seed.1076753,1694469.415
 SBS_set1,mSigHdp_ds_3k,seed.145879,1319799.728

@@ -1,0 +1,2 @@
+rm */raw_results/*/*/seed.*/summary/sigAnalysis.RDa
+rm */raw_results/*/*/seed.*/summary/other.results.txt
