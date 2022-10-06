@@ -9,6 +9,8 @@ library(tibble)
 library(magrittr)
 library(dplyr)
 library(beeswarm)
+library(MASS)
+library(tidyr)
 library(openxlsx) # https://cran.r-project.org/web/packages/openxlsx/openxlsx.pdf
 
 
@@ -204,7 +206,7 @@ SBS35_detect_fig <- function(tt) {
                                        "SigProfilerExtractor"))
   FNs <- dplyr::pull(tt3, FN.sigs)
   SBS35.found <- unlist(lapply(FNs, function(zz) !any(grepl("SBS35", zz, fixed = TRUE))))
-  tt4 <- mutate(tt3, SBS35.found = SBS35.found)
+  tt4 <- dplyr::mutate(tt3, SBS35.found = SBS35.found)
   tt5 <- tt4[ , c("Data_set", "Approach", "Run", "SBS35.found", "FN.sigs")]
   group_by(tt5, Data_set, Approach) %>% 
     summarise(num.found = sum(SBS35.found), .groups = "drop") -> tt6
@@ -237,18 +239,19 @@ SBS35_detect_fig <- function(tt) {
            pwpch = pch, spacing = 1.6)
   legend.info <- legend(
     x         = 0,5,
-    y         = 7.5,
+    y         = 7.4,
     title     = "Legend",
     title.adj = 0,
-    legend    = c("mSigHdp on one of 2 datasets at each x position",
-                  "SigProfilerExtractor on one of 2 datasets at each x position"),
+    legend    = 
+      c("mSigHdp run on one of the 2 datasets at a given x-axis position",
+        "SigProfilerExtractor run on one of the 2 datasets at a given x-axis position"),
     pch       = c(msighdp.pch, sigpro.pch),
     bty       = "n",
     col       = "black",
     border   = "white",
     fill     = NULL,
     lty      = 0
-    )
+  )
   dev.off()
   
   print(legend.info)
