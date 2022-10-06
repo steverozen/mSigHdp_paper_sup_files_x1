@@ -1,0 +1,13 @@
+
+Call: rlm(formula = num.found ~ spike.in.count + Approach, data = sensitivity_data)
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-3.5879 -1.5215  0.3699  1.2394  2.7877 
+
+Coefficients:
+                             Value   Std. Error t value
+(Intercept)                   3.4152  0.6678     5.1145
+spike.in.count                0.0345  0.0115     2.9972
+ApproachSigProfilerExtractor -2.2391  0.7421    -3.0172
+
+Residual standard error: 2.047 on 21 degrees of freedom

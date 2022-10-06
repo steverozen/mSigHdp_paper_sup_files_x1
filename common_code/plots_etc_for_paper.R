@@ -209,8 +209,15 @@ SBS35_detect_fig <- function(tt) {
   group_by(tt5, Data_set, Approach) %>% 
     summarise(num.found = sum(SBS35.found), .groups = "drop") -> tt6
 
-  tt7 <- mutate(tt6, spike.in.count = data.set.2.count[Data_set])
-  to.plot <- split(tt7, tt7$spike.in.count)
+  sensitivity_data <- mutate(tt6, spike.in.count = data.set.2.count[Data_set])
+  sensitivity_stats <- 
+    MASS::rlm(formula = num.found ~ spike.in.count + Approach,
+              data = sensitivity_data)
+  capture.output(summary(sensitivity_stats), 
+                 file = outpath("sensitivity_stats.txt"))
+  save(sensitivity_stats, sensitivity_data, file = "sensitivity_stats.Rdata")
+  
+  to.plot <- split(sensitivity_data, sensitivity_data$spike.in.count)
   to.plot <- to.plot[as.character(spike.in.counts)]
   to.plot2 <- lapply(to.plot, pull, num.found)
   to.plot2.app <- unlist(lapply(to.plot, pull, Approach))
@@ -222,18 +229,29 @@ SBS35_detect_fig <- function(tt) {
     filename = outpath("sensitivity.pdf"),
     height = 4, 
     onefile = TRUE)
-  par(mar = c(5.1, 5.1, 4.1, 2.1))
+  par(mar = c(5.1, 5.1, 4.8, 2.1), xpd = TRUE)
 
   beeswarm(x = to.plot2, las = 2, 
            ylab = "Number of runs in each data\nset in which SBS35 was detected", 
            xlab = "Number of synthetic spectra containing SBS35",
            pwpch = pch, spacing = 1.6)
-  legend(x        = "bottomright",
-         legend   = c("mSigHdp",
-                      "SigProfilerExtractor"),
-         pch      = c(msighdp.pch, sigpro.pch),
-         bty      = "n")
+  legend.info <- legend(
+    x         = 0,5,
+    y         = 7.5,
+    title     = "Legend",
+    title.adj = 0,
+    legend    = c("mSigHdp on one of 2 datasets at each x position",
+                  "SigProfilerExtractor on one of 2 datasets at each x position"),
+    pch       = c(msighdp.pch, sigpro.pch),
+    bty       = "n",
+    col       = "black",
+    border   = "white",
+    fill     = NULL,
+    lty      = 0
+    )
   dev.off()
+  
+  print(legend.info)
   
   invisible(to.plot)
   
