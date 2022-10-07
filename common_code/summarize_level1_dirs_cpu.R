@@ -53,6 +53,7 @@ cpu_time_from_one_seed <-
   function(run_directory_path, SP_flag = FALSE) {
   SP_flag <- FALSE
   if (grepl("SigProfilerExtractor", run_directory_path)) SP_flag <- TRUE
+  if (grepl("SP_narrower_range", run_directory_path)) SP_flag <- TRUE
   
   if(SP_flag == TRUE) {
     # Load profiling_info object from python pickle file
@@ -102,6 +103,7 @@ cpu_time_level1_dirs <- function(a_folder) {
     if (!tool_name %in% c("mSigHdp",
                           "mSigHdp_ds_3k",
                           "SigProfilerExtractor",
+                          "SP_narrower_range",
                           "SignatureAnalyzer",
                           "signeR")) next
     

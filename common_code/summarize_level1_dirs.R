@@ -55,8 +55,8 @@ move_sigpro_files_one_dir <- function(a_dir) {
   
   # A full directory path, e.g "indel_set1/raw_results/SigProfilerExtractor.results"
   analysis_names <- file.path(a_dir, "raw_results", 
-                              paste0(c("SigProfilerExtractor", "SP_default"), 
-                                     ".results"))
+                              paste0(c("SigProfilerExtractor", "SP_default", 
+                                       "SP_narrower_range"), ".results"))
   for (analysis_name in analysis_names) {
     if(!dir.exists(analysis_name)) {
       message("\n=====================")
@@ -324,16 +324,49 @@ summarize_all_level1_dirs <- function()  {
   all.results.fixed <- 
     dplyr::mutate(all.results, 
                   FP = dplyr::if_else(Approach %in% NR.approach, FP - 1, FP))
-  
   foox <- dplyr::filter(all.results, !(Approach %in% NR.approach))
   foo2x <- dplyr::filter(all.results.fixed, !(Approach %in% NR.approach))
   stopifnot(all.equal(foox, foo2x)) # paranoid checking
-                         
-  readr::write_csv(all.results.fixed, 
+  
+  # Workaround for table export:
+  # change 13th and 14th column of the tibble to character
+  all.results.for.export <- all.results.fixed
+  N <- nrow(all.results.fixed)
+  # Merge multiple character strings into one string
+  FP.sigs.chars <- character(N)
+  for (index in 1:N){
+    item1 <- all.results.fixed$FP.sigs[[index]]
+    if (length(item1) == 0) {
+      item_final <- "character(0)"
+    } else {
+      item2 <- paste(list(item1))
+      item_final <- gsub("\"", "'", item2)
+    }
+    FP.sigs.chars[index] <- item_final
+  } 
+  all.results.for.export$FP.sigs <- FP.sigs.chars
+  # Merge multiple character strings into one string
+  FN.sigs.chars <- character(N)
+  for (index in 1:N){
+    item1 <- all.results.fixed$FN.sigs[[index]]
+    if (length(item1) == 0) {
+      item_final <- "character(0)"
+    } else {
+      item2 <- paste(list(item1))
+      item_final <- gsub("\"", "'", item2)
+    }
+    FN.sigs.chars[index] <- item_final
+  } 
+  all.results.for.export$FN.sigs <- FN.sigs.chars
+  
+  
+  
+
+  if(!dir.exists("output_for_paper")) dir.create("output_for_paper")
+  readr::write_csv(all.results.for.export, 
                    "output_for_paper/supplementary_table_s4.csv")
   openxlsx::write.xlsx(all.results.fixed, 
-                       "output_for_paper/supplementary_table_s4.xlsx")
-  # Create Excel file
+                         "output_for_paper/supplementary_table_s4.xlsx")
   save(all.results.fixed, 
        file = "output_for_paper/supplementary_table_s4.Rdata")
   invisible(all.results.fixed)
