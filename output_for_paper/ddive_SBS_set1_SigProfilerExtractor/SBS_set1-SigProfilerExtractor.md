@@ -6,13 +6,11 @@
 
 #### False pos sigs:
 
-SBS96E (False Positive) (SBS5 0.88)
+SBS96E (False Positive) (SBS5 0.894)
 
 #### False neg sigs:
 
 SBS5
-
-SBS12
 
 SBS16
 
@@ -28,15 +26,13 @@ SBS41
 #### Reconstructed with false negative signatures:
 
 
-Reconstructing SBS96E (False Positive) (SBS5 0.88)
+Reconstructing SBS96E (False Positive) (SBS5 0.894)
 
-SBS5 0.4891531
+SBS5 0.7816854
 
-SBS12 0.361612
+SBS16 0.2183146
 
-SBS16 0.1492349
-
-Cosine similarity = 0.973
+Cosine similarity = 0.932
 
 
 
@@ -45,13 +41,19 @@ Cosine similarity = 0.973
 
 #### False pos sigs:
 
-SBS96E (False Positive) (SBS5 0.897)
+SBS96E (False Positive) (SBS40 0.898)
+
+SBS96F (False Positive) (SBS5 0.888)
 
 #### False neg sigs:
 
 SBS5
 
+SBS12
+
 SBS16
+
+SBS22
 
 SBS29
 
@@ -59,19 +61,34 @@ SBS35
 
 SBS38
 
+SBS40
+
 SBS41
 
 
 #### Reconstructed with false negative signatures:
 
 
-Reconstructing SBS96E (False Positive) (SBS5 0.897)
+Reconstructing SBS96E (False Positive) (SBS40 0.898)
 
-SBS5 0.7851325
+SBS5 0.3502247
 
-SBS16 0.2148675
+SBS40 0.6497754
 
-Cosine similarity = 0.933
+Cosine similarity = 0.919
+
+
+
+
+Reconstructing SBS96F (False Positive) (SBS5 0.888)
+
+SBS5 0.5222196
+
+SBS12 0.3147559
+
+SBS16 0.1630245
+
+Cosine similarity = 0.969
 
 
 
@@ -80,13 +97,21 @@ Cosine similarity = 0.933
 
 #### False pos sigs:
 
-SBS96E (False Positive) (SBS5 0.892)
+SBS96A (False Positive) (SBS7a 0.898)
+
+SBS96E (False Positive) (SBS5 0.889)
 
 #### False neg sigs:
 
 SBS5
 
+SBS7a
+
+SBS12
+
 SBS16
+
+SBS22
 
 SBS29
 
@@ -100,13 +125,24 @@ SBS41
 #### Reconstructed with false negative signatures:
 
 
-Reconstructing SBS96E (False Positive) (SBS5 0.892)
+Reconstructing SBS96A (False Positive) (SBS7a 0.898)
 
-SBS5 0.7783731
+SBS7a 1
 
-SBS16 0.221627
+Cosine similarity = 0.898
 
-Cosine similarity = 0.93
+
+
+
+Reconstructing SBS96E (False Positive) (SBS5 0.889)
+
+SBS5 0.5284266
+
+SBS12 0.3056058
+
+SBS16 0.1659676
+
+Cosine similarity = 0.969
 
 
 
@@ -115,42 +151,7 @@ Cosine similarity = 0.93
 
 #### False pos sigs:
 
-SBS96E (False Positive) (SBS5 0.896)
-
-#### False neg sigs:
-
-SBS5
-
-SBS16
-
-SBS29
-
-SBS35
-
-SBS38
-
-SBS41
-
-
-#### Reconstructed with false negative signatures:
-
-
-Reconstructing SBS96E (False Positive) (SBS5 0.896)
-
-SBS5 0.7770844
-
-SBS16 0.2229155
-
-Cosine similarity = 0.935
-
-
-
-
-### 1076753
-
-#### False pos sigs:
-
-SBS96E (False Positive) (SBS12 0.881)
+SBS96E (False Positive) (SBS12 0.878)
 
 #### False neg sigs:
 
@@ -172,15 +173,34 @@ SBS41
 #### Reconstructed with false negative signatures:
 
 
-Reconstructing SBS96E (False Positive) (SBS12 0.881)
+Reconstructing SBS96E (False Positive) (SBS12 0.878)
 
-SBS5 0.4761808
+SBS5 0.4793919
 
-SBS12 0.3817386
+SBS12 0.3758974
 
-SBS16 0.1420806
+SBS16 0.1447107
 
-Cosine similarity = 0.975
+Cosine similarity = 0.974
 
 
+
+
+### 1076753
+
+#### False pos sigs:
+
+
+
+#### False neg sigs:
+
+SBS16
+
+SBS29
+
+SBS35
+
+SBS38
+
+SBS41
 
