@@ -345,6 +345,15 @@ main_text_table <- function(tt, approaches.to.use, sbs.or.indel) {
                     subset = Approach %in% c(best, "SigProfilerExtractor"))
   message(sbs.or.indel, " Wilcoxon rank-sum test")
   print(wt)
+  
+  if (sbs.or.indel == "SBS") {
+    wt2 <- wilcox.test(Composite ~ Approach, 
+                      data = t2, 
+                      subset = Approach %in% c(best, "mSigHdp"))
+    message(sbs.or.indel, " Wilcoxon rank-sum test")
+    print(wt2)
+    
+  }
   dplyr::group_by(t2, Approach) %>%
     dplyr::summarise(mean_comp = mean(Composite),
                      sd_comp   = sd(Composite),
@@ -421,6 +430,11 @@ main_text_table <- function(tt, approaches.to.use, sbs.or.indel) {
   writeData(wb, 1, startCol = 1, startRow = last.datarow + 2,
             paste0("Wilcoxon rank-sum test ", best, " vs ", "SigProfilerExtractor p = ",
             format(wt$p.value, scientific = TRUE, digits = 4)))
+  if (sbs.or.indel == "SBS") {
+    writeData(wb, 1, startCol = 1, startRow = last.datarow + 3,
+              paste0("Wilcoxon rank-sum test ", best, " vs ", "mSigHdp p = ",
+                     format(wt2$p.value, scientific = TRUE, digits = 4)))
+  }
 
   saveWorkbook(wb, outpath(paste0(sbs.or.indel, ".table.xlsx")), overwrite = TRUE)
   
