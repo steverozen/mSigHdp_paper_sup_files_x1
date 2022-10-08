@@ -12,6 +12,7 @@ library(beeswarm)
 library(MASS)
 library(tidyr)
 library(openxlsx) # https://cran.r-project.org/web/packages/openxlsx/openxlsx.pdf
+# library(robust)
 
 
 # Utility functions -----------------------------------------------------------
@@ -186,7 +187,8 @@ noise_level_fig <- function(tt, indel.or.sbs, approach) {
 
 }
 
-SBS35_detect_fig <- function(tt) {
+
+SBS35_detect <- function(tt) {
 
   sigpro.pch  <- "S"
   msighdp.pch <- "M"
@@ -208,16 +210,32 @@ SBS35_detect_fig <- function(tt) {
   SBS35.found <- unlist(lapply(FNs, function(zz) !any(grepl("SBS35", zz, fixed = TRUE))))
   tt4 <- dplyr::mutate(tt3, SBS35.found = SBS35.found)
   tt5 <- tt4[ , c("Data_set", "Approach", "Run", "SBS35.found", "FN.sigs")]
-  group_by(tt5, Data_set, Approach) %>% 
-    summarise(num.found = sum(SBS35.found), .groups = "drop") -> tt6
+  dplyr::group_by(tt5, Data_set, Approach) %>% 
+    dplyr::summarise(num.found = sum(SBS35.found), .groups = "drop") -> tt6
 
   sensitivity_data <- mutate(tt6, spike.in.count = data.set.2.count[Data_set])
-  sensitivity_stats <- 
+  
+  # rrx <- robust::lmRob(formula = num.found ~ spike.in.count + as.factor(Approach),
+  #                      data = sensitivity_data)
+  
+  df <- nrow(sensitivity_data) - 3
+  sens_stats_r <- 
     MASS::rlm(formula = num.found ~ spike.in.count + Approach,
               data = sensitivity_data)
-  capture.output(summary(sensitivity_stats), 
+  sens_stats_rs <- summary(sens_stats_r)
+  sens_stats_rp <- 2*pt(-abs(sens_stats_rs$coefficients[, 3]), df = df)
+  
+  sens_stats_l <-
+    lm (formula = num.found ~ spike.in.count + Approach, 
+        data = sensitivity_data)
+  sens_stats_ls <- summary(sens_stats_l)
+  sens_stats_lp <- 2*pt(-abs(sens_stats_ls$coefficients[ , 3]), df = df)
+  
+  capture.output(df, sens_stats_rs, sens_stats_rp,
+                 sens_stats_ls, sens_stats_lp,
                  file = outpath("sensitivity_stats.txt"))
-  save(sensitivity_stats, sensitivity_data, file = "sensitivity_stats.Rdata")
+  
+  save(sens_stats_r, sens_stats_l, sensitivity_data, file = "sensitivity_stats.Rdata")
   
   to.plot <- split(sensitivity_data, sensitivity_data$spike.in.count)
   to.plot <- to.plot[as.character(spike.in.counts)]
@@ -254,10 +272,7 @@ SBS35_detect_fig <- function(tt) {
   )
   dev.off()
   
-  print(legend.info)
-  
   invisible(to.plot)
-  
 }
 
 
@@ -509,7 +524,7 @@ all_figs_and_tables_this_file <- function(tt) {
                                          "SignatureAnalyzer"))
   downsample_indel_fig(tt)
   downsample_SBS_fig(tt)
-  SBS35_detect_fig(tt)
+  SBS35_detect(tt)
   
   cpu_fig_and_table()
 }  
