@@ -1,6 +1,6 @@
 [1] 21
 
-Call: rlm(formula = num.found ~ spike.in.count + Approach, data = sensitivity_data)
+Call: rlm(formula = num.found ~ spike.in.count + Approach, data = sbs35_detect)
 Residuals:
     Min      1Q  Median      3Q     Max 
 -3.5879 -1.5215  0.3699  1.2394  2.7877 
@@ -16,7 +16,7 @@ Residual standard error: 2.047 on 21 degrees of freedom
                 4.576427e-05                 6.866125e-03                 6.559301e-03 
 
 Call:
-lm(formula = num.found ~ spike.in.count + Approach, data = sensitivity_data)
+lm(formula = num.found ~ spike.in.count + Approach, data = sbs35_detect)
 
 Residuals:
     Min      1Q  Median      3Q     Max 

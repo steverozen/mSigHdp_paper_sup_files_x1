@@ -213,31 +213,40 @@ SBS35_detect <- function(tt) {
   dplyr::group_by(tt5, Data_set, Approach) %>% 
     dplyr::summarise(num.found = sum(SBS35.found), .groups = "drop") -> tt6
 
-  sensitivity_data <- mutate(tt6, spike.in.count = data.set.2.count[Data_set])
+  sbs35_detect <- mutate(tt6, spike.in.count = data.set.2.count[Data_set])
   
   # rrx <- robust::lmRob(formula = num.found ~ spike.in.count + as.factor(Approach),
-  #                      data = sensitivity_data)
+  #                      data = sbs35_detect)
   
-  df <- nrow(sensitivity_data) - 3
+  data.table::fwrite(sbs35_detect, file = outpath("sbs35_detect_data.csv"))
+  
+  df <- nrow(sbs35_detect) - 3
   sens_stats_r <- 
     MASS::rlm(formula = num.found ~ spike.in.count + Approach,
-              data = sensitivity_data)
+              data = sbs35_detect)
   sens_stats_rs <- summary(sens_stats_r)
+  sens_coef_r <- sens_stats_rs$coefficients
   sens_stats_rp <- 2*pt(-abs(sens_stats_rs$coefficients[, 3]), df = df)
-  
+  sbs35_detect_coef <- cbind(sens_coef_r, p = sens_stats_rp)
+  sbs35_detect_coef <- data.frame(sbs35_detect_coef)
+  sbs35_detect_coef <- cbind(variable = rownames(sbs35_detect_coef), sbs35_detect_coef)
+  openxlsx::write.xlsx(sbs35_detect_coef,
+                       file = outpath("sbs35_detect_coef.xlsx"))
+    
   sens_stats_l <-
     lm (formula = num.found ~ spike.in.count + Approach, 
-        data = sensitivity_data)
+        data = sbs35_detect)
   sens_stats_ls <- summary(sens_stats_l)
   sens_stats_lp <- 2*pt(-abs(sens_stats_ls$coefficients[ , 3]), df = df)
   
   capture.output(df, sens_stats_rs, sens_stats_rp,
                  sens_stats_ls, sens_stats_lp,
-                 file = outpath("sensitivity_stats.txt"))
+                 file = outpath("sbs35_detect_stats.txt"))
   
-  save(sens_stats_r, sens_stats_l, sensitivity_data, file = "sensitivity_stats.Rdata")
+  save(sens_stats_r, sens_stats_l, sbs35_detect, 
+       file = outpath("sbs35_detect.Rdata"))
   
-  to.plot <- split(sensitivity_data, sensitivity_data$spike.in.count)
+  to.plot <- split(sbs35_detect, sbs35_detect$spike.in.count)
   to.plot <- to.plot[as.character(spike.in.counts)]
   to.plot2 <- lapply(to.plot, pull, num.found)
   to.plot2.app <- unlist(lapply(to.plot, pull, Approach))
@@ -246,7 +255,7 @@ SBS35_detect <- function(tt) {
   pch <- ifelse(to.plot2.app == "mSigHdp_ds_3k", msighdp.pch, sigpro.pch)
 
   grDevices::cairo_pdf(
-    filename = outpath("sensitivity.pdf"),
+    filename = outpath("sbs35_detect.pdf"),
     height = 4, 
     onefile = TRUE)
   par(mar = c(5.1, 5.1, 4.8, 2.1), xpd = TRUE)

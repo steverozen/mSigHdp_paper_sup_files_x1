@@ -5,6 +5,10 @@ library(tidyr)
 library(MASS)
 
 
+outpath <- function(filename) {
+  file.path("output_for_paper", filename)
+}
+
 # Ratio of number of mutations in downsample(SBS_set2) / downsample(SBS_set1) 
 
 sset1 <- ICAMS::ReadCatalog("SBS_set1/input/Realistic/ground.truth.syn.catalog.csv")
@@ -25,16 +29,22 @@ s7x <- tidyr::pivot_longer(s7, cols = c("mSigHdp", "SigProfilerExtractor"), name
 # s7x <- dplyr::mutate(s7x, found_in_all = num_seeds_with_miss == 0)
 s7x.indel <- dplyr::filter(s7x, grepl("indel", dataset_name))
 s7x.sbs <- dplyr::filter(s7x, grepl("SBS", dataset_name))
-s7x.sbs <- dplyr::mutate(s7x.sbs, num_seeds_with_hit = 5 - num_seeds_with_miss)
+sup_table_s7_sbs_for_rlm <- dplyr::mutate(s7x.sbs, num_seeds_with_hit = 5 - num_seeds_with_miss)
+data.table::fwrite(sup_table_s7_sbs_for_rlm, outpath("sup_table_s7_sbs_for_rlm.csv"))
 
-slm <- lm(num_seeds_with_hit ~ sigs_prev_prop + Approach + dataset_name, data = s7x.sbs)
+slm <- lm(num_seeds_with_hit ~ sigs_prev_prop + Approach + dataset_name, data = sup_table_s7_sbs_for_rlm)
 lsm <- summary(slm)$coefficients
 lsmt <- lsm[ , 3]
-2*pt(-abs(lmst), df = 106)
+2*pt(-abs(lmst), df = nrow(sup_table_s7_sbs_for_rlm) - 4)
 
-sbsr <- MASS::rlm(num_seeds_with_hit ~ sigs_prev_prop + Approach + dataset_name, data = s7x.sbs)
-rm <- summary(sbsr)
-rmt <- rm$coefficients[ , 3]
-2*pt(-abs(rmt), df = 106)
+sbsr <- MASS::rlm(num_seeds_with_hit ~ sigs_prev_prop + Approach + dataset_name, data = sup_table_s7_sbs_for_rlm)
+rm   <- summary(sbsr)
+rmc  <- rm$coefficients
+rmp  <- 2*pt(-abs(rmc[ , 3]), df = nrow(sup_table_s7_sbs_for_rlm) - 4)
+coef <- data.frame(cbind(rmc, p = rmp))
+sup_table_s7_coef <- cbind(Variable = rownames(coef), coef)
+openxlsx::write.xlsx(sup_table_s7_coef, file = outpath("sup_table_s7_coef.xlsx"))
 
-rr <- robust::lmRob(num_seeds_with_hit ~ sigs_prev_prop + as.factor(Approach) + as.factor(dataset_name), data = s7x.sbs)
+
+
+rr <- robust::lmRob(num_seeds_with_hit ~ sigs_prev_prop + as.factor(Approach) + as.factor(dataset_name), data = sup_table_s7_sbs_for_rlm)
