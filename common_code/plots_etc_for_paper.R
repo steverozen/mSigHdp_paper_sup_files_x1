@@ -454,10 +454,10 @@ cpu_fig_and_table <- function() {
   
   grDevices::cairo_pdf(
     filename = outpath("CPU_time.pdf"),
-    height   = 14,
+    height   = 11,
     width    = 7, 
     onefile = TRUE)
-  par(mfrow = c(3, 1), mar = c(9, 12, 4, 12) + 0.1)
+  par(mfrow = c(2, 1), mar = c(9, 8, 4, 8) + 0.1)
   
   sbs.cpu   <- main_text_cpu("SBS",   c("mSigHdp_ds_3k",
                                         "mSigHdp",
