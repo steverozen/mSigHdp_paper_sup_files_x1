@@ -11,9 +11,7 @@ See https://github.com/steverozen/mSigHdp and https://github.com/steverozen/hdpx
 The main top-level folders are common_code, output_for_paper, and multiple folders, one for each dataset, e.g.  indel_set1.
 (The …down_samp folders use the corresponding full datasets, e.g. indel_set1_down_samp uses the same data as indel_set1.)
 
-#### Data set directories
-
-#### Data set directories at the top-level:
+#### Data set directories at the top-level
 - indel_set1, indel_set2,
    `SBS_set1` and `SBS_set2` are the main synthetic data sets as documented in the paper.
 
@@ -22,14 +20,15 @@ The main top-level folders are common_code, output_for_paper, and multiple folde
    results of running mSigHdp with different downsampling thresholds
    on the synthetic data in indel_set1, indel_set2, SBS_set1, and SBS_set2.
    
-- sens_SBS35_<NN>_728 and sens_SBS35_<NN>_1066 Data with SBS35
-  "spiked in"; see Supplementary Figure S10.
+- sens_SBS35_*x*_728 and sens_SBS35_*x*_1066 Data with SBS35
+  "spiked into" *x* tumors"; see Supplementary Figure S10.
 
-# Structure of dataset directories, see 
-<embed src="FOLDER-ORGANIZATION.pdf" type="application/pdf">
-```
- 
- ### License
+#### Structure of one dataset directory
+This is the organization of a top-level data folder, using indel_set1 as an example. The …down_samp folders do not have the input subdirectory. They use the corresponding full datasets, e.g. indel_set1_down_samp uses the same data as indel_set1.
+
+![](dataset_directory_organization.png "Dataset directory organization"){width=50%}
+
+### License
  
  Copyright (C) 2022 Steven G Rozen, Mo Liu, and Yang Wu
 
