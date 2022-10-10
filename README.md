@@ -26,7 +26,7 @@ The main top-level folders are common_code, output_for_paper, and multiple folde
 #### Structure of one dataset directory
 This is the organization of a top-level data folder, using indel_set1 as an example. The …down_samp folders do not have the input subdirectory. They use the corresponding full datasets, e.g. indel_set1_down_samp uses the same data as indel_set1.
 
-![](dataset_directory_organization.png "Dataset directory organization"){width=50%}
+![](dataset_directory_organization.png "Dataset directory organization")
 
 ### License
  
