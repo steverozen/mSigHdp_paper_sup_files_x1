@@ -1,3 +1,18 @@
+# Function and script for detailed analysis of
+# false positives and negatives, including
+# possible reconstruction of the false positives
+# from other signatures.
+
+# Please run this script from the top directory
+top.dir <- "mSigHdp_paper_sup_files_x1"
+if (basename(getwd()) != top.dir) {
+  stop("Please run from top level directory, ", top.dir)
+}
+
+library(ICAMS)
+library(mSigTools)
+
+
 source("common_code/all.seeds.R")
 
 
@@ -161,41 +176,6 @@ reconstruct1 <- function(target.sig, sig.universe, max.set.size = 3, cat.fn) {
   return(to.plot)
 }
 
-if (FALSE) {
-
-ddive("SBS_set1", "SigProfilerExtractor")
-ddive("SBS_set2", "SigProfilerExtractor")
-ddive("SBS_set1", "mSigHdp_ds_3k")
-ddive("SBS_set2", "mSigHdp_ds_3k")
-
-ddive("indel_set1", "mSigHdp")
-ddive("indel_set2", "mSigHdp")
 ddive("indel_set1", "SigProfilerExtractor")
-ddive("indel_set2", "SigProfilerExtractor")
-
-ddive("SBS_set1", "mSigHdp", reconstuction.pdfs = FALSE) # Too many!!!
-ddive("SBS_set2", "mSigHdp", reconstuction.pdfs = FALSE)
-
-ddive("sens_SBS35_5_1066", "SigProfilerExtractor")
-ddive("sens_SBS35_5_728", "SigProfilerExtractor")
-ddive("sens_SBS35_10_1066", "SigProfilerExtractor")
-ddive("sens_SBS35_10_728", "SigProfilerExtractor")
-ddive("sens_SBS35_20_1066", "SigProfilerExtractor")
-ddive("sens_SBS35_20_728", "SigProfilerExtractor")
-ddive("SBS_set1", "SP_KmSigHdp")
-
-ddive("SBS_set1", "NR_hdp_gb_1", reconstuction.pdfs = FALSE) # Too many!!!
-ddive("SBS_set2", "NR_hdp_gb_1", reconstuction.pdfs = FALSE)
-
-ddive("SBS_set1", "NR_hdp_gb_20", reconstuction.pdfs = FALSE)
-ddive("SBS_set2", "NR_hdp_gb_20", reconstuction.pdfs = FALSE)
-
-ddive("indel_set1", "NR_hdp_gb_1", reconstuction.pdfs = FALSE) # Too many!!!
-ddive("indel_set2", "NR_hdp_gb_1", reconstuction.pdfs = FALSE)
-
-ddive("indel_set1", "NR_hdp_gb_50", reconstuction.pdfs = FALSE)
-ddive("indel_set2", "NR_hdp_gb_50", reconstuction.pdfs = FALSE)
-
-
-}
-  
+ddive("SBS_set1",   "SigProfilerExtractor")
+ddive("SBS_set2",   "mSigHdp_ds_3k")
