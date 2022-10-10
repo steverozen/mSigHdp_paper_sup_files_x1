@@ -1,9 +1,9 @@
-This repository contains supplementary files - synthetic data, code, and analytically results - 
-for the manuscript
+This repository contains supplementary files - synthetic data, code, and analytical results - 
+for the paper
 
 > Mo Liu, Yang Wu, Nanhai Jiang, Arnoud Boot, Steven G. Rozen,
 > ***mSigHdp: hierarchical Dirichlet process mixture modeling for mutational signature discovery***, 
-> https://www.biorxiv.org/content/10.1101/2022.01.31.478587v1
+
 
 See https://github.com/steverozen/mSigHdp and https://github.com/steverozen/hdpx for mSigHdp.
 
