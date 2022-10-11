@@ -138,7 +138,8 @@ downsample_indel_fig <- function(tt) {
                          file.name.prefix  = "downsampling_",
                          mfrow = c(3, 1),
                          mar = c(8, 14, 4, 14) + 0.1,
-                         legend.fn = function() { set1_set2_legend("indel")},
+                         legend.fn = function() { 
+                           set1_set2_legend("indel")},
                          override.labels = downsample.override)
   
 }
@@ -149,7 +150,9 @@ downsample_SBS_fig <- function(tt) {
   generic_4_beeswarm_fig(tt, approaches, "SBS", "downsampling_",
                          mfrow = c(3, 1),
                          mar = c(8, 14, 4, 14) + 0.1,
-                         legend.fn = function() { set1_set2_legend("SBS")},
+                         legend.fn = function() { 
+                           set1_set2_legend("SBS", "topleft")
+                         },
                          override.labels = downsample.override)
   
 }
@@ -325,8 +328,8 @@ main_text_cpu <- function(sbs.or.indel, approaches.to.use) {
   invisible(return.value)
 }
 
-set1_set2_legend <- function(sbs.or.indel) {
-  legend(x = "bottomleft",
+set1_set2_legend <- function(sbs.or.indel, pos = "bottomleft") {
+  legend(x = pos,
          legend = paste0(sbs.or.indel, "_set", 1:2),
          col    = c("black",  "black"),
          pch    = c(16,     17),
