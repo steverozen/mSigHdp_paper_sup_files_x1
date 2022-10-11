@@ -555,6 +555,7 @@ all_figs_and_tables_this_file <- function(tt) {
 
 
 # Calling plotting functions --------------------------------------------------
-load(outpath("supplementary_table_s4.Rdata")) # Load object `all.results.fixed`
-all_figs_and_tables_this_file(all.results.fixed)
-# computed in summarize_level1_dirs.R
+load(outpath("supplementary_table_s4.Rdata")) 
+# Load supplementary_table_s4 computed in summarize_level1_dirs.R
+all_figs_and_tables_this_file(supplementary_table_s4)
+# 
