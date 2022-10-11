@@ -177,5 +177,7 @@ reconstruct1 <- function(target.sig, sig.universe, max.set.size = 3, cat.fn) {
 }
 
 ddive("indel_set1", "SigProfilerExtractor")
+ddive("indel_set1", "mSigHdp")
+ddive("indel_set2", "mSigHdp")
 ddive("SBS_set1",   "SigProfilerExtractor")
 ddive("SBS_set2",   "mSigHdp_ds_3k")
