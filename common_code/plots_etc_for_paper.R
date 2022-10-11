@@ -479,7 +479,8 @@ cpu_fig_and_table <- function() {
     mutate(`Average SBS` = (SBS_set1 + SBS_set2) / 2, 
            .keep = "all", 
            .before = "indel_set1") %>%
-    mutate(`Average indel` = (indel_set1 + indel_set1) / 2, .keep = "all") -> tmp.table
+    mutate(`Average indel` = (indel_set1 + indel_set2) / 2,
+           .keep = "all") -> tmp.table
     tmp.table <- tmp.table[c(2, 1, 5, 4, 3)  , ]
     openxlsx::write.xlsx(tmp.table, outpath("table_3.xlsx"))
 }
