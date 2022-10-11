@@ -35,7 +35,7 @@ data.table::fwrite(sup_table_s7_sbs_for_rlm, outpath("sup_table_s7_sbs_for_rlm.c
 slm <- lm(num_seeds_with_hit ~ sigs_prev_prop + Approach + dataset_name, data = sup_table_s7_sbs_for_rlm)
 lsm <- summary(slm)$coefficients
 lsmt <- lsm[ , 3]
-2*pt(-abs(lmst), df = nrow(sup_table_s7_sbs_for_rlm) - 4)
+2*pt(-abs(lsmt), df = nrow(sup_table_s7_sbs_for_rlm) - 4)
 
 sbsr <- MASS::rlm(num_seeds_with_hit ~ sigs_prev_prop + Approach + dataset_name, data = sup_table_s7_sbs_for_rlm)
 rm   <- summary(sbsr)
