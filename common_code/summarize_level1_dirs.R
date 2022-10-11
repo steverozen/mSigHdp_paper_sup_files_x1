@@ -254,6 +254,10 @@ summarize_level1_dirs <- function(a.folder, delete.non.text = TRUE) {
                     paste(pdfs.to.delete, collapse = " "),
                     " failed")
           }
+          
+          # other.delete <- 
+          #  dir(summary.path, pattern = 
+          
           # also.delete <- 
           #  dir(summary.path, 
           #      pattern = "assessment.sessionInfo\\.txt", 
@@ -359,18 +363,19 @@ summarize_all_level1_dirs <- function()  {
   } 
   all.results.for.export$FN.sigs <- FN.sigs.chars
   
-  
-  
+  supplementary_table_s4 <- all.results.fixed
+  rm(all.results.fixed)
 
   if(!dir.exists("output_for_paper")) dir.create("output_for_paper")
   readr::write_csv(all.results.for.export, 
                    "output_for_paper/supplementary_table_s4.csv")
-  openxlsx::write.xlsx(all.results.fixed, 
+  openxlsx::write.xlsx(supplementary_table_s4, 
                          "output_for_paper/supplementary_table_s4.xlsx")
-  save(all.results.fixed, 
+  save(supplementary_table_s4, 
        file = "output_for_paper/supplementary_table_s4.Rdata")
-  invisible(all.results.fixed)
+  invisible(supplementary_table_s4)
 }
 
-# The only top level code except for checks, etc at the start of the file -----
-all.results.fixed <- summarize_all_level1_dirs()
+# The only top level code except for checks, etc at
+# the start of the file
+summarize_all_level1_dirs()
