@@ -35,15 +35,6 @@ s7x.sbs <- dplyr::filter(s7x, grepl("SBS", dataset_name))
 sup_table_s7_sbs_for_rlm <- dplyr::mutate(s7x.sbs, num_seeds_with_hit = 5 - num_seeds_with_miss)
 data.table::fwrite(sup_table_s7_sbs_for_rlm, outpath("sup_table_s7_sbs_for_rlm.csv"))
 
-# slm <- lm(num_seeds_with_hit ~ sigs_prev_prop + Approach + dataset_name, data = sup_table_s7_sbs_for_rlm)
-# lsm <- summary(slm)$coefficients
-# lsmt <- lsm[ , 3]
-# 2*pt(-abs(lsmt), df = nrow(sup_table_s7_sbs_for_rlm) - 4)
-# 
-# rr <- 
-#  robust::lmRob(
-#    num_seeds_with_hit ~ sigs_prev_prop + as.factor(Approach) + as.factor(dataset_name), 
-#    data = sup_table_s7_sbs_for_rlm)
 
 sbsr <- MASS::rlm(num_seeds_with_hit ~ sigs_prev_prop + Approach + 
                     dataset_name, data = sup_table_s7_sbs_for_rlm)
@@ -54,7 +45,7 @@ coef <- data.frame(cbind(rmc, p = rmp))
 sup_table_s7_coef <- cbind(Variable = rownames(coef), coef)
 openxlsx::write.xlsx(sup_table_s7_coef, file = outpath("sup_table_s7_coef.xlsx"))
 
-# NUmbers for the secion on indel results
+# Numbers for the section on indel results
 
 load("output_for_paper/supplementary_table_s4.Rdata")
 # mSigHdp and sig pro for indel datas
@@ -65,5 +56,5 @@ dplyr::filter(supplementary_table_s4,
   dplyr::group_by(Approach) %>%
   dplyr::mutate(med.fp = median(FP), avg.fp = mean(FP)) -> examine.indels
 
-
+# Page 11, composite measure comparison for SBS data
 
